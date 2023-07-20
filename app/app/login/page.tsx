@@ -1,5 +1,8 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
+import { signIn } from "next-auth/react"
 
 import logo from "@/public/logo.png"
 import googleIcon from "@/public/google-icon.png"
@@ -16,13 +19,12 @@ export default function Page() {
           </div>
         </Link>
         <h1 className='font-semibold text-3xl'>Welcome Back!</h1>
-        <button className=' flex gap-x-4 py-2 border border-neutral-400 rounded items-center justify-center w-full'>
+        <button
+          className=' flex gap-x-4 py-2 border border-neutral-400 rounded items-center justify-center w-full'
+          onClick={() => signIn("google")}
+        >
           <Image src={googleIcon} alt='' className='h-9 w-9' />
           <p className='text-lg font-medium'>Signin with Google</p>
-        </button>
-        <button className=' flex gap-x-4 py-2 border border-neutral-400 rounded items-center justify-center w-full'>
-          <Image src={microsoftIcon} alt='' className='h-9 w-9' />
-          <p className='text-lg font-medium'>Signin with Microsoft</p>
         </button>
       </div>
     </main>
