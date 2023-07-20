@@ -3,12 +3,22 @@
 import Link from "next/link"
 import Image from "next/image"
 import { signIn } from "next-auth/react"
+import { useEffect } from "react"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 import logo from "@/public/logo.png"
 import googleIcon from "@/public/google-icon.png"
 import microsoftIcon from "@/public/microsoft-icon.png"
 
 export default function Page() {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/app/add-linkedin")
+    }
+  })
   return (
     <main className='' id='login-page'>
       <div className='w-96 mx-auto py-16 px-6 gap-y-8 flex flex-col items-center'>
