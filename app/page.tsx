@@ -30,7 +30,7 @@ export default function Home() {
                 Login
               </div>
             </Link>
-            <Link href='/app/signup'>
+            <Link href='/app/login'>
               <div className='text-neutral-white border-2 border-primary bg-primary rounded-full px-6 py-2 font-medium'>
                 Get Started
               </div>
@@ -44,7 +44,7 @@ export default function Home() {
             <div>Convert Your Linkedin</div>
             <div>Into Job Landing Portfolios</div>
           </h1>
-          <Link href='/app/signup'>
+          <Link href='/app/login'>
             <div className='text-neutral-white border-2 text-xl border-primary bg-primary rounded-full px-6 py-2 font-medium'>
               Get Started
             </div>
@@ -124,7 +124,7 @@ export default function Home() {
           <h2 className='text-neutral-white text-4xl font-semibold capitalize'>
             Build your portfolio today
           </h2>
-          <Link href='/app/signup'>
+          <Link href='/app/login'>
             <div className='text-primary bg-neutral-white border-2 text-xl rounded-full px-6 py-2 font-medium mt-8'>
               Get Started
             </div>
