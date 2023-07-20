@@ -37,3 +37,9 @@ model User {
   image         String?
   accounts      Account[]
 }
+
+model Site {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  linkedin_url String
+  title        String
+}
