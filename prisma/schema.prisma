@@ -71,10 +71,12 @@ model User {
   emailVerified DateTime?
   image         String?
   accounts      Account[]
+  Site          Site?
 }
 
 model Site {
   id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String        @unique @db.ObjectId
   linkedin_url String
   first_name   String?
   last_name    String?
@@ -88,4 +90,6 @@ model Site {
   skills       String[]
   projects     Project[]
   certificates Certificate[]
+
+  user User @relation(fields: [userId], references: [id])
 }
