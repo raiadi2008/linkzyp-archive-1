@@ -16,13 +16,7 @@ export default function Page() {
     console.log("linkedinURL", linkedinURL)
     console.log("proxy curl base", process.env.PROXY_CURL_BASE)
     const userInfo = await fetch(
-      `${process.env.PROXY_CURL_BASE}/api/v2/linkedin?url=${linkedinURL}&fallback_to_cache=on-error&use_cache=if-present&skills=include`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.PROXY_CURL_KEY}`,
-        },
-      }
+      `/api/linkedin-data?linkedinURL=${linkedinURL}`
     )
     if (userInfo.status === HttpStatus.SUCCESS && userInfo.ok) {
       const data = await userInfo.json()

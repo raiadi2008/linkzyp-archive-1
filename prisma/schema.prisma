@@ -17,6 +17,7 @@ type Experience {
   comapny_linkedin_profile_url String?
   title                        String?
   description                  String?
+  location                     String?
   logo                         String?
 }
 
@@ -75,21 +76,22 @@ model User {
 }
 
 model Site {
-  id           String        @id @default(auto()) @map("_id") @db.ObjectId
-  userId       String        @unique @db.ObjectId
-  linkedin_url String
-  first_name   String?
-  last_name    String?
-  full_name    String?
-  occupation   String?
-  summuary     String?
-  country      String?
-  experiences  Experience[]
-  education    Education[]
-  courses      String[]
-  skills       String[]
-  projects     Project[]
-  certificates Certificate[]
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String        @unique @db.ObjectId
+  profile_picture String?
+  linkedin_url    String
+  first_name      String?
+  last_name       String?
+  full_name       String?
+  occupation      String?
+  summuary        String?
+  country         String?
+  experiences     Experience[]
+  education       Education[]
+  courses         String[]
+  skills          String[]
+  projects        Project[]
+  certificates    Certificate[]
 
   user User @relation(fields: [userId], references: [id])
 }
