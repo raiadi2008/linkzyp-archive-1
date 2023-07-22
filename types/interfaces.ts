@@ -38,10 +38,10 @@ export interface ISite {
   id?: string
   userId?: string
   profile_picture?: string
-  linkedin_url?: string
+  linkedin_url: string
   first_name?: string
   last_name?: string
-  full_name?: String
+  full_name?: string
   occupation?: string
   summary?: string
   country?: string
