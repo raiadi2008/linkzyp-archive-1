@@ -1,3 +1,7 @@
+import { NextRequest, NextResponse } from "next/server"
+import { getToken } from "next-auth/jwt"
+import { getServerSession } from "next-auth"
+
 import HttpStatus from "@/constants/http_status"
 import {
   ICertificate,
@@ -5,10 +9,13 @@ import {
   IExperience,
   IProject,
   ISite,
-} from "@/lib/interfaces"
-import { NextRequest, NextResponse } from "next/server"
+} from "@/types/interfaces"
+import authOptions from "@/lib/auth"
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
+  const session = await getServerSession(authOptions)
+  console.log("session", session)
+  return "adafsd"
   const { searchParams } = new URL(request.url)
   const linkedinURL: string | null = searchParams.get("linkedinURL")
   if (!linkedinURL)
@@ -138,6 +145,7 @@ export async function GET(request: Request) {
           } as ICertificate
         }),
       } as ISite
+      // save this data into db
       return NextResponse.json(SiteData, { status: HttpStatus.SUCCESS })
     } else {
       return NextResponse.json(
