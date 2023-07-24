@@ -100,8 +100,9 @@ model Site {
 }
 
 model Theme {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String @unique
+  id   String  @id @default(auto()) @map("_id") @db.ObjectId
+  name String  @unique
   type String // paid or free
-  img  String
+  path String
+  img  String?
 }
