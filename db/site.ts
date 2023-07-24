@@ -18,6 +18,8 @@ export async function createSiteDB(siteData: ISite) {
       skills: siteData.skills,
       projects: siteData.projects,
       certificates: siteData.certificates,
+      theme: "adsf",
+      username: "",
       user: {
         connect: {
           id: siteData.userId,
@@ -25,4 +27,14 @@ export async function createSiteDB(siteData: ISite) {
       },
     },
   })
+  return user_site
+}
+
+export async function getSiteByUsername(username: string) {
+  const site = await prisma.site.findFirst({
+    where: {
+      username: username,
+    },
+  })
+  return site
 }

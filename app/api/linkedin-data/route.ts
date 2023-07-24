@@ -11,6 +11,7 @@ import {
   ISite,
 } from "@/types/interfaces"
 import authOptions from "@/lib/auth"
+import { createSiteDB } from "@/db/site"
 
 export async function GET(request: NextRequest) {
   try {
@@ -54,7 +55,7 @@ export async function GET(request: NextRequest) {
       if (res.ok && res.status === HttpStatus.SUCCESS) {
         // if response is recieved save the data in the url
         const data = await res.json()
-        const SiteData = {
+        const site_data = {
           profile_picture: data["profile_pic_url"],
           linkedin_url: linkedinURL,
           first_name: data["first_name"],
@@ -161,8 +162,8 @@ export async function GET(request: NextRequest) {
           userId: user_id,
         } as ISite
         // save this data into db
-
-        return NextResponse.json(SiteData, { status: HttpStatus.SUCCESS })
+        const user_site = await createSiteDB(site_data)
+        return NextResponse.json(user_site, { status: HttpStatus.SUCCESS })
       } else {
         return NextResponse.json(
           {
@@ -176,6 +177,7 @@ export async function GET(request: NextRequest) {
       }
     }
   } catch (e) {
+    console.log("error", e)
     return NextResponse.json(
       {
         error: "Something went wrong",
