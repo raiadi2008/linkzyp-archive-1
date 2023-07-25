@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getSiteByUsernameDB } from "./db/site"
-import { getThemeByIdDB } from "./db/theme"
+
 import HttpStatus from "./constants/http_status"
 export const config = {
   matcher: [
@@ -28,7 +27,6 @@ export async function middleware(req: NextRequest) {
     }
     const data = await response.json()
     const url = data["themeUrl"]
-    console.log("url user", url)
     const siteURL = new URL(url)
     return NextResponse.rewrite(siteURL)
   }

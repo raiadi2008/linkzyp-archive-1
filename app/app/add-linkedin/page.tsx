@@ -13,14 +13,12 @@ export default function Page() {
 
   async function handleSumbit() {
     setLoading(true)
-    console.log("linkedinURL", linkedinURL)
-    console.log("proxy curl base", process.env.PROXY_CURL_BASE)
+
     const userInfo = await fetch(
       `/api/linkedin-data?linkedinURL=${linkedinURL}`
     )
     if (userInfo.status === HttpStatus.SUCCESS && userInfo.ok) {
       const data = await userInfo.json()
-      console.log("data", data)
     }
     setLoading(false)
   }

@@ -1,10 +1,13 @@
 async function getUserInfo(username: string) {
   const res = await fetch(
-    `${process.env.NEXTAUTH_URL}/api/user?username=${username}`
+    `${process.env.NEXTAUTH_URL}/api/user?username=${username}`,
+    {
+      next: { revalidate: 3600 },
+    }
   )
   if (res.ok) {
     const data = await res.json()
-    console.log(data)
+
     return data
   }
   return null

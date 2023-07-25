@@ -177,7 +177,6 @@ export async function GET(request: NextRequest) {
       }
     }
   } catch (e) {
-    console.log("error", e)
     return NextResponse.json(
       {
         error: "Something went wrong",
