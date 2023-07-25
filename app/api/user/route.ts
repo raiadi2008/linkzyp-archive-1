@@ -1,6 +1,6 @@
 import HttpStatus from "@/constants/http_status"
 import { getSiteByUsernameDB } from "@/db/site"
-import { getThemeByIdDB } from "@/db/theme"
+
 import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(req: NextRequest) {
@@ -26,20 +26,7 @@ export async function GET(req: NextRequest) {
       { status: HttpStatus.NOT_FOUND }
     )
   }
-  const themeId = site.themeId
-  const theme = await getThemeByIdDB(themeId)
-  if (!theme) {
-    return NextResponse.json(
-      { error: "Theme not found" },
-      { status: HttpStatus.NOT_FOUND }
-    )
-  }
-  const themeUrl = new URL(`themes/${theme.path}/${username}`, origin)
-
-  return NextResponse.json(
-    {
-      themeUrl: themeUrl.toString(),
-    },
-    { status: HttpStatus.SUCCESS }
-  )
+  return NextResponse.json(site, {
+    status: HttpStatus.SUCCESS,
+  })
 }
