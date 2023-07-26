@@ -40,3 +40,13 @@ export async function getSiteByUsernameDB(username: string) {
   })
   return site
 }
+
+export async function getSiteByUserId(user_id: string) {
+  const site = await prisma.site.findUnique({
+    where: {
+      userId: user_id,
+    },
+  })
+
+  return site
+}

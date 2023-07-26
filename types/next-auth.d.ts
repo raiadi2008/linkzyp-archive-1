@@ -5,12 +5,19 @@ declare module "next-auth" {
   interface Session {
     user: {
       id: string
+      added_linkedin: boolean
     } & DefaultSession["user"]
+  }
+
+  interface User {
+    id: string
+    added_linkedin: boolean
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
     id: string
+    added_linkedin: boolean
   }
 }

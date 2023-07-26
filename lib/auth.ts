@@ -2,7 +2,6 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import type { NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import { prisma } from "@/lib/prismadb"
-import { JWT } from "next-auth/jwt"
 
 const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -20,14 +19,16 @@ const authOptions: NextAuthOptions = {
       if (account) {
         token.accessToken = account.access_token
         token.id = user.id
+        token.added_linkedin = user.added_linkedin
       }
       return token
     },
     session({ session, token }) {
       if (token) {
         session.user.id = token.id
+        session.user.added_linkedin = token.added_linkedin
       }
-
+      console.log("auth session", session)
       return session
     },
   },
