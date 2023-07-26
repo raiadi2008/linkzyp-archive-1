@@ -12,6 +12,7 @@ import {
 } from "@/types/interfaces"
 import authOptions from "@/lib/auth"
 import { createSiteDB } from "@/db/site"
+import { updateUserLinkedinAdded } from "@/db/user"
 
 export async function GET(request: NextRequest) {
   try {
@@ -163,6 +164,9 @@ export async function GET(request: NextRequest) {
         } as ISite
         // save this data into db
         const user_site = await createSiteDB(site_data)
+        if (user_site) {
+          await updateUserLinkedinAdded(true, user_id)
+        }
         return NextResponse.json(user_site, { status: HttpStatus.SUCCESS })
       } else {
         return NextResponse.json(

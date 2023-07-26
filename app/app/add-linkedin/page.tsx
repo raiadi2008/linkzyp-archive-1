@@ -2,11 +2,25 @@
 
 import Loader from "@/components/loader"
 import HttpStatus from "@/constants/http_status"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 export default function Page() {
   const [linkedinURL, setLinkedinURL] = useState("")
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const { data: session, status } = useSession()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (status !== "authenticated") {
+      router.push("/app/login")
+    }
+    if (session?.user.added_linkedin) {
+      router.push("/app/settings")
+    }
+  })
 
   function handleLinkedinChange(event: React.ChangeEvent<HTMLInputElement>) {
     setLinkedinURL(event.target.value)
@@ -19,6 +33,8 @@ export default function Page() {
     const userInfo = await fetch(`/api/linkedin-data?linkedinURL=${url}`)
     if (userInfo.status === HttpStatus.SUCCESS && userInfo.ok) {
       const data = await userInfo.json()
+    } else {
+      setError("Something went wrong. Retry after some time")
     }
     setLoading(false)
   }
@@ -37,6 +53,7 @@ export default function Page() {
           disabled={loading}
           onChange={handleLinkedinChange}
         />
+        <p className='h-4 text-sm text-dark-red'>{error}</p>
         <button
           className='bg-primary text-neutral-white text-lg font-medium px-6 py-2 rounded-md relative'
           onClick={handleSumbit}
@@ -44,7 +61,6 @@ export default function Page() {
         >
           {loading ? (
             <div className='px-5'>
-              {" "}
               <Loader />
             </div>
           ) : (
