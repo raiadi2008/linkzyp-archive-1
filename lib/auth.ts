@@ -28,7 +28,7 @@ const authOptions: NextAuthOptions = {
         session.user.id = token.id
         session.user.added_linkedin = token.added_linkedin
       }
-      console.log("auth session", session)
+
       return session
     },
   },

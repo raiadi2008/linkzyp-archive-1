@@ -18,7 +18,6 @@ export default function Page() {
   useEffect(() => {
     if (status === "authenticated") {
       if (session.user.added_linkedin) {
-        console.log(session.user)
         router.push("/app/settings")
       } else {
         router.push("/app/add-linkedin")

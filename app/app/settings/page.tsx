@@ -24,9 +24,7 @@ export default function Page() {
           setPortfolioUrl(data["portfolio_url"])
         }
       })
-      .catch((err) => {
-        console.log(err)
-      })
+      .catch((err) => {})
   }, [])
 
   return (
