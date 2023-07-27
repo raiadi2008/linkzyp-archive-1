@@ -72,7 +72,7 @@ model User {
   emailVerified  DateTime?
   image          String?
   accounts       Account[]
-  added_linkedin Boolean
+  added_linkedin Boolean?  @default(false)
   Site           Site?
 }
 
