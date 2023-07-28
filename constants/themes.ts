@@ -1,5 +1,5 @@
-enum ThemesID {
+enum Themes {
   BASIC_THEMES = "Basic Theme",
 }
 
-export default ThemesID
+export default Themes

@@ -13,6 +13,7 @@ import {
 import authOptions from "@/lib/auth"
 import { createSiteDB } from "@/db/site"
 import { updateUserLinkedinAdded } from "@/db/user"
+import Themes from "@/constants/themes"
 
 export async function GET(request: NextRequest) {
   try {
@@ -163,7 +164,7 @@ export async function GET(request: NextRequest) {
           userId: user_id,
         } as ISite
         // save this data into db
-        const user_site = await createSiteDB(site_data)
+        const user_site = await createSiteDB(site_data, Themes.BASIC_THEMES)
         if (user_site) {
           await updateUserLinkedinAdded(true, user_id)
         }

@@ -1,4 +1,4 @@
-import ThemesID from "@/constants/themes"
+import Themes from "@/constants/themes"
 import { prisma } from "@/lib/prismadb"
 import { ISite } from "@/types/interfaces"
 import { v4 as uuidv4 } from "uuid"
@@ -6,7 +6,7 @@ import { getThemeByName } from "./theme"
 
 export async function createSiteDB(
   siteData: ISite,
-  themeName: string = ThemesID.BASIC_THEMES
+  themeName: string = Themes.BASIC_THEMES
 ) {
   const theme = await getThemeByName(themeName)
   const user_site = await prisma.site.create({
