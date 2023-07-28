@@ -2,8 +2,13 @@ import ThemesID from "@/constants/themes"
 import { prisma } from "@/lib/prismadb"
 import { ISite } from "@/types/interfaces"
 import { v4 as uuidv4 } from "uuid"
+import { getThemeByName } from "./theme"
 
-export async function createSiteDB(siteData: ISite) {
+export async function createSiteDB(
+  siteData: ISite,
+  themeName: string = ThemesID.BASIC_THEMES
+) {
+  const theme = await getThemeByName(themeName)
   const user_site = await prisma.site.create({
     data: {
       profile_picture: siteData.profile_picture,
@@ -20,7 +25,7 @@ export async function createSiteDB(siteData: ISite) {
       skills: siteData.skills,
       projects: siteData.projects,
       certificates: siteData.certificates,
-      themeId: ThemesID.BASIC_THEMES,
+      themeId: theme?.id!,
       username: uuidv4(),
       user: {
         connect: {

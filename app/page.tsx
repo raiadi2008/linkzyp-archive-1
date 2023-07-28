@@ -26,13 +26,13 @@ export default function Home() {
           </Link>
           <div className='flex gap-x-8 items-center'>
             <Link href='/app/login'>
-              <div className='rounded-full border-2 border-primary px-6 py-2 font-medium'>
-                Login
+              <div className='rounded-full border-2 border-primary px-6 py-2 font-medium sm:hidden'>
+                Get Started
               </div>
             </Link>
             <Link href='/app/login'>
               <div className='text-neutral-white border-2 border-primary bg-primary rounded-full px-6 py-2 font-medium'>
-                Get Started
+                Login
               </div>
             </Link>
           </div>
@@ -40,16 +40,17 @@ export default function Home() {
       </section>
       <section id='hero' className='pt-24 pb-8 px-4'>
         <div className='max-w-website relative mx-auto flex flex-col items-center gap-y-12'>
-          <h1 className='text-center text-7xl font-black tracking-wide'>
+          <h1 className='text-center text-7xl font-black tracking-wide xl:text-5xl md:text-4xl xs:text-3xl'>
             <div>Convert Your Linkedin</div>
-            <div>Into Job Landing Portfolios</div>
+            <div>Into Job Landing </div>
+            <div>Portfolios</div>
           </h1>
           <Link href='/app/login'>
             <div className='text-neutral-white border-2 text-xl border-primary bg-primary rounded-full px-6 py-2 font-medium'>
               Get Started
             </div>
           </Link>
-          <div className='w-2/3 mx-auto'>
+          <div className='w-2/3 mx-auto sm:w-full'>
             <Image src={portfolioSS} alt='' className='' />
           </div>
         </div>
@@ -93,26 +94,30 @@ export default function Home() {
               className='absolute left-40 top-72 h-11 w-11'
             />
           </div>
-          <div className='w-96'>
-            <h2 className='text-3xl font-semibold mb-3'>
+          <div className='w-96 lg:w-72'>
+            <h2 className='text-3xl font-semibold mb-3 lg:text-2xl'>
               Professional Templates
             </h2>
-            <p className='text-gray-500 text-lg font-medium'>
+            <p className='text-gray-500 text-lg font-medium lg:text-base'>
               Choose from a variety of professional templates to get started
               quickly. Change styles and colors to suit your needs.
             </p>
           </div>
-          <div className='w-96'>
-            <h2 className='text-3xl font-semibold mb-3'>Easy To Deploy</h2>
-            <p className='text-gray-500 text-lg font-medium'>
+          <div className='w-96 lg:w-72'>
+            <h2 className='text-3xl font-semibold mb-3 lg:text-2xl'>
+              Easy To Deploy
+            </h2>
+            <p className='text-gray-500 text-lg font-medium lg:text-base'>
               With Linkzyp, you can deploy your portfolio instantly. No need to
               own a server or maintain the deployments. We will do everything
               for you.
             </p>
           </div>
-          <div className='w-96'>
-            <h2 className='text-3xl font-semibold mb-3'>Share Anywhere</h2>
-            <p className='text-gray-500 text-lg font-medium'>
+          <div className='w-96 lg:w-72'>
+            <h2 className='text-3xl font-semibold mb-3 lg:text-2xl'>
+              Share Anywhere
+            </h2>
+            <p className='text-gray-500 text-lg font-medium lg:text-base'>
               You can claim a username and get a shareable url to your
               portfolio.
             </p>
@@ -121,11 +126,11 @@ export default function Home() {
       </section>
       <section id='footer' className='bg-neutral-dark mt-8'>
         <div className='max-w-website mx-auto relative px-4 py-16 flex flex-col items-center'>
-          <h2 className='text-neutral-white text-4xl font-semibold capitalize'>
+          <h2 className='text-neutral-white text-4xl font-semibold capitalize lg:text-3xl text-center'>
             Build your portfolio today
           </h2>
           <Link href='/app/login'>
-            <div className='text-primary bg-neutral-white border-2 text-xl rounded-full px-6 py-2 font-medium mt-8'>
+            <div className='text-primary bg-neutral-white border-2 text-xl rounded-full px-6 py-2 font-medium mt-8 lg:text-lg'>
               Get Started
             </div>
           </Link>

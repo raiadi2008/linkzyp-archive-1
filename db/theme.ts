@@ -8,3 +8,12 @@ export async function getThemeByIdDB(id: string) {
   })
   return theme
 }
+
+export async function getThemeByName(name: string) {
+  const theme = await prisma.theme.findUnique({
+    where: {
+      name,
+    },
+  })
+  return theme
+}
