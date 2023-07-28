@@ -81,7 +81,7 @@ model Site {
   userId          String        @unique @db.ObjectId
   domain          String?
   username        String        @unique
-  themeId         String        @unique @db.ObjectId
+  themeId         String        @db.ObjectId
   profile_picture String?
   linkedin_url    String
   first_name      String?

@@ -14,3 +14,13 @@ export async function updateUserLinkedinAdded(
   })
   return user
 }
+
+export async function getUserByIdDB(id: string) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+  })
+
+  return user
+}

@@ -10,20 +10,22 @@ export default function Page() {
   const [linkedinURL, setLinkedinURL] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const { data: session, status } = useSession()
+  const { data: session, status, update } = useSession()
   const router = useRouter()
 
-  // useEffect(() => {
-  //   if (status !== "authenticated") {
-  //     router.push("/app/login")
-  //   }
-  //   if (session?.user.added_linkedin) {
-  //     router.push("/app/settings")
-  //   }
-  // })
+  useEffect(() => {
+    console.log(session)
+    if (status !== "authenticated") {
+      router.push("/app/login")
+    }
+    if (session?.user.added_linkedin) {
+      router.push("/app/settings")
+    }
+  }, [router, session, status, update])
 
   function handleLinkedinChange(event: React.ChangeEvent<HTMLInputElement>) {
     setLinkedinURL(event.target.value)
+    setError(null)
   }
 
   async function handleSumbit() {
@@ -33,9 +35,16 @@ export default function Page() {
     const userInfo = await fetch(`/api/linkedin-data?linkedinURL=${url}`)
     if (userInfo.status === HttpStatus.SUCCESS && userInfo.ok) {
       const data = await userInfo.json()
+      await update({
+        ...session,
+        user: {
+          added_linkedin: true,
+        },
+      })
     } else {
       setError("Something went wrong. Retry after some time")
     }
+
     setLoading(false)
   }
 
