@@ -8,7 +8,7 @@ import Link from "next/link"
 
 async function getUserInfo(username: string) {
   const res = await fetch(
-    `${process.env.NEXTAUTH_URL}/api/user?username=${username}`,
+    `${process.env.NEXTAUTH_URL}/api/site?username=${username}`,
     { next: { revalidate: 100 } }
   )
   if (res.ok) {

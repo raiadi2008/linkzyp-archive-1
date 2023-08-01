@@ -3,7 +3,6 @@
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { getToken } from "next-auth/jwt"
 import AccountSettings from "@/components/settings/account"
 import { ISite } from "@/types/interfaces"
 
