@@ -1,12 +1,14 @@
 export default function Page() {
   return (
     <main className=''>
-      <section className='w-1/2 mx-auto child:mb-4 text-sm py-12'>
-        <h2 className='mb-6 font-medium text-lg'>Privacy Policy for Linkzyp</h2>
+      <section className='w-1/2 mx-auto child:mb-4 text-sm py-12 px-8 sm:w-full'>
+        <h2 className='mb-6 font-medium text-2xl'>
+          Privacy Policy for Linkzyp
+        </h2>
 
-        <p>Effective Date: 12 July 2023</p>
+        <div className='font-semibold mb-4'>Effective Date: 12 July 2023</div>
 
-        <p>
+        <p className='ml-4'>
           This Privacy Policy outlines the practices of linkzyp (&quot;we,&quot;
           &quot;us,&quot; or &quot;our&quot;) regarding the collection, use, and
           disclosure of personal information when you use our application
@@ -16,23 +18,23 @@ export default function Page() {
           personal information.
         </p>
 
-        <h3 className='text-xl font-medium mt-4 mb-2'>
+        <h3 className='text-xl font-medium mt-4 mb-4'>
           1. Information We Collect
         </h3>
 
-        <h4>1.1 Personal Information:</h4>
-        <p>
+        <h4 className='text-base ml-2 mt-4 mb-2'>1.1 Personal Information:</h4>
+        <p className='ml-4'>
           When you use the App, we may collect the following personal
           information from you for authentication purposes:
         </p>
-        <ul>
+        <div className='ml-4'>
           <li>Full name</li>
           <li>Email address</li>
           <li>Profile photo</li>
-        </ul>
+        </div>
 
-        <h4>1.2 Usage Information:</h4>
-        <p>
+        <h4 className='text-base ml-2 mb-2 mt-4'>1.2 Usage Information:</h4>
+        <p className='ml-4'>
           In addition to personal information, we may collect certain
           non-personal information about your use of the App, such as your
           device type, operating system, and IP address. This information is
@@ -44,28 +46,30 @@ export default function Page() {
           2. Use of Personal Information
         </h3>
 
-        <h4>2.1 Authentication:</h4>
-        <p>
+        <h4 className='text-base ml-2 mb-2 mt-4'>2.1 Authentication:</h4>
+        <p className='ml-4'>
           We use the personal information you provide to authenticate your
           identity and ensure the security of the App. This includes verifying
           your email address, associating your profile photo with your account,
           and enabling you to access the App&apos;s features and services.
         </p>
 
-        <h4>2.2 Communication:</h4>
-        <p>
+        <h4 className='text-base ml-2 mb-2 mt-4'>2.2 Communication:</h4>
+        <p className='ml-4'>
           We may occasionally use your email address to send you important
           updates and notifications related to the App. These communications are
           aimed at providing you with relevant information about the App&apos;s
           features, improvements, and changes.
         </p>
 
-        <h3 className='text-xl font-medium mt-4 mb-2'>
+        <h3 className='text-xl font-medium mt-4 mb-4'>
           3. Information Sharing and Disclosure
         </h3>
 
-        <h4>3.1 Third-Party Service Providers:</h4>
-        <p>
+        <h4 className='text-base ml-2 mb-2 mt-4'>
+          3.1 Third-Party Service Providers:
+        </h4>
+        <p className='ml-4'>
           We may engage third-party service providers to assist us in providing
           and improving the App. These service providers may have access to your
           personal information solely for the purpose of performing services on
@@ -73,8 +77,8 @@ export default function Page() {
           purpose.
         </p>
 
-        <h4>3.2 Aggregated Data:</h4>
-        <p>
+        <h4 className='text-base ml-2 mb-2 mt-4'>3.2 Aggregated Data:</h4>
+        <p className='ml-4'>
           We may analyze and aggregate non-personal information collected
           through the App to identify trends, monitor usage patterns, and
           improve our services. This aggregated data does not personally
@@ -82,17 +86,17 @@ export default function Page() {
           purposes, such as research or marketing.
         </p>
 
-        <h4>3.3 Legal Requirements:</h4>
-        <p>
+        <h4 className='text-base ml-2 mb-2 mt-4'>3.3 Legal Requirements:</h4>
+        <p className='ml-4'>
           We may disclose your personal information if required to do so by law
           or in response to a valid legal request, such as a court order,
           government investigation, or to protect our rights, property, or
           safety.
         </p>
 
-        <h3 className='text-xl font-medium mt-4 mb-2'>4. Data Security</h3>
+        <h3 className='text-xl font-medium mt-4 mb-4'>4. Data Security</h3>
 
-        <p>
+        <p className='ml-4'>
           We take reasonable measures to protect the personal information we
           collect from unauthorized access, disclosure, alteration, and
           destruction. However, please be aware that no method of transmission
@@ -100,11 +104,11 @@ export default function Page() {
           guarantee absolute security.
         </p>
 
-        <h3 className='text-xl font-medium mt-4 mb-2'>
+        <h3 className='text-xl font-medium mt-4 mb-4'>
           5. Your Choices and Rights
         </h3>
 
-        <p>
+        <p className='ml-4'>
           You have the right to access, update, and correct your personal
           information collected through the App. If you would like to review or
           modify any personal information you have provided, please contact us
@@ -112,11 +116,11 @@ export default function Page() {
           below.
         </p>
 
-        <h3 className='text-xl font-medium mt-4 mb-2'>
+        <h3 className='text-xl font-medium mt-4 mb-4'>
           6. Children&apos;s Privacy
         </h3>
 
-        <p>
+        <p className='ml-4'>
           The App is not intended for use by individuals under the age of 13. We
           do not knowingly collect personal information from children under 13
           years of age. If you believe we have unintentionally collected
@@ -124,11 +128,11 @@ export default function Page() {
           immediately, and we will take steps to delete it.
         </p>
 
-        <h3 className='text-xl font-medium mt-4 mb-2'>
+        <h3 className='text-xl font-medium mt-4 mb-4'>
           7. Changes to this Privacy Policy
         </h3>
 
-        <p>
+        <p className='ml-4'>
           We reserve the right to update or modify this Privacy Policy at any
           time. Any changes we make will be posted on this page, and the
           effective date will be revised accordingly. We encourage you to review
@@ -138,20 +142,24 @@ export default function Page() {
 
         <h3 className='text-xl font-medium mt-4 mb-2'>8. Contact Us</h3>
 
-        <p>
+        <p className='ml-4'>
           If you have any questions, concerns, or requests regarding this
           Privacy Policy or our data practices, please contact us at:
         </p>
 
-        <p>linkzyp.official@gmail.com</p>
+        <div className='font-semibold ml-4 my-4'>
+          linkzyp.official@gmail.com
+        </div>
 
-        <p>
+        <p className='ml-4'>
           By using the App, you signify your acceptance of this Privacy Policy.
           If you do not agree with the terms of this Policy, please do not use
           the App.
         </p>
 
-        <p>Last updated: 15 July 2023</p>
+        <div className='font-semibold mb-4 mt-4'>
+          Effective Date: 12 July 2023
+        </div>
       </section>
     </main>
   )
