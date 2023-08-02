@@ -31,9 +31,16 @@ function CurrentSettingsSection(
 ) {
   switch (index) {
     case 0:
-      return (
-        <AccountSettings siteInfo={siteInfo} updateSiteInfo={updateSiteInfo} />
-      )
+      if (siteInfo) {
+        return (
+          <AccountSettings
+            siteInfo={siteInfo}
+            updateSiteInfo={updateSiteInfo}
+          />
+        )
+      } else {
+        return <div>Loading...</div>
+      }
     case 1:
       return <div>Themes</div>
     case 2:
@@ -74,7 +81,7 @@ export default function Page() {
   const router = useRouter()
 
   useEffect(() => {
-    if (status !== "authenticated") {
+    if (status !== "authenticated" && status !== "loading") {
       router.push("/app/login")
     }
   }, [status])
@@ -84,7 +91,8 @@ export default function Page() {
       .then((data) => {
         updateSiteInfo({
           id: data["id"],
-          user_id: data["user_id"],
+          userId: data["userId"],
+          username: data["username"],
           profile_picture: data["profile_picture"],
           first_name: data["first_name"],
           last_name: data["last_name"],

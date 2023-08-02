@@ -39,6 +39,7 @@ export interface ICertificate {
 export interface ISite {
   id?: string
   userId?: string
+  username?: string
   profile_picture?: string
   linkedin_url: string
   first_name?: string
@@ -56,6 +57,6 @@ export interface ISite {
 }
 
 export interface ISiteUpdates {
-  siteInfo: ISite | null
+  siteInfo: ISite
   updateSiteInfo: Dispatch<SetStateAction<ISite | null>>
 }
