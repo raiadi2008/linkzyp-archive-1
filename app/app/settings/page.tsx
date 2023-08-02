@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import AccountSettings from "@/components/settings/account"
+import ProfileSettings from "@/components/settings/profile/profile"
 import {
   ICertificate,
   IEducation,
@@ -14,7 +14,7 @@ import {
 import HttpStatus from "@/constants/http_status"
 
 const navbar = [
-  "Account",
+  "Profile",
   "Themes",
   "Links",
   "Work Experience",
@@ -33,7 +33,7 @@ function CurrentSettingsSection(
     case 0:
       if (siteInfo) {
         return (
-          <AccountSettings
+          <ProfileSettings
             siteInfo={siteInfo}
             updateSiteInfo={updateSiteInfo}
           />

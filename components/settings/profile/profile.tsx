@@ -4,7 +4,7 @@ import { ISite, ISiteUpdates } from "@/types/interfaces"
 import Link from "next/link"
 import { Dispatch, SetStateAction, use, useEffect, useState } from "react"
 
-export default function AccountSettings({
+export default function ProfileSettings({
   siteInfo,
   updateSiteInfo,
 }: ISiteUpdates) {
@@ -26,7 +26,7 @@ export default function AccountSettings({
   return (
     <div className='max-w-medium-website'>
       <div className=''>
-        <div className='flex justify-between mb-8'>
+        <div className='flex items-center justify-between mb-8'>
           <div>
             <label>First Name</label>
             <p className='text-gray-500 font-extralight text-sm'>
@@ -37,12 +37,12 @@ export default function AccountSettings({
             </p>
           </div>
           <input
-            className='text-gray-500 text-right outline-none focus:border-b focus:text-neutral-dark focus:border-gray-300 py-1 px-2 focus:bg-gray-100 rounded w-64 focus:text-left'
+            className='text-gray-500 text-right outline-none focus:border-b focus:text-neutral-dark focus:border-gray-300 py-1 px-2 focus:bg-gray-100 rounded w-72 focus:text-left'
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
-        <div className='flex justify-between mb-8'>
+        <div className='flex items-center justify-between mb-8'>
           <div>
             <label>Last Name</label>
             <p className='text-gray-500 font-extralight text-sm'>
@@ -53,12 +53,12 @@ export default function AccountSettings({
             </p>
           </div>
           <input
-            className='text-gray-500 text-right outline-none focus:border-b focus:text-neutral-dark focus:border-gray-300 py-1 px-2 focus:bg-gray-100 rounded w-64 focus:text-left'
+            className='text-gray-500 text-right outline-none focus:border-b focus:text-neutral-dark focus:border-gray-300 py-1 px-2 focus:bg-gray-100 rounded w-72 focus:text-left'
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
         </div>
-        <div className='flex justify-between mb-8'>
+        <div className='flex items-center justify-between mb-8'>
           <div>
             <label>Occupation</label>
             <p className='text-gray-500 font-extralight text-sm'>
@@ -69,12 +69,12 @@ export default function AccountSettings({
             </p>
           </div>
           <input
-            className='text-gray-500 text-right outline-none focus:border-b focus:text-neutral-dark focus:border-gray-300 py-1 px-2 focus:bg-gray-100 rounded w-64 focus:text-left'
+            className='text-gray-500 text-right outline-none focus:border-b focus:text-neutral-dark focus:border-gray-300 py-1 px-2 focus:bg-gray-100 rounded w-72 focus:text-left'
             value={occupation}
             onChange={(e) => setOccupation(e.target.value)}
           />
         </div>
-        <div className='flex justify-between mb-2'>
+        <div className='flex justify-between items-center mb-2'>
           <div>
             <label>Username</label>
             <p className='text-gray-500 font-extralight text-sm'>
