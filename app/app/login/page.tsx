@@ -26,7 +26,7 @@ export default function Page() {
   })
   return (
     <main className='' id='login-page'>
-      <div className='w-96 mx-auto py-16 px-6 gap-y-8 flex flex-col items-center'>
+      <div className='w-96 mx-auto py-16 px-6 gap-y-8 flex flex-col items-center '>
         <Link href={"/"}>
           <div className='relative flex gap-x-2 items-center'>
             <Image src={logo} alt='logo' className='w-12 h-12' />
@@ -41,6 +41,12 @@ export default function Page() {
           <Image src={googleIcon} alt='' className='h-9 w-9' />
           <p className='text-lg font-medium'>Signin with Google</p>
         </button>
+        <Link href='/app/privacy-policy'>
+          <div className=' font-extralight text-sm'>
+            By sigining up to use linkzyp you agree with our
+            <div className='text-blue-600'>privacy policy</div>
+          </div>
+        </Link>
       </div>
     </main>
   )
