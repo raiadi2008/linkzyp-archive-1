@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react"
+
 export interface IExperience {
   starts_at?: Date
   ends_at?: Date
@@ -45,10 +47,15 @@ export interface ISite {
   occupation?: string
   summary?: string
   country?: string
-  experiences?: IExperience[]
+  experiences: IExperience[]
   education: IEducation[]
   courses: string[]
   skills: string[]
   projects: IProject[]
   certificates: ICertificate[]
+}
+
+export interface ISiteUpdates {
+  siteInfo: ISite | null
+  updateSiteInfo: Dispatch<SetStateAction<ISite | null>>
 }

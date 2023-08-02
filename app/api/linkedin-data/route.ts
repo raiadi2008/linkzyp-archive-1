@@ -182,7 +182,6 @@ export async function GET(request: NextRequest) {
       }
     }
   } catch (e) {
-    console.log(e)
     return NextResponse.json(
       {
         error: "Something went wrong",

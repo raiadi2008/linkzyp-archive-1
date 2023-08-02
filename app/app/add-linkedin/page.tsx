@@ -14,7 +14,6 @@ export default function Page() {
   const router = useRouter()
 
   useEffect(() => {
-    console.log(session)
     if (status !== "authenticated") {
       router.push("/app/login")
     }

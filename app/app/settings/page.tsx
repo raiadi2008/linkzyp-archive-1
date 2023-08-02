@@ -1,10 +1,17 @@
 "use client"
 
 import { useSession } from "next-auth/react"
-import { useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import AccountSettings from "@/components/settings/account"
-import { ISite } from "@/types/interfaces"
+import {
+  ICertificate,
+  IEducation,
+  IExperience,
+  IProject,
+  ISite,
+} from "@/types/interfaces"
+import HttpStatus from "@/constants/http_status"
 
 const navbar = [
   "Account",
@@ -17,10 +24,16 @@ const navbar = [
   "Certificates",
 ]
 
-function CurrentSettingsSection(index: number) {
+function CurrentSettingsSection(
+  index: number,
+  siteInfo: ISite | null,
+  updateSiteInfo: Dispatch<SetStateAction<ISite | null>>
+) {
   switch (index) {
     case 0:
-      return <AccountSettings />
+      return (
+        <AccountSettings siteInfo={siteInfo} updateSiteInfo={updateSiteInfo} />
+      )
     case 1:
       return <div>Themes</div>
     case 2:
@@ -38,16 +51,18 @@ function CurrentSettingsSection(index: number) {
   }
 }
 
-async function getUserInfo(username: string) {
+async function getUserInfo() {
   const res = await fetch(
-    `${process.env.NEXTAUTH_URL}/api/user?username=${username}`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/site/settings`,
+    {
+      method: "GET",
+    }
   )
-  if (res.ok) {
+  if (res.ok && res.status === HttpStatus.SUCCESS) {
     const data = await res.json()
-
     return data
   }
-  return null
+  throw Error("Error fetching site info")
 }
 
 export default function Page() {
@@ -62,7 +77,39 @@ export default function Page() {
     if (status !== "authenticated" && status !== "loading") {
       router.push("/app/login")
     }
-  }, [router, status])
+  }, [status])
+
+  useEffect(() => {
+    getUserInfo()
+      .then((data) => {
+        updateSiteInfo({
+          id: data["id"],
+          user_id: data["user_id"],
+          profile_picture: data["profile_picture"],
+          first_name: data["first_name"],
+          last_name: data["last_name"],
+          linkedin_url: data["linkedin_url"],
+          occupation: data["occupation"],
+          experiences: data["experiences"] as IExperience[],
+          education: data["education"] as IEducation[],
+          projects: data["projects"] as IProject[],
+          certificates: data["certificates"] as ICertificate[],
+          skills: data["skills"] as string[],
+          courses: data["courses"] as string[],
+        } as ISite)
+      })
+      .catch((err) => {
+        router.push("/app/login")
+        return null
+      })
+      .finally(() => {
+        setLoadingInfo(false)
+      })
+  }, [])
+
+  useEffect(() => {
+    console.log(siteInfo)
+  }, [siteInfo])
 
   function changeTab(index: number) {
     setActiveTab(index)
@@ -72,7 +119,7 @@ export default function Page() {
     <main className='' id='settings'>
       <section className='mx-auto max-w-website py-6 overflow-hidden'>
         <h1 className='text-4xl font-bold mb-12'>Settings</h1>
-        <div id='settings-sidebar' className='overflow-x-auto mb-6'>
+        <div id='settings-sidebar' className='overflow-x-auto mb-12'>
           <ul className='flex gap-x-4  border-b border-gray-200 child:p-2 w-fit child:whitespace-nowrap'>
             {navbar.map((item, index) => {
               return (
@@ -91,7 +138,9 @@ export default function Page() {
             })}
           </ul>
         </div>
-        <div id='settings-content'>{CurrentSettingsSection(activeTab)}</div>
+        <div id='settings-content'>
+          {CurrentSettingsSection(activeTab, siteInfo, updateSiteInfo)}
+        </div>
       </section>
     </main>
   )

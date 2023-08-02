@@ -36,9 +36,9 @@ module.exports = {
       },
       maxWidth: {
         'website': '1240px',
-        'large-portfolio': '1240px',
-        'medium-portfolio': "960px",
-        'small-portfolio': "680px"
+        'large-website': "960px",
+        'medium-website': "840px",
+        'small-website': "680px"
       }
     }
   },

@@ -23,13 +23,12 @@ export async function middleware(req: NextRequest) {
       new URL(`/api/portfolio-url?username=${username}`, origin)
     )
     const data = await response.json()
-    console.log("data = ", response.status, data)
     if (!response.ok || response.status !== HttpStatus.SUCCESS) {
       return NextResponse.rewrite(not_found_url)
     }
 
     const url = data["themeUrl"]
-    console.log("url", url)
+
     const siteURL = new URL(url)
     return NextResponse.rewrite(siteURL)
   }
