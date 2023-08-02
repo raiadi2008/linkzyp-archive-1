@@ -2,9 +2,7 @@ export default function Page() {
   return (
     <main className=''>
       <section className='w-1/2 mx-auto child:mb-4 text-sm py-12'>
-        <h2 className='mb-6 font-medium text-lg '>
-          Privacy Policy for Linkzyp
-        </h2>
+        <h2 className='mb-6 font-medium text-lg'>Privacy Policy for Linkzyp</h2>
 
         <p>Effective Date: 12 July 2023</p>
 

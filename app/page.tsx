@@ -124,14 +124,19 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section id='footer' className='bg-neutral-dark mt-8'>
-        <div className='max-w-website mx-auto relative px-4 py-16 flex flex-col items-center'>
+      <section id='footer' className='bg-neutral-dark mt-8 relative'>
+        <div className='max-w-website mx-auto relative px-4 pt-16 pb-4 flex flex-col items-center'>
           <h2 className='text-neutral-white text-4xl font-semibold capitalize lg:text-3xl text-center'>
             Build your portfolio today
           </h2>
           <Link href='/app/login'>
             <div className='text-primary bg-neutral-white border-2 text-xl rounded-full px-6 py-2 font-medium mt-8 lg:text-lg'>
               Get Started
+            </div>
+          </Link>
+          <Link href='/app/privacy-policy'>
+            <div className='text-neutral-white mt-20 font-extralight text-sm'>
+              checkout our privacy policy here
             </div>
           </Link>
         </div>
