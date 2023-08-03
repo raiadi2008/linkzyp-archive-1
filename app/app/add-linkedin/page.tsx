@@ -1,6 +1,6 @@
 "use client"
 
-import Loader from "@/components/loader"
+import Loader from "@/components/utils/loader"
 import HttpStatus from "@/constants/http_status"
 import React, { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"

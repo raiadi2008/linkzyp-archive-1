@@ -12,11 +12,10 @@ import {
   ISite,
 } from "@/types/interfaces"
 import HttpStatus from "@/constants/http_status"
+import WorkExperience from "@/components/settings/work-experience/work-experience"
 
 const navbar = [
   "Profile",
-  "Themes",
-  "Links",
   "Work Experience",
   "Education",
   "Skills and Courses",
@@ -42,18 +41,20 @@ function CurrentSettingsSection(
         return <div>Loading...</div>
       }
     case 1:
-      return <div>Themes</div>
+      if (siteInfo) {
+        return (
+          <WorkExperience siteInfo={siteInfo} updateSiteInfo={updateSiteInfo} />
+        )
+      } else {
+        return <div>Loading...</div>
+      }
     case 2:
-      return <div>Links</div>
-    case 3:
-      return <div>Work Experience</div>
-    case 4:
       return <div>Education</div>
-    case 5:
+    case 3:
       return <div>Skills and Courses</div>
-    case 6:
+    case 4:
       return <div>Projects</div>
-    case 7:
+    case 5:
       return <div>Certificates</div>
   }
 }
