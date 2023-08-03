@@ -14,6 +14,7 @@ import {
 import HttpStatus from "@/constants/http_status"
 import WorkExperience from "@/components/settings/work-experience/work-experience"
 import Education from "@/components/settings/education/education"
+import SkillsAndCourses from "@/components/settings/skills-and-courses/skills-and-courses"
 
 const navbar = [
   "Profile",
@@ -56,7 +57,16 @@ function CurrentSettingsSection(
         return <div>Loading...</div>
       }
     case 3:
-      return <div>Skills and Courses</div>
+      if (siteInfo) {
+        return (
+          <SkillsAndCourses
+            siteInfo={siteInfo}
+            updateSiteInfo={updateSiteInfo}
+          />
+        )
+      } else {
+        return <div>Loading...</div>
+      }
     case 4:
       return <div>Projects</div>
     case 5:
