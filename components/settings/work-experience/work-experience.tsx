@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react"
 
 import { IExperience, ISite, ISiteUpdates } from "@/types/interfaces"
-import { formatDateAs_YYYY_MM_DD, removeItemAtIndex } from "@/utils/functions"
+import {
+  convert_YYYY_MM_DD_toDate,
+  formatDateAs_YYYY_MM_DD,
+  removeItemAtIndex,
+} from "@/utils/functions"
 
 export default function WorkExperience({
   siteInfo,
@@ -62,7 +66,13 @@ export default function WorkExperience({
                     ? formatDateAs_YYYY_MM_DD(experience.starts_at)
                     : ""
                 }
-                onChange={(e) => {}}
+                onChange={(e) => {
+                  const workExperience = [...experiences]
+                  workExperience[index].starts_at = convert_YYYY_MM_DD_toDate(
+                    e.target.value
+                  )
+                  setExperiences(workExperience)
+                }}
               />
               <p>to</p>
               <input
@@ -73,6 +83,13 @@ export default function WorkExperience({
                     ? formatDateAs_YYYY_MM_DD(experience.ends_at)
                     : ""
                 }
+                onChange={(e) => {
+                  const workExperience = [...experiences]
+                  workExperience[index].ends_at = convert_YYYY_MM_DD_toDate(
+                    e.target.value
+                  )
+                  setExperiences(workExperience)
+                }}
               />
             </div>
             <button

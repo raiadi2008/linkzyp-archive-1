@@ -13,6 +13,7 @@ import {
 } from "@/types/interfaces"
 import HttpStatus from "@/constants/http_status"
 import WorkExperience from "@/components/settings/work-experience/work-experience"
+import Education from "@/components/settings/education/education"
 
 const navbar = [
   "Profile",
@@ -49,7 +50,11 @@ function CurrentSettingsSection(
         return <div>Loading...</div>
       }
     case 2:
-      return <div>Education</div>
+      if (siteInfo) {
+        return <Education siteInfo={siteInfo} updateSiteInfo={updateSiteInfo} />
+      } else {
+        return <div>Loading...</div>
+      }
     case 3:
       return <div>Skills and Courses</div>
     case 4:

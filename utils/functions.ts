@@ -33,8 +33,8 @@ export function getTodayFormattedDate(): string {
 
 export function getDateWithoutTime(
   dateString: string | null | undefined
-): Date | null {
-  if (!dateString) return null
+): Date | undefined {
+  if (!dateString) return undefined
   const dateObject = new Date(dateString)
 
   // Ignore the time part
@@ -47,14 +47,14 @@ export function getDateWithoutTime(
 
 export function convert_YYYY_MM_DD_toDate(
   dateString: string | null | undefined
-): Date | null {
-  if (!dateString) return null
+): Date | undefined {
+  if (!dateString) return undefined
   try {
     const dateObject = new Date(dateString)
     console.log("dateObject", dateObject)
     return dateObject
   } catch (error) {
-    return null
+    return undefined
   }
 }
 
