@@ -15,10 +15,9 @@ export async function createSiteDB(
       linkedin_url: siteData.linkedin_url,
       first_name: siteData.first_name,
       last_name: siteData.last_name,
-      full_name: siteData.full_name,
+
       occupation: siteData.occupation,
-      summuary: siteData.summary,
-      country: siteData.country,
+
       experiences: siteData.experiences,
       education: siteData.education,
       courses: siteData.courses,

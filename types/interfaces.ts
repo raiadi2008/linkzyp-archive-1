@@ -21,33 +21,28 @@ export interface IEducation {
 }
 
 export interface IProject {
-  starts_at?: Date
-  ends_at?: Date
   title?: string
   description?: string
   url?: string
 }
 
 export interface ICertificate {
-  starts_at?: Date
-  ends_at?: Date
   name?: string
   authority?: string
   url?: string
 }
 
 export interface ISite {
-  id?: string
-  userId?: string
-  username?: string
+  id: string
+  userId: string
+  domain?: string
+  username: string
+  themeId: string
   profile_picture?: string
-  linkedin_url: string
+  linkedin_url?: string
   first_name?: string
   last_name?: string
-  full_name?: string
   occupation?: string
-  summary?: string
-  country?: string
   experiences: IExperience[]
   education: IEducation[]
   courses: string[]

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getToken } from "next-auth/jwt"
 import { getServerSession } from "next-auth"
-
+import { v4 as uuidv4 } from "uuid"
 import HttpStatus from "@/constants/http_status"
 import {
   ICertificate,
@@ -15,10 +15,21 @@ import { createSiteDB } from "@/db/site"
 import { updateUserLinkedinAdded } from "@/db/user"
 import Themes from "@/constants/themes"
 
+/**
+ *
+ * @param request
+ * @returns ISite
+ * @description fetch data from of the profile using linkedin url.
+ *    Create Site data for the user and return the created data.
+ *    If linkedin url not provided then add the basic site info for user
+ *    Requires users session
+ * @author Aditya Narayan Rai
+ */
+
 export async function GET(request: NextRequest) {
   try {
-    // step 1: Check for session
     const session = await getServerSession(authOptions)
+    let site_data: ISite | null
 
     if (!session) {
       return NextResponse.json(
@@ -26,24 +37,24 @@ export async function GET(request: NextRequest) {
         { status: HttpStatus.UNAUTHORIZED }
       )
     }
-
-    // extract user id from session
     const user_id: string = session.user.id
-
-    // extract linkedin url from params
     const { searchParams } = new URL(request.url)
     const linkedinURL: string | null = searchParams.get("linkedinURL")
-    if (!linkedinURL)
+    const withLinkedin: boolean = searchParams.get("withLinkedin") === "true"
+
+    if (!linkedinURL && withLinkedin)
       return NextResponse.json(
         {
-          error: "linkedinURL is required",
+          error: "linkedin url is required",
         },
         {
           status: HttpStatus.BAD_REQUEST,
         }
       )
-    else {
-      // fetch data of the linkedin url
+
+    if (!withLinkedin) {
+      site_data = { username: uuidv4(), userId: user_id } as ISite
+    } else {
       const res = await fetch(
         `${process.env.PROXY_CURL_BASE}/api/v2/linkedin?url=${linkedinURL}&fallback_to_cache=on-error&use_cache=if-present&skills=include`,
         {
@@ -53,19 +64,16 @@ export async function GET(request: NextRequest) {
           },
         }
       )
-      // if data create site data now
+
       if (res.ok && res.status === HttpStatus.SUCCESS) {
-        // if response is recieved save the data in the url
         const data = await res.json()
-        const site_data = {
+        site_data = {
           profile_picture: data["profile_pic_url"],
           linkedin_url: linkedinURL,
+          username: uuidv4(),
           first_name: data["first_name"],
           last_name: data["last_name"],
-          full_name: data["full_name"],
           occupation: data["occupation"],
-          summary: data["summary"],
-          country: data["country"],
           experiences: (data["experiences"] as any[]).map((value, index) => {
             return {
               starts_at: value["starts_at"]
@@ -164,11 +172,6 @@ export async function GET(request: NextRequest) {
           userId: user_id,
         } as ISite
         // save this data into db
-        const user_site = await createSiteDB(site_data, Themes.BASIC_THEMES)
-        if (user_site) {
-          await updateUserLinkedinAdded(true, user_id)
-        }
-        return NextResponse.json(user_site, { status: HttpStatus.SUCCESS })
       } else {
         return NextResponse.json(
           {
@@ -181,7 +184,14 @@ export async function GET(request: NextRequest) {
         )
       }
     }
+    console.log("user_site", site_data)
+    const user_site = await createSiteDB(site_data, Themes.BASIC_THEMES)
+    if (user_site) {
+      await updateUserLinkedinAdded(true, user_id)
+    }
+    return NextResponse.json(user_site, { status: HttpStatus.SUCCESS })
   } catch (e) {
+    console.log("error", e)
     return NextResponse.json(
       {
         error: "Something went wrong",

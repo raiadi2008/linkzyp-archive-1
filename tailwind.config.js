@@ -39,7 +39,8 @@ module.exports = {
         'website': '1240px',
         'large-website': "960px",
         'medium-website': "840px",
-        'small-website': "680px"
+        'small-website': "680px",
+        'micro-website': "480px"
       }
     }
   },

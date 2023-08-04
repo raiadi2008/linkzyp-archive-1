@@ -8,10 +8,10 @@ export default function ProfileSettings({
   siteInfo,
   updateSiteInfo,
 }: ISiteUpdates) {
-  const [firstName, setFirstName] = useState(siteInfo.first_name)
-  const [lastName, setLastName] = useState(siteInfo.last_name)
-  const [occupation, setOccupation] = useState(siteInfo.occupation)
-  const [username, setUsername] = useState(siteInfo.username)
+  const [firstName, setFirstName] = useState(siteInfo.first_name ?? "")
+  const [lastName, setLastName] = useState(siteInfo.last_name ?? "")
+  const [occupation, setOccupation] = useState(siteInfo.occupation ?? "")
+  const [username, setUsername] = useState(siteInfo.username ?? "")
 
   useEffect(() => {
     updateSiteInfo({
