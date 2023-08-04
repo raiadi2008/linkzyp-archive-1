@@ -79,7 +79,7 @@ export default function SkillsAndCourses({
             className='px-5 py-2 outline-none border border-gray-300 rounded w-full'
             type='text'
             value={newCourse}
-            placeholder='Add new skill eg. Content Writing'
+            placeholder='Add new course eg. Basic Computing'
             onChange={(e) => {
               setNewCourse(e.target.value)
             }}

@@ -22,7 +22,7 @@ export default function Projects({ siteInfo, updateSiteInfo }: ISiteUpdates) {
             <input
               className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
               type='text'
-              placeholder='School Name for eg. Harvard University'
+              placeholder='Project Title eg. My Awesome Project'
               value={value.title}
               onChange={(e) => {
                 const _projects = [...projects]
@@ -33,7 +33,7 @@ export default function Projects({ siteInfo, updateSiteInfo }: ISiteUpdates) {
             <textarea
               className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2 resize-none'
               rows={4}
-              placeholder='Degree Name for eg. Bachelor of Science'
+              placeholder='Project Description eg. This is my awesome project. It does awesome things.'
               value={value.description}
               onChange={(e) => {
                 const _projects = [...projects]
@@ -44,7 +44,7 @@ export default function Projects({ siteInfo, updateSiteInfo }: ISiteUpdates) {
             <input
               className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
               type='text'
-              placeholder='Field of study for eg. Computer Science'
+              placeholder='Link to the project eg. https://github.com/user/repo'
               value={value.url}
               onChange={(e) => {
                 const _projects = [...projects]

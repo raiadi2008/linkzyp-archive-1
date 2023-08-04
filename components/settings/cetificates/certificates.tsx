@@ -27,7 +27,7 @@ export default function Certificates({
             <input
               className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
               type='text'
-              placeholder='School Name for eg. Harvard University'
+              placeholder='Certificate Title eg. Chartered Accountant Diploma tier-1'
               value={value.name}
               onChange={(e) => {
                 const edu = [...certificates]
@@ -38,7 +38,7 @@ export default function Certificates({
             <input
               className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
               type='text'
-              placeholder='Degree Name for eg. Bachelor of Science'
+              placeholder='Issued by eg. Chartered Accountant Association USA'
               value={value.authority}
               onChange={(e) => {
                 const edu = [...certificates]
@@ -49,7 +49,7 @@ export default function Certificates({
             <input
               className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
               type='text'
-              placeholder='Field of study for eg. Computer Science'
+              placeholder='Url of the certificate eg. https://bit.ly/tech-cert'
               value={value.url}
               onChange={(e) => {
                 const edu = [...certificates]
@@ -79,7 +79,7 @@ export default function Certificates({
           setCertificates(edu)
         }}
       >
-        + Add Another Education
+        + Add Another Certificate
       </button>
     </div>
   )
