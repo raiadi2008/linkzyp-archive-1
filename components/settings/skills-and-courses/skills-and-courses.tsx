@@ -20,7 +20,7 @@ export default function SkillsAndCourses({
       <h2 className='text-2xl font-semibold mb-4'>Your Skills</h2>
       <div className='flex flex-wrap gap-2 p-4 border border-neutral-200 rounded mb-4'>
         {skills.map((value, index) => (
-          <div className='px-4 py-2 bg-primary-light rounded-full flex items-center'>
+          <div className='px-4 py-2 bg-blue-50 rounded-full flex items-center'>
             <p key={index}>{value}</p>
             <button
               onClick={(e) => {
@@ -60,7 +60,7 @@ export default function SkillsAndCourses({
       <h2 className='text-2xl font-semibold mb-4 mt-16'>Your Courses</h2>
       <div className='flex flex-wrap gap-2 p-4 border border-neutral-200 rounded mb-4'>
         {courses.map((value, index) => (
-          <div className='px-4 py-2 bg-primary-light rounded-full flex items-center'>
+          <div className='px-4 py-2 bg-blue-50 rounded-full flex items-center'>
             <p key={index}>{value}</p>
             <button
               onClick={(e) => {
