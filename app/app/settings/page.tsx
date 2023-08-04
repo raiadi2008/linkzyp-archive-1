@@ -16,6 +16,7 @@ import WorkExperience from "@/components/settings/work-experience/work-experienc
 import Education from "@/components/settings/education/education"
 import SkillsAndCourses from "@/components/settings/skills-and-courses/skills-and-courses"
 import Projects from "@/components/settings/projects/projects"
+import Certificates from "@/components/settings/cetificates/certificates"
 
 const navbar = [
   "Profile",
@@ -75,7 +76,13 @@ function CurrentSettingsSection(
         return <div>Loading...</div>
       }
     case 5:
-      return <div>Certificates</div>
+      if (siteInfo) {
+        return (
+          <Certificates siteInfo={siteInfo} updateSiteInfo={updateSiteInfo} />
+        )
+      } else {
+        return <div>Loading...</div>
+      }
   }
 }
 
