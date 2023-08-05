@@ -152,7 +152,7 @@ export default function Page() {
   }
 
   return (
-    <main className='' id='settings'>
+    <main className='h-screen w-screen overflow-scroll' id='settings'>
       <section className='mx-auto max-w-website py-6 overflow-hidden'>
         <h1 className='text-4xl font-bold mb-12'>Settings</h1>
         <div id='settings-sidebar' className='overflow-x-auto mb-12'>
@@ -176,6 +176,18 @@ export default function Page() {
         </div>
         <div id='settings-content'>
           {CurrentSettingsSection(activeTab, siteInfo, updateSiteInfo)}
+        </div>
+      </section>
+      <section className='absolute bottom-0 w-screen bg-white'>
+        <div className='max-w-website mx-auto sticky bottom-0'>
+          <div className=' max-w-medium-website py-8 flex gap-x-6 justify-end'>
+            <button className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white'>
+              Discard Changes
+            </button>
+            <button className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium'>
+              Save Changes
+            </button>
+          </div>
         </div>
       </section>
     </main>
