@@ -54,3 +54,16 @@ export async function getSiteByUserId(user_id: string) {
 
   return site
 }
+
+export async function updateSiteDB(siteData: ISite, user_id: string) {
+  const updatedSite = await prisma.site.update({
+    where: {
+      userId: user_id,
+    },
+    data: {
+      ...siteData,
+    },
+  })
+
+  return updatedSite
+}

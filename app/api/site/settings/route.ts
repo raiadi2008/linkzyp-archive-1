@@ -2,9 +2,10 @@ import { getServerSession } from "next-auth"
 
 import authOptions from "@/lib/auth"
 import HttpStatus from "@/constants/http_status"
-import { getSiteByUserId, getSiteByUsernameDB } from "@/db/site"
+import { getSiteByUserId, getSiteByUsernameDB, updateSiteDB } from "@/db/site"
 
 import { NextRequest, NextResponse } from "next/server"
+import { ISite } from "@/types/interfaces"
 
 /**
  * @method GET
@@ -46,4 +47,32 @@ export async function PUT(req: NextRequest) {
       { error: "Unauthorized" },
       { status: HttpStatus.UNAUTHORIZED }
     )
+  const user_id = session.user.id
+
+  const payload = (await req.json()) as ISite
+  const payloadActual = {
+    domain: payload.domain,
+    username: payload.username,
+    themeId: payload.themeId,
+    profile_picture: payload.profile_picture,
+    linkedin_url: payload.linkedin_url,
+    first_name: payload.first_name,
+    last_name: payload.last_name,
+    occupation: payload.occupation,
+    experiences: payload.experiences,
+    education: payload.education,
+    courses: payload.courses,
+    skills: payload.skills,
+    projects: payload.projects,
+    certificates: payload.certificates,
+  } as ISite
+  const updatedSite = await updateSiteDB(payloadActual, user_id)
+
+  if (!updatedSite)
+    return NextResponse.json(
+      { error: "Something went wrong while updating your data" },
+      { status: HttpStatus.UNAUTHORIZED }
+    )
+
+  return NextResponse.json(updatedSite, { status: HttpStatus.SUCCESS })
 }

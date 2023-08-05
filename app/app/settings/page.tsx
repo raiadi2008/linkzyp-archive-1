@@ -114,6 +114,38 @@ export default function Page() {
     }
   }, [status])
 
+  async function updateUserSiteData() {
+    setLoadingInfo(true)
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/site/settings`,
+      {
+        method: "PUT",
+        body: JSON.stringify(siteInfo),
+      }
+    )
+    if (res.ok && res.status === HttpStatus.SUCCESS) {
+      const data = await res.json()
+      updateSiteInfo({
+        id: data["id"],
+        userId: data["userId"],
+        username: data["username"],
+        profile_picture: data["profile_picture"],
+        first_name: data["first_name"],
+        last_name: data["last_name"],
+        linkedin_url: data["linkedin_url"],
+        occupation: data["occupation"],
+        experiences: data["experiences"] as IExperience[],
+        education: data["education"] as IEducation[],
+        projects: data["projects"] as IProject[],
+        certificates: data["certificates"] as ICertificate[],
+        skills: data["skills"] as string[],
+        courses: data["courses"] as string[],
+      } as ISite)
+    }
+
+    setLoadingInfo(false)
+  }
+
   useEffect(() => {
     getUserInfo()
       .then((data) => {
@@ -185,7 +217,11 @@ export default function Page() {
           >
             Discard Changes
           </button> */}
-            <button className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light'>
+            <button
+              disabled={loadingInfo}
+              onClick={(e) => updateUserSiteData()}
+              className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light'
+            >
               Save Changes
             </button>
           </div>
