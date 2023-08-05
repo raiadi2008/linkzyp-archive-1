@@ -17,6 +17,10 @@ module.exports = {
       xxs: { max: '320px' },
     },
     extend: {
+      boxShadow: {
+
+        '-2xl': '0px -2px 13px 3px rgba(0, 0, 0, 0.05)'
+      },
       colors: {
         // main colors
         "primary": "#6e44ff",
