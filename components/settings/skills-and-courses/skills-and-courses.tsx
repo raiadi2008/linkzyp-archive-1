@@ -1,4 +1,4 @@
-import { ISite, ISiteUpdates } from "@/types/interfaces"
+import { ISite, ISiteUpdates } from "@/utils/interfaces"
 import { removeItemAtIndex } from "@/utils/functions"
 import { useEffect, useState } from "react"
 

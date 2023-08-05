@@ -10,7 +10,7 @@ import {
   IExperience,
   IProject,
   ISite,
-} from "@/types/interfaces"
+} from "@/utils/interfaces"
 import HttpStatus from "@/constants/http_status"
 import WorkExperience from "@/components/settings/work-experience/work-experience"
 import Education from "@/components/settings/education/education"

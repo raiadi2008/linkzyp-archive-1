@@ -9,7 +9,7 @@ import {
   IExperience,
   IProject,
   ISite,
-} from "@/types/interfaces"
+} from "@/utils/interfaces"
 import authOptions from "@/lib/auth"
 import { createSiteDB } from "@/db/site"
 import { updateUserLinkedinAdded } from "@/db/user"

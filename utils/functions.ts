@@ -64,3 +64,27 @@ export function removeItemAtIndex<T>(array: T[], index: number): T[] {
   }
   return array
 }
+
+/**
+ * @param date any | null | undefined
+ * @returns date | null
+ * @description converts a JSON object into a date object
+ * @example
+ * convertJSONIntoDate({ year: 2020, month: 1, day: 1 }
+ */
+
+export function convertJSONIntoDate(
+  date: any | null | undefined
+): Date | null | undefined {
+  if (!date) return null
+  try {
+    const year: number = date["year"]
+    const month: number = date["month"] - 1
+    const day: number = date["day"]
+
+    const result = new Date(year, month - 1, day)
+    return result
+  } catch (e) {
+    console.error(e)
+  }
+}

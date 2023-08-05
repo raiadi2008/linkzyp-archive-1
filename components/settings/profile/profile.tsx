@@ -1,6 +1,6 @@
 "use client"
 
-import { ISite, ISiteUpdates } from "@/types/interfaces"
+import { ISite, ISiteUpdates } from "@/utils/interfaces"
 import Link from "next/link"
 import { Dispatch, SetStateAction, use, useEffect, useState } from "react"
 

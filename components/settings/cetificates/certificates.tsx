@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { ICertificate, ISite, ISiteUpdates } from "@/types/interfaces"
+import { ICertificate, ISite, ISiteUpdates } from "@/utils/interfaces"
 import {
   convert_YYYY_MM_DD_toDate,
   formatDateAs_YYYY_MM_DD,

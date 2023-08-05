@@ -3,7 +3,7 @@ import {
   IEducation,
   IExperience,
   IProject,
-} from "@/types/interfaces"
+} from "@/utils/interfaces"
 import Link from "next/link"
 
 async function getUserInfo(username: string) {

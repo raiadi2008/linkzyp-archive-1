@@ -33,11 +33,11 @@ export interface ICertificate {
 }
 
 export interface ISite {
-  id: string
-  userId: string
+  id?: string
+  userId?: string
   domain?: string
-  username: string
-  themeId: string
+  username?: string
+  themeId?: string
   profile_picture?: string
   linkedin_url?: string
   first_name?: string
