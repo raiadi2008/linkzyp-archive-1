@@ -4,13 +4,6 @@ import { useSession } from "next-auth/react"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 
-import ProfileSettings from "@/components/settings/profile/profile"
-import HttpStatus from "@/constants/http_status"
-import WorkExperience from "@/components/settings/work-experience/work-experience"
-import Education from "@/components/settings/education/education"
-import SkillsAndCourses from "@/components/settings/skills-and-courses/skills-and-courses"
-import Projects from "@/components/settings/projects/projects"
-import Certificates from "@/components/settings/cetificates/certificates"
 import {
   ICertificate,
   IEducation,
@@ -18,124 +11,9 @@ import {
   IProject,
   ISite,
 } from "@/utils/interfaces"
-
-const navbar = [
-  "Profile",
-  "Experience",
-  "Education",
-  "Skills and Courses",
-  "Projects",
-  "Certificates",
-  "Links and Socials",
-  "FAQs",
-]
-
-const navbarMap = new Map<string, string>([
-  ["Profile", "profile"],
-  ["Experience", "experience"],
-  ["Education", "education"],
-  ["Skills and Courses", "skills-and-courses"],
-  ["Projects", "projects"],
-  ["Certificates", "certificates"],
-  ["Links and Socials", "links-and-socials"],
-  ["FAQs", "faqs"],
-])
-
-function CurrentSettingsSection(
-  tab: string | null,
-  siteInfo: ISite | null,
-  setValuesChanged: Dispatch<SetStateAction<boolean>>,
-  updateSiteInfo: Dispatch<SetStateAction<ISite | null>>
-) {
-  switch (tab) {
-    case "profile":
-      if (siteInfo) {
-        return (
-          <ProfileSettings
-            siteInfo={siteInfo}
-            setValuesChanged={setValuesChanged}
-            updateSiteInfo={updateSiteInfo}
-          />
-        )
-      } else {
-        return <div>Loading...</div>
-      }
-    case "experience":
-      if (siteInfo) {
-        return (
-          <WorkExperience
-            setValuesChanged={setValuesChanged}
-            siteInfo={siteInfo}
-            updateSiteInfo={updateSiteInfo}
-          />
-        )
-      } else {
-        return <div>Loading...</div>
-      }
-    case "education":
-      if (siteInfo) {
-        return (
-          <Education
-            setValuesChanged={setValuesChanged}
-            siteInfo={siteInfo}
-            updateSiteInfo={updateSiteInfo}
-          />
-        )
-      } else {
-        return <div>Loading...</div>
-      }
-    case "skills-and-courses":
-      if (siteInfo) {
-        return (
-          <SkillsAndCourses
-            setValuesChanged={setValuesChanged}
-            siteInfo={siteInfo}
-            updateSiteInfo={updateSiteInfo}
-          />
-        )
-      } else {
-        return <div>Loading...</div>
-      }
-    case "projects":
-      if (siteInfo) {
-        return (
-          <Projects
-            setValuesChanged={setValuesChanged}
-            siteInfo={siteInfo}
-            updateSiteInfo={updateSiteInfo}
-          />
-        )
-      } else {
-        return <div>Loading...</div>
-      }
-    case "certificates":
-      if (siteInfo) {
-        return (
-          <Certificates
-            setValuesChanged={setValuesChanged}
-            siteInfo={siteInfo}
-            updateSiteInfo={updateSiteInfo}
-          />
-        )
-      } else {
-        return <div>Loading...</div>
-      }
-  }
-}
-
-async function getUserInfo() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/site/settings`,
-    {
-      method: "GET",
-    }
-  )
-  if (res.ok && res.status === HttpStatus.SUCCESS) {
-    const data = await res.json()
-    return data
-  }
-  throw Error("Error fetching site info")
-}
+import { navbar, navbarMap } from "@/constants/settings_navbar"
+import CurrentSettingsSection from "./tab_selector"
+import getUserInfo from "./fetch"
 
 export default function Page() {
   const { data: session, status } = useSession()
