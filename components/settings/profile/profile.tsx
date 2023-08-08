@@ -6,6 +6,7 @@ import { Dispatch, SetStateAction, use, useEffect, useState } from "react"
 
 export default function ProfileSettings({
   siteInfo,
+  setValuesChanged,
   updateSiteInfo,
 }: ISiteUpdates) {
   const [firstName, setFirstName] = useState(siteInfo.first_name ?? "")

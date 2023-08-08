@@ -53,5 +53,6 @@ export interface ISite {
 
 export interface ISiteUpdates {
   siteInfo: ISite
+  setValuesChanged: Dispatch<SetStateAction<boolean>>
   updateSiteInfo: Dispatch<SetStateAction<ISite | null>>
 }

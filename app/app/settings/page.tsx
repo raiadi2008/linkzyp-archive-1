@@ -44,6 +44,7 @@ const navbarMap = new Map<string, string>([
 function CurrentSettingsSection(
   tab: string | null,
   siteInfo: ISite | null,
+  setValuesChanged: Dispatch<SetStateAction<boolean>>,
   updateSiteInfo: Dispatch<SetStateAction<ISite | null>>
 ) {
   switch (tab) {
@@ -52,6 +53,7 @@ function CurrentSettingsSection(
         return (
           <ProfileSettings
             siteInfo={siteInfo}
+            setValuesChanged={setValuesChanged}
             updateSiteInfo={updateSiteInfo}
           />
         )
@@ -61,14 +63,24 @@ function CurrentSettingsSection(
     case "experience":
       if (siteInfo) {
         return (
-          <WorkExperience siteInfo={siteInfo} updateSiteInfo={updateSiteInfo} />
+          <WorkExperience
+            setValuesChanged={setValuesChanged}
+            siteInfo={siteInfo}
+            updateSiteInfo={updateSiteInfo}
+          />
         )
       } else {
         return <div>Loading...</div>
       }
     case "education":
       if (siteInfo) {
-        return <Education siteInfo={siteInfo} updateSiteInfo={updateSiteInfo} />
+        return (
+          <Education
+            setValuesChanged={setValuesChanged}
+            siteInfo={siteInfo}
+            updateSiteInfo={updateSiteInfo}
+          />
+        )
       } else {
         return <div>Loading...</div>
       }
@@ -76,6 +88,7 @@ function CurrentSettingsSection(
       if (siteInfo) {
         return (
           <SkillsAndCourses
+            setValuesChanged={setValuesChanged}
             siteInfo={siteInfo}
             updateSiteInfo={updateSiteInfo}
           />
@@ -85,14 +98,24 @@ function CurrentSettingsSection(
       }
     case "projects":
       if (siteInfo) {
-        return <Projects siteInfo={siteInfo} updateSiteInfo={updateSiteInfo} />
+        return (
+          <Projects
+            setValuesChanged={setValuesChanged}
+            siteInfo={siteInfo}
+            updateSiteInfo={updateSiteInfo}
+          />
+        )
       } else {
         return <div>Loading...</div>
       }
     case "certificates":
       if (siteInfo) {
         return (
-          <Certificates siteInfo={siteInfo} updateSiteInfo={updateSiteInfo} />
+          <Certificates
+            setValuesChanged={setValuesChanged}
+            siteInfo={siteInfo}
+            updateSiteInfo={updateSiteInfo}
+          />
         )
       } else {
         return <div>Loading...</div>
@@ -194,6 +217,7 @@ export default function Page() {
           {CurrentSettingsSection(
             searchParams.get("tab"),
             siteInfo,
+            setValuesChanged,
             updateSiteInfo
           )}
         </div>
@@ -202,13 +226,13 @@ export default function Page() {
         <div className='max-w-website mx-auto sticky bottom-0'>
           <div className=' max-w-medium-website py-8 flex gap-x-6 justify-end'>
             <button
-              disabled={isLoading}
+              disabled={isLoading || !valuesChanged}
               className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light'
             >
               Discard Changes
             </button>
             <button
-              disabled={isLoading}
+              disabled={isLoading || !valuesChanged}
               className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light'
             >
               Save Changes
