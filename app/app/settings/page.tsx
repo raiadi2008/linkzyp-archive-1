@@ -35,6 +35,7 @@ export default function Page() {
   }, [status])
 
   useEffect(() => {
+    router.push(`?tab=${navbarMap.get("Profile")}`)
     getUserInfo()
       .then((data) => {
         updateSiteInfo({
