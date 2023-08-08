@@ -2,8 +2,15 @@
 
 import { useSession } from "next-auth/react"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
+
 import ProfileSettings from "@/components/settings/profile/profile"
+import HttpStatus from "@/constants/http_status"
+import WorkExperience from "@/components/settings/work-experience/work-experience"
+import Education from "@/components/settings/education/education"
+import SkillsAndCourses from "@/components/settings/skills-and-courses/skills-and-courses"
+import Projects from "@/components/settings/projects/projects"
+import Certificates from "@/components/settings/cetificates/certificates"
 import {
   ICertificate,
   IEducation,
@@ -11,29 +18,36 @@ import {
   IProject,
   ISite,
 } from "@/utils/interfaces"
-import HttpStatus from "@/constants/http_status"
-import WorkExperience from "@/components/settings/work-experience/work-experience"
-import Education from "@/components/settings/education/education"
-import SkillsAndCourses from "@/components/settings/skills-and-courses/skills-and-courses"
-import Projects from "@/components/settings/projects/projects"
-import Certificates from "@/components/settings/cetificates/certificates"
 
 const navbar = [
   "Profile",
-  "Work Experience",
+  "Experience",
   "Education",
   "Skills and Courses",
   "Projects",
   "Certificates",
+  "Links and Socials",
+  "FAQs",
 ]
 
+const navbarMap = new Map<string, string>([
+  ["Profile", "profile"],
+  ["Experience", "experience"],
+  ["Education", "education"],
+  ["Skills and Courses", "skills-and-courses"],
+  ["Projects", "projects"],
+  ["Certificates", "certificates"],
+  ["Links and Socials", "links-and-socials"],
+  ["FAQs", "faqs"],
+])
+
 function CurrentSettingsSection(
-  index: number,
+  tab: string | null,
   siteInfo: ISite | null,
   updateSiteInfo: Dispatch<SetStateAction<ISite | null>>
 ) {
-  switch (index) {
-    case 0:
+  switch (tab) {
+    case "profile":
       if (siteInfo) {
         return (
           <ProfileSettings
@@ -44,7 +58,7 @@ function CurrentSettingsSection(
       } else {
         return <div>Loading...</div>
       }
-    case 1:
+    case "experience":
       if (siteInfo) {
         return (
           <WorkExperience siteInfo={siteInfo} updateSiteInfo={updateSiteInfo} />
@@ -52,13 +66,13 @@ function CurrentSettingsSection(
       } else {
         return <div>Loading...</div>
       }
-    case 2:
+    case "education":
       if (siteInfo) {
         return <Education siteInfo={siteInfo} updateSiteInfo={updateSiteInfo} />
       } else {
         return <div>Loading...</div>
       }
-    case 3:
+    case "skills-and-courses":
       if (siteInfo) {
         return (
           <SkillsAndCourses
@@ -69,13 +83,13 @@ function CurrentSettingsSection(
       } else {
         return <div>Loading...</div>
       }
-    case 4:
+    case "projects":
       if (siteInfo) {
         return <Projects siteInfo={siteInfo} updateSiteInfo={updateSiteInfo} />
       } else {
         return <div>Loading...</div>
       }
-    case 5:
+    case "certificates":
       if (siteInfo) {
         return (
           <Certificates siteInfo={siteInfo} updateSiteInfo={updateSiteInfo} />
@@ -102,49 +116,22 @@ async function getUserInfo() {
 
 export default function Page() {
   const { data: session, status } = useSession()
+
+  const [isLoading, setIsLoading] = useState(true)
   const [activeTab, setActiveTab] = useState(0)
-  const [loadingInfo, setLoadingInfo] = useState(true)
+  const [valuesChanged, setValuesChanged] = useState(false)
   const [siteInfo, updateSiteInfo] = useState<ISite | null>(null)
 
+  const searchParams = useSearchParams()
   const router = useRouter()
+
+  useEffect(() => {}, [searchParams])
 
   useEffect(() => {
     if (status !== "authenticated" && status !== "loading") {
       router.push("/app/login")
     }
   }, [status])
-
-  async function updateUserSiteData() {
-    setLoadingInfo(true)
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/site/settings`,
-      {
-        method: "PUT",
-        body: JSON.stringify(siteInfo),
-      }
-    )
-    if (res.ok && res.status === HttpStatus.SUCCESS) {
-      const data = await res.json()
-      updateSiteInfo({
-        id: data["id"],
-        userId: data["userId"],
-        username: data["username"],
-        profile_picture: data["profile_picture"],
-        first_name: data["first_name"],
-        last_name: data["last_name"],
-        linkedin_url: data["linkedin_url"],
-        occupation: data["occupation"],
-        experiences: data["experiences"] as IExperience[],
-        education: data["education"] as IEducation[],
-        projects: data["projects"] as IProject[],
-        certificates: data["certificates"] as ICertificate[],
-        skills: data["skills"] as string[],
-        courses: data["courses"] as string[],
-      } as ISite)
-    }
-
-    setLoadingInfo(false)
-  }
 
   useEffect(() => {
     getUserInfo()
@@ -171,12 +158,13 @@ export default function Page() {
         return null
       })
       .finally(() => {
-        setLoadingInfo(false)
+        setIsLoading(false)
       })
   }, [])
 
   function changeTab(index: number) {
     setActiveTab(index)
+    router.push(`?tab=${navbarMap.get(navbar[index])}`)
   }
 
   return (
@@ -203,23 +191,24 @@ export default function Page() {
           </ul>
         </div>
         <div id='settings-content'>
-          {CurrentSettingsSection(activeTab, siteInfo, updateSiteInfo)}
+          {CurrentSettingsSection(
+            searchParams.get("tab"),
+            siteInfo,
+            updateSiteInfo
+          )}
         </div>
       </section>
       <section className='absolute bottom-0 w-screen bg-white -shadow-2xl'>
         <div className='max-w-website mx-auto sticky bottom-0'>
           <div className=' max-w-medium-website py-8 flex gap-x-6 justify-end'>
-            {/* <button
-            onClick={(e) => {
-              discardChanges()
-            }}
-            className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light'
-          >
-            Discard Changes
-          </button> */}
             <button
-              disabled={loadingInfo}
-              onClick={(e) => updateUserSiteData()}
+              disabled={isLoading}
+              className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light'
+            >
+              Discard Changes
+            </button>
+            <button
+              disabled={isLoading}
               className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light'
             >
               Save Changes

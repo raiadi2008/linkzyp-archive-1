@@ -1,3 +1,11 @@
+import {
+  ICertificate,
+  IEducation,
+  IExperience,
+  IProject,
+  ISite,
+} from "./interfaces"
+
 function padZero(num: number): string {
   return num.toString().padStart(2, "0")
 }
@@ -86,5 +94,36 @@ export function convertJSONIntoDate(
     return result
   } catch (e) {
     console.error(e)
+  }
+}
+
+/**
+ * @param data any
+ * @description converts json recieved to ISite
+ * @returns ISite | null
+ */
+
+export function convertResponseIntoLinkedinData(data: any) {
+  try {
+    const result = {
+      id: data["id"],
+      userId: data["userId"],
+      username: data["username"],
+      profile_picture: data["profile_picture"],
+      first_name: data["first_name"],
+      last_name: data["last_name"],
+      linkedin_url: data["linkedin_url"],
+      occupation: data["occupation"],
+      experiences: data["experiences"] as IExperience[],
+      education: data["education"] as IEducation[],
+      projects: data["projects"] as IProject[],
+      certificates: data["certificates"] as ICertificate[],
+      skills: data["skills"] as string[],
+      courses: data["courses"] as string[],
+    } as ISite
+    return result
+  } catch (e) {
+    console.error(e)
+    return null
   }
 }
