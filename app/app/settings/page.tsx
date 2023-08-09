@@ -19,7 +19,7 @@ export default function Page() {
   const { data: session, status } = useSession()
 
   const [isLoading, setIsLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState(1)
+  const [activeTab, setActiveTab] = useState(2)
   const [valuesChanged, setValuesChanged] = useState(false)
   const [siteInfo, updateSiteInfo] = useState<ISite | null>(null)
 

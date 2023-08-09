@@ -9,6 +9,7 @@ import Projects from "@/components/settings/projects/projects"
 import Certificates from "@/components/settings/cetificates/certificates"
 import ProfileSettingsLoading from "@/components/settings/profile/loading"
 import WorkExperienceLoading from "@/components/settings/work-experience/loading"
+import EducationLoading from "@/components/settings/education/loading"
 
 export default function CurrentSettingsSection(
   tab: string | null,
@@ -33,7 +34,7 @@ export default function CurrentSettingsSection(
       if (siteInfo) {
         return <Education siteInfo={siteInfo} />
       } else {
-        return <div>Loading...</div>
+        return <EducationLoading />
       }
     case "skills-and-courses":
       if (siteInfo) {

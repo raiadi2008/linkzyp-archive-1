@@ -1,4 +1,4 @@
-export default function WorkExperienceLoading() {
+export default function EducationLoading() {
   return (
     <>
       <section className='mx-auto max-w-website py-6 h-full mb-32'>
@@ -12,16 +12,18 @@ export default function WorkExperienceLoading() {
               <p>to</p>
               <div className='animate-pulse rounded  bg-slate-200 h-9 flex-1 '></div>
             </div>
-            <button className='absolute bottom-2 right-0 text-dark-red border rounded p-2 border-neutral-red'>
-              delete experience
+            <button
+              className='absolute bottom-2 right-0 text-dark-red border rounded p-2 border-neutral-red'
+              disabled={true}
+            >
+              remove education
             </button>
           </div>
-
           <button
-            disabled={true}
             className='px-5 py-2 border border-gray-300 rounded w-full mb-2 resize-none'
+            disabled={true}
           >
-            + Add Another Experience
+            + Add Another Education
           </button>
         </div>
       </section>
