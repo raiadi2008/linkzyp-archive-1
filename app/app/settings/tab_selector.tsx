@@ -7,6 +7,7 @@ import Education from "@/components/settings/education/education"
 import SkillsAndCourses from "@/components/settings/skills-and-courses/skills-and-courses"
 import Projects from "@/components/settings/projects/projects"
 import Certificates from "@/components/settings/cetificates/certificates"
+import ProfileSettingsLoading from "@/components/settings/profile/loading"
 
 export default function CurrentSettingsSection(
   tab: string | null,
@@ -19,7 +20,7 @@ export default function CurrentSettingsSection(
       if (siteInfo) {
         return <ProfileSettings siteInfo={siteInfo} />
       } else {
-        return <div>Loading...</div>
+        return <ProfileSettingsLoading />
       }
     case "experience":
       if (siteInfo) {
