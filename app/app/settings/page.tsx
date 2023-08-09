@@ -70,7 +70,7 @@ export default function Page() {
   }
 
   return (
-    <main className='h-screen w-screen relative' id='settings'>
+    <main className='w-screen relative' id='settings'>
       <section className='mx-auto max-w-website py-6'>
         <h1 className='text-3xl font-bold mb-6'>Settings</h1>
         <div id='settings-sidebar' className='overflow-x-auto'>

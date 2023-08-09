@@ -17,73 +17,37 @@ export default function CurrentSettingsSection(
   switch (tab) {
     case "profile":
       if (siteInfo) {
-        return (
-          <ProfileSettings
-            siteInfo={siteInfo}
-            setValuesChanged={setValuesChanged}
-            updateSiteInfo={updateSiteInfo}
-          />
-        )
+        return <ProfileSettings siteInfo={siteInfo} />
       } else {
         return <div>Loading...</div>
       }
     case "experience":
       if (siteInfo) {
-        return (
-          <WorkExperience
-            setValuesChanged={setValuesChanged}
-            siteInfo={siteInfo}
-            updateSiteInfo={updateSiteInfo}
-          />
-        )
+        return <WorkExperience siteInfo={siteInfo} />
       } else {
         return <div>Loading...</div>
       }
     case "education":
       if (siteInfo) {
-        return (
-          <Education
-            setValuesChanged={setValuesChanged}
-            siteInfo={siteInfo}
-            updateSiteInfo={updateSiteInfo}
-          />
-        )
+        return <Education siteInfo={siteInfo} />
       } else {
         return <div>Loading...</div>
       }
     case "skills-and-courses":
       if (siteInfo) {
-        return (
-          <SkillsAndCourses
-            setValuesChanged={setValuesChanged}
-            siteInfo={siteInfo}
-            updateSiteInfo={updateSiteInfo}
-          />
-        )
+        return <SkillsAndCourses siteInfo={siteInfo} />
       } else {
         return <div>Loading...</div>
       }
     case "projects":
       if (siteInfo) {
-        return (
-          <Projects
-            setValuesChanged={setValuesChanged}
-            siteInfo={siteInfo}
-            updateSiteInfo={updateSiteInfo}
-          />
-        )
+        return <Projects siteInfo={siteInfo} />
       } else {
         return <div>Loading...</div>
       }
     case "certificates":
       if (siteInfo) {
-        return (
-          <Certificates
-            setValuesChanged={setValuesChanged}
-            siteInfo={siteInfo}
-            updateSiteInfo={updateSiteInfo}
-          />
-        )
+        return <Certificates siteInfo={siteInfo} />
       } else {
         return <div>Loading...</div>
       }
