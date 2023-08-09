@@ -26,8 +26,6 @@ export default function Page() {
   const searchParams = useSearchParams()
   const router = useRouter()
 
-  useEffect(() => {}, [searchParams])
-
   useEffect(() => {
     if (status !== "authenticated" && status !== "loading") {
       router.push("/app/login")
@@ -35,7 +33,6 @@ export default function Page() {
   }, [status])
 
   useEffect(() => {
-    router.push(`?tab=${navbarMap.get("Profile")}`)
     getUserInfo()
       .then((data) => {
         updateSiteInfo({
