@@ -15,11 +15,12 @@ import { navbar, navbarMap } from "@/constants/settings_navbar"
 import CurrentSettingsSection from "./tab_selector"
 import getUserInfo from "./fetch"
 
+const TAB = "tab"
+
 export default function Page() {
   const { data: session, status } = useSession()
 
   const [isLoading, setIsLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState(2)
   const [valuesChanged, setValuesChanged] = useState(false)
   const [siteInfo, updateSiteInfo] = useState<ISite | null>(null)
 
@@ -33,6 +34,9 @@ export default function Page() {
   }, [status])
 
   useEffect(() => {
+    if (!searchParams.get(TAB)) {
+      router.push(`?${TAB}=profile`)
+    }
     getUserInfo()
       .then((data) => {
         updateSiteInfo({
@@ -62,8 +66,7 @@ export default function Page() {
   }, [])
 
   function changeTab(index: number) {
-    setActiveTab(index)
-    router.push(`?tab=${navbarMap.get(navbar[index])}`)
+    router.push(`?${TAB}=${navbarMap.get(navbar[index])}`)
   }
 
   return (
@@ -78,7 +81,7 @@ export default function Page() {
                   onClick={() => changeTab(index)}
                   key={index}
                   className={`text-base ${
-                    index === activeTab
+                    navbarMap.get(item) === searchParams.get(TAB)
                       ? "text-neutral-dark border-b border-neutral-dark"
                       : "text-gray-500 hover:cursor-pointer"
                   }`}
@@ -92,7 +95,7 @@ export default function Page() {
       </section>
       <div id='settings-content'>
         {CurrentSettingsSection(
-          searchParams.get("tab"),
+          searchParams.get(TAB),
           siteInfo,
           setValuesChanged,
           updateSiteInfo

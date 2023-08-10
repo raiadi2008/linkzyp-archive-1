@@ -7,6 +7,7 @@ const navbar = [
   "Certificates",
   "Links and Socials",
   "FAQs",
+  "Services",
 ]
 
 const navbarMap = new Map<string, string>([
@@ -18,6 +19,7 @@ const navbarMap = new Map<string, string>([
   ["Certificates", "certificates"],
   ["Links and Socials", "links-and-socials"],
   ["FAQs", "faqs"],
+  ["Services", "services"],
 ])
 
 export { navbar, navbarMap }
