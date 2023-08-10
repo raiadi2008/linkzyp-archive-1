@@ -7,6 +7,13 @@ import {
   removeItemAtIndex,
 } from "@/utils/functions"
 
+interface WorkExperienceError {
+  company: string | null
+  title: string | null
+  starts_at: string | null
+  ends_at: string | null
+}
+
 function compareExperiences(
   currentWE: IExperience[],
   initialWE: IExperience[]
@@ -40,7 +47,7 @@ function compareExperiences(
 export default function WorkExperience({ siteInfo }: ISiteUpdates) {
   const [dataChanged, setDataChanged] = useState(false)
   const [experiences, setExperiences] = useState<IExperience[]>(
-    siteInfo.experiences.map((value) => {
+    siteInfo.experiences!.map((value) => {
       return {
         company: value.company,
         title: value.title,
@@ -55,7 +62,7 @@ export default function WorkExperience({ siteInfo }: ISiteUpdates) {
   )
 
   useEffect(() => {
-    if (compareExperiences(experiences, siteInfo.experiences)) {
+    if (compareExperiences(experiences, siteInfo.experiences!)) {
       setDataChanged(true)
     } else {
       setDataChanged(false)
@@ -63,7 +70,20 @@ export default function WorkExperience({ siteInfo }: ISiteUpdates) {
   }, [experiences])
 
   function discardWorkExperienceChanges() {
-    setExperiences(siteInfo.experiences)
+    setExperiences(
+      siteInfo.experiences!.map((value) => {
+        return {
+          company: value.company,
+          title: value.title,
+          description: value.description,
+          starts_at: value.starts_at,
+          ends_at: value.ends_at,
+          location: value.location,
+          company_linkedin_profile_url: value.company_linkedin_profile_url,
+          logo: value.logo,
+        }
+      })
+    )
     setDataChanged(false)
   }
 
@@ -76,8 +96,11 @@ export default function WorkExperience({ siteInfo }: ISiteUpdates) {
           {experiences.map((experience, index) => {
             return (
               <div key={index} className='my-12 relative pb-14'>
+                <label className='font-sm text-gray-600 px-2' htmlFor='company'>
+                  Compnay Name<span className='text-dark-red'>*</span>
+                </label>
                 <input
-                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
+                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-4'
                   type='text'
                   placeholder='Company Name eg. Google'
                   value={experience.company}
@@ -87,8 +110,11 @@ export default function WorkExperience({ siteInfo }: ISiteUpdates) {
                     setExperiences(workExperience)
                   }}
                 />
+                <label className='font-sm text-gray-600 px-2' htmlFor='title'>
+                  Title<span className='text-dark-red'>*</span>
+                </label>
                 <input
-                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
+                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-4'
                   type='text'
                   placeholder='Job Title eg. Software Engineer'
                   value={experience.title}
@@ -98,6 +124,9 @@ export default function WorkExperience({ siteInfo }: ISiteUpdates) {
                     setExperiences(workExperience)
                   }}
                 />
+                <label className='font-sm text-gray-600 px-2'>
+                  Job Description
+                </label>
                 <textarea
                   className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2 resize-none'
                   rows={4}
@@ -109,39 +138,62 @@ export default function WorkExperience({ siteInfo }: ISiteUpdates) {
                     setExperiences(workExperience)
                   }}
                 />
+                <label className='font-sm text-gray-600 px-2' htmlFor='company'>
+                  Company Profile Linkedin Url
+                </label>
+                <input
+                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-4'
+                  type='text'
+                  placeholder='Company Name eg. Google'
+                  value={experience.company_linkedin_profile_url}
+                  onChange={(e) => {
+                    const workExperience = [...experiences]
+                    workExperience[index].company_linkedin_profile_url =
+                      e.target.value
+                    setExperiences(workExperience)
+                  }}
+                />
                 <div className='flex gap-x-6 items-center'>
-                  <input
-                    className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2 resize-none'
-                    type='date'
-                    value={
-                      experience.starts_at
-                        ? formatDateAs_YYYY_MM_DD(experience.starts_at)
-                        : ""
-                    }
-                    onChange={(e) => {
-                      const workExperience = [...experiences]
-                      workExperience[index].starts_at =
-                        convert_YYYY_MM_DD_toDate(e.target.value)
-                      setExperiences(workExperience)
-                    }}
-                  />
-                  <p>to</p>
-                  <input
-                    className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2 resize-none'
-                    type='date'
-                    value={
-                      experience.ends_at
-                        ? formatDateAs_YYYY_MM_DD(experience.ends_at)
-                        : ""
-                    }
-                    onChange={(e) => {
-                      const workExperience = [...experiences]
-                      workExperience[index].ends_at = convert_YYYY_MM_DD_toDate(
-                        e.target.value
-                      )
-                      setExperiences(workExperience)
-                    }}
-                  />
+                  <div className='w-full'>
+                    <label className='font-sm text-gray-600 px-2'>
+                      Start Date<span className='text-dark-red'>*</span>
+                    </label>
+                    <input
+                      className='px-5 py-2 outline-none border border-gray-300 rounded w-full  mb-2 resize-none'
+                      type='date'
+                      value={
+                        experience.starts_at
+                          ? formatDateAs_YYYY_MM_DD(experience.starts_at)
+                          : ""
+                      }
+                      onChange={(e) => {
+                        const workExperience = [...experiences]
+                        workExperience[index].starts_at =
+                          convert_YYYY_MM_DD_toDate(e.target.value)
+                        setExperiences(workExperience)
+                      }}
+                    />
+                  </div>
+                  <div className='w-full'>
+                    <label className='font-sm text-gray-600 px-2'>
+                      End Date<span className='text-dark-red'>*</span>
+                    </label>
+                    <input
+                      className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2 resize-none'
+                      type='date'
+                      value={
+                        experience.ends_at
+                          ? formatDateAs_YYYY_MM_DD(experience.ends_at)
+                          : ""
+                      }
+                      onChange={(e) => {
+                        const workExperience = [...experiences]
+                        workExperience[index].ends_at =
+                          convert_YYYY_MM_DD_toDate(e.target.value)
+                        setExperiences(workExperience)
+                      }}
+                    />
+                  </div>
                 </div>
                 <button
                   className='absolute bottom-2 right-0 text-dark-red border rounded p-2 border-neutral-red'
