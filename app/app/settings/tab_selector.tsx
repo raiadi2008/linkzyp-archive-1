@@ -17,43 +17,94 @@ import CertificatesLoading from "@/components/settings/cetificates/loading"
 export default function CurrentSettingsSection(
   tab: string | null,
   siteInfo: ISite | null,
+  valuesChanged: boolean,
+  isLoading: boolean,
+  setIsLoading: Dispatch<SetStateAction<boolean>>,
   setValuesChanged: Dispatch<SetStateAction<boolean>>,
   updateSiteInfo: Dispatch<SetStateAction<ISite | null>>
 ) {
   switch (tab) {
     case "profile":
-      if (siteInfo) {
-        return <ProfileSettings siteInfo={siteInfo} />
+      if (!isLoading && siteInfo) {
+        return (
+          <ProfileSettings
+            siteInfo={siteInfo}
+            valuesChanged={valuesChanged}
+            setValuesChanged={setValuesChanged}
+            setSiteInfo={updateSiteInfo}
+            setIsLoading={setIsLoading}
+          />
+        )
       } else {
         return <ProfileSettingsLoading />
       }
     case "experience":
-      if (siteInfo) {
-        return <WorkExperience siteInfo={siteInfo} />
+      if (!isLoading && siteInfo) {
+        return (
+          <WorkExperience
+            siteInfo={siteInfo}
+            valuesChanged={valuesChanged}
+            setValuesChanged={setValuesChanged}
+            setSiteInfo={updateSiteInfo}
+            setIsLoading={setIsLoading}
+          />
+        )
       } else {
         return <WorkExperienceLoading />
       }
     case "education":
-      if (siteInfo) {
-        return <Education siteInfo={siteInfo} />
+      if (!isLoading && siteInfo) {
+        return (
+          <Education
+            siteInfo={siteInfo}
+            valuesChanged={valuesChanged}
+            setValuesChanged={setValuesChanged}
+            setSiteInfo={updateSiteInfo}
+            setIsLoading={setIsLoading}
+          />
+        )
       } else {
         return <EducationLoading />
       }
     case "skills-and-courses":
-      if (siteInfo) {
-        return <SkillsAndCourses siteInfo={siteInfo} />
+      if (!isLoading && siteInfo) {
+        return (
+          <SkillsAndCourses
+            siteInfo={siteInfo}
+            valuesChanged={valuesChanged}
+            setValuesChanged={setValuesChanged}
+            setSiteInfo={updateSiteInfo}
+            setIsLoading={setIsLoading}
+          />
+        )
       } else {
         return <SkillsAndCoursesLoading />
       }
     case "projects":
-      if (siteInfo) {
-        return <Projects siteInfo={siteInfo} />
+      if (!isLoading && siteInfo) {
+        return (
+          <Projects
+            siteInfo={siteInfo}
+            valuesChanged={valuesChanged}
+            setValuesChanged={setValuesChanged}
+            setSiteInfo={updateSiteInfo}
+            setIsLoading={setIsLoading}
+          />
+        )
       } else {
         return <ProjectsLoading />
       }
     case "certificates":
-      if (siteInfo) {
-        return <Certificates siteInfo={siteInfo} />
+      if (!isLoading && siteInfo) {
+        return (
+          <Certificates
+            siteInfo={siteInfo}
+            valuesChanged={valuesChanged}
+            setValuesChanged={setValuesChanged}
+            setSiteInfo={updateSiteInfo}
+            setIsLoading={setIsLoading}
+          />
+        )
       } else {
         return <CertificatesLoading />
       }

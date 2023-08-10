@@ -34,9 +34,11 @@ export default function Page() {
   }, [status])
 
   useEffect(() => {
+    setIsLoading(true)
     if (!searchParams.get(TAB)) {
       router.push(`?${TAB}=profile`)
     }
+    setIsLoading(true)
     getUserInfo()
       .then((data) => {
         updateSiteInfo({
@@ -97,6 +99,9 @@ export default function Page() {
         {CurrentSettingsSection(
           searchParams.get(TAB),
           siteInfo,
+          valuesChanged,
+          isLoading,
+          setIsLoading,
           setValuesChanged,
           updateSiteInfo
         )}

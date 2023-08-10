@@ -43,14 +43,18 @@ export interface ISite {
   first_name?: string
   last_name?: string
   occupation?: string
-  experiences: IExperience[]
-  education: IEducation[]
-  courses: string[]
-  skills: string[]
-  projects: IProject[]
-  certificates: ICertificate[]
+  experiences?: IExperience[]
+  education?: IEducation[]
+  courses?: string[]
+  skills?: string[]
+  projects?: IProject[]
+  certificates?: ICertificate[]
 }
 
 export interface ISiteUpdates {
   siteInfo: ISite
+  valuesChanged: boolean
+  setIsLoading: Dispatch<SetStateAction<boolean>>
+  setValuesChanged: Dispatch<SetStateAction<boolean>>
+  setSiteInfo: Dispatch<SetStateAction<ISite | null>>
 }

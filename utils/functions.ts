@@ -103,7 +103,7 @@ export function convertJSONIntoDate(
  * @returns ISite | null
  */
 
-export function convertResponseIntoLinkedinData(data: any) {
+export function parseSiteDataFromJSON(data: any) {
   try {
     const result = {
       id: data["id"],
