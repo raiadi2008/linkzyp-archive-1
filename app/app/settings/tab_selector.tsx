@@ -12,6 +12,7 @@ import WorkExperienceLoading from "@/components/settings/work-experience/loading
 import EducationLoading from "@/components/settings/education/loading"
 import SkillsAndCoursesLoading from "@/components/settings/skills-and-courses/loading"
 import ProjectsLoading from "@/components/settings/projects/loading"
+import CertificatesLoading from "@/components/settings/cetificates/loading"
 
 export default function CurrentSettingsSection(
   tab: string | null,
@@ -54,7 +55,7 @@ export default function CurrentSettingsSection(
       if (siteInfo) {
         return <Certificates siteInfo={siteInfo} />
       } else {
-        return <div>Loading...</div>
+        return <CertificatesLoading />
       }
   }
 }
