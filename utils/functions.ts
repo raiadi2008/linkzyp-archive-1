@@ -127,3 +127,20 @@ export function parseSiteDataFromJSON(data: any) {
     return null
   }
 }
+
+/**
+ * @param inputDate string | null | undefined
+ * @description converts a string into a date object
+ * @returns Date | null
+ */
+export function parseDateString(
+  inputDate: string | null | undefined
+): Date | null {
+  if (!inputDate) return null
+  const date = new Date(inputDate)
+
+  if (isNaN(date.getTime())) {
+    return null
+  }
+  return date
+}

@@ -9,6 +9,7 @@ export interface IExperience {
   description?: string
   location?: string
   logo?: string
+  currently_working?: boolean
 }
 
 export interface IEducation {

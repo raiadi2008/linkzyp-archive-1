@@ -4,8 +4,11 @@ import { IExperience, ISiteUpdates } from "@/utils/interfaces"
 import {
   convert_YYYY_MM_DD_toDate,
   formatDateAs_YYYY_MM_DD,
+  parseDateString,
+  parseSiteDataFromJSON,
   removeItemAtIndex,
 } from "@/utils/functions"
+import HttpStatus from "@/constants/http_status"
 
 interface WorkExperienceError {
   company: string | null
@@ -44,8 +47,13 @@ function compareExperiences(
   return false
 }
 
-export default function WorkExperience({ siteInfo }: ISiteUpdates) {
-  const [dataChanged, setDataChanged] = useState(false)
+export default function WorkExperience({
+  siteInfo,
+  valuesChanged,
+  setValuesChanged,
+  setSiteInfo,
+  setIsLoading,
+}: ISiteUpdates) {
   const [experiences, setExperiences] = useState<IExperience[]>(
     siteInfo.experiences!.map((value) => {
       return {
@@ -60,14 +68,48 @@ export default function WorkExperience({ siteInfo }: ISiteUpdates) {
       }
     })
   )
+  const [experiencesError, setExperiencesError] = useState<
+    WorkExperienceError[]
+  >(
+    siteInfo.experiences!.map((value) => {
+      return {
+        company: null,
+        ends_at: null,
+        starts_at: null,
+        title: null,
+      }
+    })
+  )
 
   useEffect(() => {
+    validateInputs()
     if (compareExperiences(experiences, siteInfo.experiences!)) {
-      setDataChanged(true)
+      setValuesChanged(true)
     } else {
-      setDataChanged(false)
+      setValuesChanged(false)
     }
   }, [experiences])
+
+  function validateInputs() {
+    const _experiencesError = experiences.map((value, index) => {
+      return {
+        company:
+          !value.company || value.company.length === 0
+            ? "Company name cannot be empty"
+            : null,
+        title:
+          !value.title || value.title.length === 0
+            ? "Job title cannot be empty"
+            : null,
+        starts_at: !value.starts_at ? "Start date cannot be empty" : null,
+        ends_at:
+          !value.currently_working && !value.ends_at
+            ? "End date cannot be empty"
+            : null,
+      } as WorkExperienceError
+    })
+    setExperiencesError(_experiencesError)
+  }
 
   function discardWorkExperienceChanges() {
     setExperiences(
@@ -84,10 +126,32 @@ export default function WorkExperience({ siteInfo }: ISiteUpdates) {
         }
       })
     )
-    setDataChanged(false)
+    setValuesChanged(false)
   }
 
-  function saveWorkExperienceChanges() {}
+  async function saveWorkExperienceChanges() {
+    console.log("came here")
+    validateInputs()
+    for (let ee of experiencesError) {
+      if (ee.company || ee.title || ee.starts_at || ee.ends_at) {
+        console.log("came here 1")
+        return
+      }
+    }
+    console.log("came here 2")
+    setIsLoading(true)
+    const res = await fetch("/api/site/experience", {
+      method: "PUT",
+      body: JSON.stringify(experiences),
+    })
+    if (res.ok && res.status === HttpStatus.SUCCESS) {
+      const data = await res.json()
+      const parsedData = parseSiteDataFromJSON(data)
+      setSiteInfo(parsedData)
+      setValuesChanged(false)
+    }
+    setIsLoading(false)
+  }
 
   return (
     <>
@@ -100,7 +164,11 @@ export default function WorkExperience({ siteInfo }: ISiteUpdates) {
                   Compnay Name<span className='text-dark-red'>*</span>
                 </label>
                 <input
-                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-4'
+                  className={`px-5 py-2 outline-none border ${
+                    experiencesError[index] && experiencesError[index].company
+                      ? "border-neutral-red"
+                      : "border-gray-300"
+                  } rounded w-full mb-4`}
                   type='text'
                   placeholder='Company Name eg. Google'
                   value={experience.company}
@@ -114,7 +182,11 @@ export default function WorkExperience({ siteInfo }: ISiteUpdates) {
                   Title<span className='text-dark-red'>*</span>
                 </label>
                 <input
-                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-4'
+                  className={`px-5 py-2 outline-none border ${
+                    experiencesError[index] && experiencesError[index].title
+                      ? "border-neutral-red"
+                      : "border-gray-300"
+                  } rounded w-full mb-4`}
                   type='text'
                   placeholder='Job Title eg. Software Engineer'
                   value={experience.title}
@@ -159,7 +231,7 @@ export default function WorkExperience({ siteInfo }: ISiteUpdates) {
                       Start Date<span className='text-dark-red'>*</span>
                     </label>
                     <input
-                      className='px-5 py-2 outline-none border border-gray-300 rounded w-full  mb-2 resize-none'
+                      className='px-5 py-2 outline-none border border-gray-300 rounded w-full  mb-2'
                       type='date'
                       value={
                         experience.starts_at
@@ -179,7 +251,7 @@ export default function WorkExperience({ siteInfo }: ISiteUpdates) {
                       End Date<span className='text-dark-red'>*</span>
                     </label>
                     <input
-                      className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2 resize-none'
+                      className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
                       type='date'
                       value={
                         experience.ends_at
@@ -225,14 +297,14 @@ export default function WorkExperience({ siteInfo }: ISiteUpdates) {
           <div className=' max-w-medium-website py-8 flex gap-x-6 justify-end'>
             <button
               onClick={discardWorkExperienceChanges}
-              disabled={!dataChanged}
+              disabled={!valuesChanged}
               className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light'
             >
               Discard Changes
             </button>
             <button
               onClick={saveWorkExperienceChanges}
-              disabled={!dataChanged}
+              disabled={!valuesChanged}
               className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light'
             >
               Save Changes

@@ -19,6 +19,7 @@ type Experience {
   description                  String?
   location                     String?
   logo                         String?
+  currently_working            Boolean   @default(false)
 }
 
 type Education {
