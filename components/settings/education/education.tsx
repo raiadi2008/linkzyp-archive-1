@@ -1,11 +1,21 @@
 import { useEffect, useState } from "react"
 
-import { IEducation, ISite, ISiteUpdates } from "@/utils/interfaces"
+import { IEducation, ISiteUpdates } from "@/utils/interfaces"
 import {
   convert_YYYY_MM_DD_toDate,
   formatDateAs_YYYY_MM_DD,
+  parseSiteDataFromJSON,
   removeItemAtIndex,
 } from "@/utils/functions"
+import HttpStatus from "@/constants/http_status"
+
+interface EducationError {
+  school: boolean
+  degree_name: boolean
+  field_of_study: boolean
+  starts_at: boolean
+  ends_at: boolean
+}
 
 function compareEducation(a: IEducation[], b: IEducation[]): boolean {
   if (a.length !== b.length) return true
@@ -24,10 +34,15 @@ function compareEducation(a: IEducation[], b: IEducation[]): boolean {
   return false
 }
 
-export default function Education({ siteInfo }: ISiteUpdates) {
-  const [dataChanged, setDataChanged] = useState(false)
+export default function Education({
+  siteInfo,
+  valuesChanged,
+  setIsLoading,
+  setValuesChanged,
+  setSiteInfo,
+}: ISiteUpdates) {
   const [education, setEducation] = useState<IEducation[]>(
-    siteInfo.education.map((value) => {
+    siteInfo.education!.map((value) => {
       return {
         school: value.school,
         degree_name: value.degree_name,
@@ -38,16 +53,44 @@ export default function Education({ siteInfo }: ISiteUpdates) {
       }
     })
   )
+  const [errors, setErrors] = useState<EducationError[]>(
+    siteInfo.education!.map((values) => {
+      return {
+        school: false,
+        degree_name: false,
+        field_of_study: false,
+        starts_at: false,
+        ends_at: false,
+      } as EducationError
+    })
+  )
 
   useEffect(() => {
-    if (compareEducation(education, siteInfo.education)) {
-      setDataChanged(true)
+    validateEducationData()
+    if (compareEducation(education, siteInfo.education!)) {
+      setValuesChanged(true)
+    } else {
+      setValuesChanged(false)
     }
   }, [education])
 
+  function validateEducationData() {
+    const _error = siteInfo.education!.map((value) => {
+      return {
+        school: !value.school || value.school.length === 0,
+        degree_name: !value.degree_name || value.degree_name.length === 0,
+        field_of_study:
+          !value.field_of_study || value.field_of_study.length === 0,
+        starts_at: !value.starts_at,
+        ends_at: !value.starts_at,
+      } as EducationError
+    })
+    setErrors(_error)
+  }
+
   function discardEducationChanges() {
     setEducation(
-      siteInfo.education.map((value) => {
+      siteInfo.education!.map((value) => {
         return {
           school: value.school,
           degree_name: value.degree_name,
@@ -58,9 +101,34 @@ export default function Education({ siteInfo }: ISiteUpdates) {
         }
       })
     )
-    setDataChanged(false)
+    setValuesChanged(false)
   }
-  function saveEducationChanges() {}
+  async function saveEducationChanges() {
+    validateEducationData()
+    for (let ee of errors) {
+      if (
+        ee.degree_name ||
+        ee.ends_at ||
+        ee.field_of_study ||
+        ee.school ||
+        ee.school
+      ) {
+        return
+      }
+    }
+    setIsLoading(true)
+    const res = await fetch("/api/site/education", {
+      method: "PUT",
+      body: JSON.stringify(education),
+    })
+    if (res.ok && res.status === HttpStatus.SUCCESS) {
+      const data = await res.json()
+      const parsedData = parseSiteDataFromJSON(data)
+      setSiteInfo(parsedData)
+      setValuesChanged(false)
+    }
+    setIsLoading(false)
+  }
 
   return (
     <>
@@ -167,14 +235,14 @@ export default function Education({ siteInfo }: ISiteUpdates) {
           <div className=' max-w-medium-website py-8 flex gap-x-6 justify-end'>
             <button
               onClick={discardEducationChanges}
-              disabled={!dataChanged}
+              disabled={!valuesChanged}
               className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light'
             >
               Discard Changes
             </button>
             <button
               onClick={saveEducationChanges}
-              disabled={!dataChanged}
+              disabled={!valuesChanged}
               className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light'
             >
               Save Changes

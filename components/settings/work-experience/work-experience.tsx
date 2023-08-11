@@ -130,15 +130,12 @@ export default function WorkExperience({
   }
 
   async function saveWorkExperienceChanges() {
-    console.log("came here")
     validateInputs()
     for (let ee of experiencesError) {
       if (ee.company || ee.title || ee.starts_at || ee.ends_at) {
-        console.log("came here 1")
         return
       }
     }
-    console.log("came here 2")
     setIsLoading(true)
     const res = await fetch("/api/site/experience", {
       method: "PUT",
