@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react"
 
 import { IProject, ISite, ISiteUpdates } from "@/utils/interfaces"
-import {
-  convert_YYYY_MM_DD_toDate,
-  formatDateAs_YYYY_MM_DD,
-  removeItemAtIndex,
-} from "@/utils/functions"
+import { parseSiteDataFromJSON, removeItemAtIndex } from "@/utils/functions"
+import HttpStatus from "@/constants/http_status"
 
 function compareProjects(a: IProject[], b: IProject[]): boolean {
   if (a.length !== b.length) return true
@@ -20,10 +17,15 @@ function compareProjects(a: IProject[], b: IProject[]): boolean {
   return false
 }
 
-export default function Projects({ siteInfo }: ISiteUpdates) {
-  const [dataChanged, setDataChanged] = useState(false)
+export default function Projects({
+  siteInfo,
+  setIsLoading,
+  setSiteInfo,
+  setValuesChanged,
+  valuesChanged,
+}: ISiteUpdates) {
   const [projects, setProjects] = useState<IProject[]>(
-    siteInfo.projects.map((value) => {
+    siteInfo.projects!.map((value) => {
       return {
         title: value.title,
         description: value.description,
@@ -31,10 +33,27 @@ export default function Projects({ siteInfo }: ISiteUpdates) {
       }
     })
   )
+  const [errors, setErrors] = useState<boolean[]>(
+    siteInfo.projects!.map(() => false)
+  )
+
+  useEffect(() => {
+    validateInput()
+    if (compareProjects(projects, siteInfo.projects!)) {
+      setValuesChanged(true)
+    } else {
+      setValuesChanged(false)
+    }
+  }, [projects])
+
+  function validateInput() {
+    const _error = projects.map((value) => !value.title)
+    setErrors(_error)
+  }
 
   function discardProjectChanges() {
     setProjects(
-      siteInfo.projects.map((value) => {
+      siteInfo.projects!.map((value) => {
         return {
           title: value.title,
           description: value.description,
@@ -42,18 +61,28 @@ export default function Projects({ siteInfo }: ISiteUpdates) {
         }
       })
     )
-    setDataChanged(false)
+    setValuesChanged(false)
   }
 
-  function saveProjectChanges() {}
-
-  useEffect(() => {
-    if (compareProjects(projects, siteInfo.projects)) {
-      setDataChanged(true)
-    } else {
-      setDataChanged(false)
+  async function saveProjectChanges() {
+    validateInput()
+    if (errors.some((value) => value === true)) {
+      return
     }
-  }, [projects])
+    setIsLoading(true)
+
+    const res = await fetch("/api/site/projects", {
+      method: "PUT",
+      body: JSON.stringify(projects),
+    })
+    if (res.ok && res.status === HttpStatus.SUCCESS) {
+      const data = await res.json()
+      const parsedData = parseSiteDataFromJSON(data)
+      setSiteInfo(parsedData)
+      setValuesChanged(false)
+    }
+    setIsLoading(false)
+  }
 
   return (
     <>
@@ -129,14 +158,14 @@ export default function Projects({ siteInfo }: ISiteUpdates) {
           <div className=' max-w-medium-website py-8 flex gap-x-6 justify-end'>
             <button
               onClick={discardProjectChanges}
-              disabled={!dataChanged}
+              disabled={!valuesChanged}
               className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light'
             >
               Discard Changes
             </button>
             <button
               onClick={saveProjectChanges}
-              disabled={!dataChanged}
+              disabled={!valuesChanged}
               className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light'
             >
               Save Changes
