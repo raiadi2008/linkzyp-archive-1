@@ -1,6 +1,7 @@
 import { ISite, ISiteUpdates } from "@/utils/interfaces"
-import { removeItemAtIndex } from "@/utils/functions"
+import { parseSiteDataFromJSON, removeItemAtIndex } from "@/utils/functions"
 import { useEffect, useState } from "react"
+import HttpStatus from "@/constants/http_status"
 
 function compareStringArray(a: string[], b: string[]): boolean {
   if (a.length !== b.length) return true
@@ -10,29 +11,49 @@ function compareStringArray(a: string[], b: string[]): boolean {
   return false
 }
 
-export default function SkillsAndCourses({ siteInfo }: ISiteUpdates) {
-  const [skills, setSkills] = useState<string[]>([...siteInfo.skills])
+export default function SkillsAndCourses({
+  siteInfo,
+  valuesChanged,
+  setIsLoading,
+  setSiteInfo,
+  setValuesChanged,
+}: ISiteUpdates) {
+  const [skills, setSkills] = useState<string[]>([...siteInfo.skills!])
   const [newSkill, setNewSkill] = useState<string>("")
   const [newCourse, setNewCourse] = useState<string>("")
-  const [courses, setCourses] = useState<string[]>([...siteInfo.courses])
-  const [dataChanged, setDataChanged] = useState(false)
+  const [courses, setCourses] = useState<string[]>([...siteInfo.courses!])
 
   useEffect(() => {
     if (
-      compareStringArray(siteInfo.skills, skills) ||
-      compareStringArray(siteInfo.courses, courses)
+      compareStringArray(siteInfo.skills!, skills) ||
+      compareStringArray(siteInfo.courses!, courses)
     ) {
-      setDataChanged(true)
+      setValuesChanged(true)
+    } else {
+      setValuesChanged(false)
     }
   }, [skills, courses])
 
   function discardSkillAndCourseChanges() {
-    setSkills([...siteInfo.skills])
-    setCourses([...siteInfo.courses])
-    setDataChanged(false)
+    setSkills([...siteInfo.skills!])
+    setCourses([...siteInfo.courses!])
+    setValuesChanged(false)
   }
 
-  function saveSkillAndCourseChanges() {}
+  async function saveSkillAndCourseChanges() {
+    setIsLoading(true)
+    const res = await fetch("/api/site/skills-and-courses", {
+      method: "PUT",
+      body: JSON.stringify({ skills: skills, courses: courses }),
+    })
+    if (res.ok && res.status === HttpStatus.SUCCESS) {
+      const data = await res.json()
+      const parsedData = parseSiteDataFromJSON(data)
+      setSiteInfo(parsedData)
+      setValuesChanged(false)
+    }
+    setIsLoading(false)
+  }
 
   return (
     <>
@@ -125,14 +146,14 @@ export default function SkillsAndCourses({ siteInfo }: ISiteUpdates) {
           <div className=' max-w-medium-website py-8 flex gap-x-6 justify-end'>
             <button
               onClick={discardSkillAndCourseChanges}
-              disabled={!dataChanged}
+              disabled={!valuesChanged}
               className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light'
             >
               Discard Changes
             </button>
             <button
               onClick={saveSkillAndCourseChanges}
-              disabled={!dataChanged}
+              disabled={!valuesChanged}
               className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light'
             >
               Save Changes
