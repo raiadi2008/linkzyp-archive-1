@@ -30,7 +30,7 @@ export async function createSiteDB(
       projects: siteData.projects,
       certificates: siteData.certificates,
       themeId: theme?.id!,
-      username: siteData.username,
+      username: siteData.username!,
       user: {
         connect: {
           id: siteData.userId,

@@ -31,6 +31,7 @@ export default function Page() {
     if (status !== "authenticated" && status !== "loading") {
       router.push("/app/login")
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status])
 
   useEffect(() => {
@@ -65,6 +66,7 @@ export default function Page() {
       .finally(() => {
         setIsLoading(false)
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function changeTab(index: number) {

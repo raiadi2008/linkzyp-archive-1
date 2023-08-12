@@ -9,8 +9,6 @@ import { useRouter } from "next/navigation"
 
 import logo from "@/public/logo.png"
 import googleIcon from "@/public/google-icon.png"
-import microsoftIcon from "@/public/microsoft-icon.png"
-import { data } from "autoprefixer"
 
 export default function Page() {
   const { data: session, status } = useSession()

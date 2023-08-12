@@ -72,6 +72,7 @@ export default function Education({
     } else {
       setValuesChanged(false)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [education])
 
   function validateEducationData() {
