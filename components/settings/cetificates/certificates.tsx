@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
 
 import { ICertificate, ISite, ISiteUpdates } from "@/utils/interfaces"
-import {
-  convert_YYYY_MM_DD_toDate,
-  formatDateAs_YYYY_MM_DD,
-  removeItemAtIndex,
-} from "@/utils/functions"
+import { parseSiteDataFromJSON, removeItemAtIndex } from "@/utils/functions"
+import HttpStatus from "@/constants/http_status"
+
+interface CertificateError {
+  name: boolean
+  authority: boolean
+}
 
 function compareCertificates(a: ICertificate[], b: ICertificate[]): boolean {
   if (a.length !== b.length) return true
@@ -20,10 +22,15 @@ function compareCertificates(a: ICertificate[], b: ICertificate[]): boolean {
   return false
 }
 
-export default function Certificates({ siteInfo }: ISiteUpdates) {
-  const [dataChanged, setDataChanged] = useState(false)
+export default function Certificates({
+  siteInfo,
+  setIsLoading,
+  setSiteInfo,
+  setValuesChanged,
+  valuesChanged,
+}: ISiteUpdates) {
   const [certificates, setCertificates] = useState<ICertificate[]>(
-    siteInfo.certificates.map((value) => {
+    siteInfo.certificates!.map((value) => {
       return {
         name: value.name,
         authority: value.authority,
@@ -31,10 +38,28 @@ export default function Certificates({ siteInfo }: ISiteUpdates) {
       }
     })
   )
+  const [errors, setErrors] = useState<CertificateError[]>(
+    siteInfo.certificates!.map((value) => {
+      return {
+        name: false,
+        authority: false,
+      }
+    })
+  )
+
+  function validateInputs() {
+    const _errors: CertificateError[] = certificates.map((value) => {
+      return {
+        name: !value.name || value.name.length === 0,
+        authority: !value.authority || value.authority.length === 0,
+      }
+    })
+    setErrors(_errors)
+  }
 
   function discardCertificateChanges() {
     setCertificates(
-      siteInfo.certificates.map((value) => {
+      siteInfo.certificates!.map((value) => {
         return {
           name: value.name,
           authority: value.authority,
@@ -42,15 +67,36 @@ export default function Certificates({ siteInfo }: ISiteUpdates) {
         }
       })
     )
-    setDataChanged(false)
+    setValuesChanged(false)
   }
 
-  function saveCertificateChanges() {}
+  async function saveCertificateChanges() {
+    validateInputs()
+
+    for (let err of errors) {
+      if (err.name || err.authority) {
+        return
+      }
+    }
+    setIsLoading(true)
+    const res = await fetch("/api/site/certificates", {
+      method: "PUT",
+      body: JSON.stringify(certificates),
+    })
+    if (res.ok && res.status === HttpStatus.SUCCESS) {
+      const data = await res.json()
+      const parsedData = parseSiteDataFromJSON(data)
+      setSiteInfo(parsedData)
+      setValuesChanged(false)
+    }
+    setIsLoading(false)
+  }
 
   useEffect(() => {
-    if (compareCertificates(certificates, siteInfo.certificates)) {
-      setDataChanged(true)
-    } else setDataChanged(false)
+    validateInputs()
+    if (compareCertificates(certificates, siteInfo.certificates!)) {
+      setValuesChanged(true)
+    } else setValuesChanged(false)
   }, [certificates])
 
   return (
@@ -111,7 +157,7 @@ export default function Certificates({ siteInfo }: ISiteUpdates) {
             className='px-5 py-2 border border-gray-300 rounded w-full mb-2 resize-none'
             onClick={() => {
               const edu = [...certificates]
-              edu.push({} as ICertificate)
+              edu.push({ name: "", authority: "", url: "" } as ICertificate)
               setCertificates(edu)
             }}
           >
@@ -124,14 +170,14 @@ export default function Certificates({ siteInfo }: ISiteUpdates) {
           <div className=' max-w-medium-website py-8 flex gap-x-6 justify-end'>
             <button
               onClick={discardCertificateChanges}
-              disabled={!dataChanged}
+              disabled={!valuesChanged}
               className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light'
             >
               Discard Changes
             </button>
             <button
               onClick={saveCertificateChanges}
-              disabled={!dataChanged}
+              disabled={!valuesChanged}
               className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light'
             >
               Save Changes
