@@ -73,7 +73,7 @@ export default async function Page({
   })
 
   return (
-    <main className='max-w-small-portfolio mx-auto'>
+    <main className='max-w-small-website mx-auto'>
       <section id='hero' className='py-8'>
         <h1 className='text-6xl font-bold mb-4'>
           <div>Hi, I&apos;m</div>
