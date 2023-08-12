@@ -5,9 +5,9 @@ const navbar = [
   "Skills and Courses",
   "Projects",
   "Certificates",
-  "Links and Socials",
-  "FAQs",
-  "Services",
+  // "Links and Socials",
+  // "FAQs",
+  // "Services",
 ]
 
 const navbarMap = new Map<string, string>([
@@ -17,9 +17,9 @@ const navbarMap = new Map<string, string>([
   ["Skills and Courses", "skills-and-courses"],
   ["Projects", "projects"],
   ["Certificates", "certificates"],
-  ["Links and Socials", "links-and-socials"],
-  ["FAQs", "faqs"],
-  ["Services", "services"],
+  // ["Links and Socials", "links-and-socials"],
+  // ["FAQs", "faqs"],
+  // ["Services", "services"],
 ])
 
 export { navbar, navbarMap }
