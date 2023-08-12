@@ -44,6 +44,7 @@ export default function Projects({
     } else {
       setValuesChanged(false)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projects])
 
   function validateInput() {

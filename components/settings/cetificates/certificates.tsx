@@ -97,6 +97,7 @@ export default function Certificates({
     if (compareCertificates(certificates, siteInfo.certificates!)) {
       setValuesChanged(true)
     } else setValuesChanged(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [certificates])
 
   return (

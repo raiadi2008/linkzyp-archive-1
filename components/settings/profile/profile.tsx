@@ -50,6 +50,7 @@ export default function ProfileSettings({
     ) {
       setValuesChanged(true)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profileInfo])
 
   function discardProfileChanges() {
@@ -223,7 +224,7 @@ export default function ProfileSettings({
               <label>Username</label>
               <p className='text-gray-500 font-extralight text-sm'>
                 <span className='block'>
-                  Won't be visible on site. Username will make
+                  Won&apos;t be visible on site. Username will make
                 </span>
                 <span className='block'>
                   the url where your portfolio is accessible.

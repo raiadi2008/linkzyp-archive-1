@@ -1,7 +1,5 @@
 "use client"
 
-import Link from "next/link"
-
 export default function ProfileSettingsLoading() {
   return (
     <>
@@ -51,7 +49,7 @@ export default function ProfileSettingsLoading() {
               <label>Username</label>
               <p className='text-gray-500 font-extralight text-sm'>
                 <span className='block'>
-                  Won't be visible on site. Username will make
+                  Won&apos;t be visible on site. Username will make
                 </span>
                 <span className='block'>
                   the url where your portfolio is accessible.

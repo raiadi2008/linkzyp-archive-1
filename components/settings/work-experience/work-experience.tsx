@@ -88,6 +88,7 @@ export default function WorkExperience({
     } else {
       setValuesChanged(false)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [experiences])
 
   function validateInputs() {
