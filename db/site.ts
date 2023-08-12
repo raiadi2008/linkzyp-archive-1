@@ -1,8 +1,15 @@
 import Themes from "@/constants/themes"
 import { prisma } from "@/lib/prismadb"
-import { ISite } from "@/types/interfaces"
+import { ISite } from "@/utils/interfaces"
 import { v4 as uuidv4 } from "uuid"
 import { getThemeByName } from "./theme"
+
+/**
+ * @param siteData
+ * @param themeName optional
+ * @returns site created in database
+ * @description creates a site in database with the given site data and returns the same
+ */
 
 export async function createSiteDB(
   siteData: ISite,
@@ -15,10 +22,7 @@ export async function createSiteDB(
       linkedin_url: siteData.linkedin_url,
       first_name: siteData.first_name,
       last_name: siteData.last_name,
-      full_name: siteData.full_name,
       occupation: siteData.occupation,
-      summuary: siteData.summary,
-      country: siteData.country,
       experiences: siteData.experiences,
       education: siteData.education,
       courses: siteData.courses,
@@ -26,7 +30,7 @@ export async function createSiteDB(
       projects: siteData.projects,
       certificates: siteData.certificates,
       themeId: theme?.id!,
-      username: uuidv4(),
+      username: siteData.username,
       user: {
         connect: {
           id: siteData.userId,
@@ -54,4 +58,17 @@ export async function getSiteByUserId(user_id: string) {
   })
 
   return site
+}
+
+export async function updateSiteDB(siteData: ISite, user_id: string) {
+  const updatedSite = await prisma.site.update({
+    where: {
+      userId: user_id,
+    },
+    data: {
+      ...siteData,
+    },
+  })
+
+  return updatedSite
 }

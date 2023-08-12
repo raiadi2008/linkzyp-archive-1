@@ -3,12 +3,12 @@ import {
   IEducation,
   IExperience,
   IProject,
-} from "@/types/interfaces"
+} from "@/utils/interfaces"
 import Link from "next/link"
 
 async function getUserInfo(username: string) {
   const res = await fetch(
-    `${process.env.NEXTAUTH_URL}/api/user?username=${username}`,
+    `${process.env.NEXTAUTH_URL}/api/site?username=${username}`,
     { next: { revalidate: 100 } }
   )
   if (res.ok) {
@@ -73,7 +73,7 @@ export default async function Page({
   })
 
   return (
-    <main className='max-w-small-portfolio mx-auto'>
+    <main className='max-w-small-website mx-auto'>
       <section id='hero' className='py-8'>
         <h1 className='text-6xl font-bold mb-4'>
           <div>Hi, I&apos;m</div>

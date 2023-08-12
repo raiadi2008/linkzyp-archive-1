@@ -1,6 +1,6 @@
 "use client"
 
-import Loader from "@/components/loader"
+import Loader from "@/components/utils/loader"
 import HttpStatus from "@/constants/http_status"
 import React, { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
@@ -14,7 +14,6 @@ export default function Page() {
   const router = useRouter()
 
   useEffect(() => {
-    console.log(session)
     if (status !== "authenticated") {
       router.push("/app/login")
     }
@@ -28,13 +27,23 @@ export default function Page() {
     setError(null)
   }
 
-  async function handleSumbit() {
+  async function handleSumbit(withLinkedin: boolean = true) {
     const url = linkedinURL
+
+    if (url.length === 0 && withLinkedin) {
+      setError("Please enter a valid URL")
+      return
+    }
     setLinkedinURL("")
     setLoading(true)
-    const userInfo = await fetch(`/api/linkedin-data?linkedinURL=${url}`)
+    const urlParms = withLinkedin
+      ? `?linkedinURL=${url}&withLinkedin=true`
+      : "withLinkedin=false"
+
+    const userInfo = await fetch(`/api/linkedin-data?${urlParms}`)
     if (userInfo.status === HttpStatus.SUCCESS && userInfo.ok) {
       const data = await userInfo.json()
+      console.log("returned data", data)
       await update({
         ...session,
         user: {
@@ -50,22 +59,23 @@ export default function Page() {
 
   return (
     <main className='linkedin-url-page'>
-      <div className='max-w-website mx-auto flex flex-col items-center py-24 px-4'>
-        <h1 className='text-3xl font-medium capitalize mb-10 text-center lg:text-2xl sm:text-xl'>
+      <div className='max-w-micro-website mx-auto flex flex-col  py-24'>
+        <h1 className='text-3xl font-medium capitalize mb-8 text-center lg:text-2xl sm:text-xl'>
           Add your LinkedIn profile URL
         </h1>
         <input
           type='text'
-          className='p-2 border border-gray-300 rounded w-96 mb-8 lg:w-80 sm:w-72'
+          className='p-2 border border-gray-300 rounded'
           placeholder='https://www.linkedin.com/in/...'
           value={linkedinURL}
           disabled={loading}
           onChange={handleLinkedinChange}
         />
-        <p className='h-4 text-sm text-dark-red'>{error}</p>
+        <p className='h-4 text-sm text-neutral-red'>{error}</p>
+
         <button
-          className='bg-primary text-neutral-white text-lg font-medium px-6 py-2 rounded-md relative'
-          onClick={handleSumbit}
+          className='bg-primary mt-4 text-neutral-white text-lg border font-medium px-6 py-2 rounded-md relative disabled:bg-primary-light'
+          onClick={(e) => handleSumbit(true)}
           disabled={loading}
         >
           {loading ? (
@@ -75,6 +85,18 @@ export default function Page() {
           ) : (
             "Continue"
           )}
+        </button>
+        <div className='my-8 border-t border-neutral-300 relative'>
+          <p className='text-neutral-500 absolute -top-3 left-1/2 -translate-x-1/2 bg-white px-4'>
+            OR
+          </p>
+        </div>
+        <button
+          className='border border-gray-300 rounded-md px-6 py-2 disabled:text-neutral-500'
+          disabled={loading}
+          onClick={(e) => handleSumbit(false)}
+        >
+          Continue Without Linkedin
         </button>
       </div>
     </main>

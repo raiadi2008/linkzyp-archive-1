@@ -4,6 +4,7 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./node_modules/tailwind-datepicker-react/dist/**/*.js",
   ],
   theme: {
     screens: {
@@ -16,6 +17,10 @@ module.exports = {
       xxs: { max: '320px' },
     },
     extend: {
+      boxShadow: {
+
+        '-2xl': '0px -2px 13px 3px rgba(0, 0, 0, 0.05)'
+      },
       colors: {
         // main colors
         "primary": "#6e44ff",
@@ -36,11 +41,17 @@ module.exports = {
       },
       maxWidth: {
         'website': '1240px',
-        'large-portfolio': '1240px',
-        'medium-portfolio': "960px",
-        'small-portfolio': "680px"
+        'large-website': "960px",
+        'medium-website': "840px",
+        'small-website': "680px",
+        'micro-website': "480px"
       }
     }
   },
-  plugins: [],
+  plugins: [
+    function ({ addVariant }) {
+      addVariant('child', '& > *');
+      addVariant('child-hover', '& > *:hover');
+    }
+  ],
 }

@@ -19,6 +19,7 @@ type Experience {
   description                  String?
   location                     String?
   logo                         String?
+  currently_working            Boolean   @default(false)
 }
 
 type Education {
@@ -31,16 +32,12 @@ type Education {
 }
 
 type Project {
-  starts_at   DateTime?
-  ends_at     DateTime?
   title       String?
   description String?
   url         String?
 }
 
 type Certificate {
-  starts_at DateTime?
-  ends_at   DateTime?
   name      String?
   authority String?
   url       String?
@@ -83,13 +80,10 @@ model Site {
   username        String        @unique
   themeId         String        @db.ObjectId
   profile_picture String?
-  linkedin_url    String
+  linkedin_url    String?
   first_name      String?
   last_name       String?
-  full_name       String?
   occupation      String?
-  summuary        String?
-  country         String?
   experiences     Experience[]
   education       Education[]
   courses         String[]

@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react"
+
 export interface IExperience {
   starts_at?: Date
   ends_at?: Date
@@ -7,6 +9,7 @@ export interface IExperience {
   description?: string
   location?: string
   logo?: string
+  currently_working?: boolean
 }
 
 export interface IEducation {
@@ -19,16 +22,12 @@ export interface IEducation {
 }
 
 export interface IProject {
-  starts_at?: Date
-  ends_at?: Date
   title?: string
   description?: string
   url?: string
 }
 
 export interface ICertificate {
-  starts_at?: Date
-  ends_at?: Date
   name?: string
   authority?: string
   url?: string
@@ -37,18 +36,26 @@ export interface ICertificate {
 export interface ISite {
   id?: string
   userId?: string
+  domain?: string
+  username?: string
+  themeId?: string
   profile_picture?: string
-  linkedin_url: string
+  linkedin_url?: string
   first_name?: string
   last_name?: string
-  full_name?: string
   occupation?: string
-  summary?: string
-  country?: string
   experiences?: IExperience[]
-  education: IEducation[]
-  courses: string[]
-  skills: string[]
-  projects: IProject[]
-  certificates: ICertificate[]
+  education?: IEducation[]
+  courses?: string[]
+  skills?: string[]
+  projects?: IProject[]
+  certificates?: ICertificate[]
+}
+
+export interface ISiteUpdates {
+  siteInfo: ISite
+  valuesChanged: boolean
+  setIsLoading: Dispatch<SetStateAction<boolean>>
+  setValuesChanged: Dispatch<SetStateAction<boolean>>
+  setSiteInfo: Dispatch<SetStateAction<ISite | null>>
 }
