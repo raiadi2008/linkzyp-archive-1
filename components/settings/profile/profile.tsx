@@ -356,7 +356,7 @@ export default function ProfileSettings({
 
       <section className='fixed bottom-0 w-screen bg-white -shadow-2xl'>
         <div className='max-w-website mx-auto'>
-          <div className=' max-w-medium-website py-8 flex gap-x-6 justify-end'>
+          <div className=' max-w-medium-website py-6 flex gap-x-6 justify-end'>
             <button
               onClick={discardProfileChanges}
               disabled={!valuesChanged}
