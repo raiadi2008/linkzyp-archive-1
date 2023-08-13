@@ -79,16 +79,18 @@ export default function Page() {
   }
 
   return (
-    <main className='w-screen relative' id='settings'>
-      <section className=''>
-        <div className='relative px-12 flex justify-between items-center py-6'>
-          <Link href={"/"}>
+    <main
+      className='w-screen relative h-screen overflow-y-scroll no-scrollbar'
+      id='settings'
+    >
+      <section className='mx-auto max-w-website px-6'>
+        <div className='relative flex justify-between items-center py-6'>
+          <Link href='/'>
             <div className='relative flex gap-x-2 items-center'>
               <Image src={logo} alt='logo' className='w-10 h-10' />
               <h2 className='text-xl text-neutral-dark font-medium'>Linkzyp</h2>
             </div>
           </Link>
-
           <button
             onClick={() => signOut()}
             className='text-neutral-white border-2 border-primary bg-primary rounded-full px-6 py-2 font-medium'
@@ -97,9 +99,9 @@ export default function Page() {
           </button>
         </div>
       </section>
-      <section className='mx-auto max-w-website pt-3 pb-6'>
+      <section className='mx-auto max-w-website px-6'>
         <h1 className='text-3xl font-bold mb-6'>Settings</h1>
-        <div id='settings-sidebar' className='overflow-x-auto'>
+        <div id='settings-sidebar' className='overflow-x-auto no-scrollbar'>
           <ul className='flex gap-x-4  border-b border-gray-200 child:p-2 w-fit child:whitespace-nowrap'>
             {navbar.map((item, index) => {
               return (
@@ -119,17 +121,16 @@ export default function Page() {
           </ul>
         </div>
       </section>
-      <div id='settings-content' className=''>
-        {CurrentSettingsSection(
-          searchParams.get(TAB),
-          siteInfo,
-          valuesChanged,
-          isLoading,
-          setIsLoading,
-          setValuesChanged,
-          updateSiteInfo
-        )}
-      </div>
+
+      {CurrentSettingsSection(
+        searchParams.get(TAB),
+        siteInfo,
+        valuesChanged,
+        isLoading,
+        setIsLoading,
+        setValuesChanged,
+        updateSiteInfo
+      )}
     </main>
   )
 }
