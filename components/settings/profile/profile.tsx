@@ -364,14 +364,14 @@ export default function ProfileSettings({
             <button
               onClick={discardProfileChanges}
               disabled={!valuesChanged}
-              className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light'
+              className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light sm:font-normal sm:text-sm sm:border-1'
             >
               Discard Changes
             </button>
             <button
               onClick={saveProfileChanges}
               disabled={!valuesChanged}
-              className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light'
+              className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light sm:font-normal sm:text-sm sm:border-1'
             >
               Save Changes
             </button>
