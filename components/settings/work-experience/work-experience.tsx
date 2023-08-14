@@ -4,7 +4,6 @@ import { IExperience, ISiteUpdates } from "@/utils/interfaces"
 import {
   convert_YYYY_MM_DD_toDate,
   formatDateAs_YYYY_MM_DD,
-  parseDateString,
   parseSiteDataFromJSON,
   removeItemAtIndex,
 } from "@/utils/functions"
@@ -38,7 +37,8 @@ function compareExperiences(
       current.location !== initial.location ||
       current.company_linkedin_profile_url !==
         initial.company_linkedin_profile_url ||
-      current.logo !== initial.logo
+      current.logo !== initial.logo ||
+      current.currently_working !== initial.currently_working
     ) {
       return true
     }
@@ -63,6 +63,7 @@ export default function WorkExperience({
         starts_at: value.starts_at,
         ends_at: value.ends_at,
         location: value.location,
+        currently_working: value.currently_working,
         company_linkedin_profile_url: value.company_linkedin_profile_url,
         logo: value.logo,
       }
@@ -123,6 +124,7 @@ export default function WorkExperience({
           ends_at: value.ends_at,
           location: value.location,
           company_linkedin_profile_url: value.company_linkedin_profile_url,
+          currently_working: value.currently_working,
           logo: value.logo,
         }
       })
@@ -153,7 +155,7 @@ export default function WorkExperience({
 
   return (
     <>
-      <section className='mx-auto max-w-website py-6 h-full mb-32'>
+      <section className='mx-auto max-w-website py-6 mb-32 px-6'>
         <div className='max-w-medium-website'>
           {experiences.map((experience, index) => {
             return (
@@ -161,39 +163,53 @@ export default function WorkExperience({
                 <label className='font-sm text-gray-600 px-2' htmlFor='company'>
                   Compnay Name<span className='text-dark-red'>*</span>
                 </label>
-                <input
-                  className={`px-5 py-2 outline-none border ${
-                    experiencesError[index] && experiencesError[index].company
-                      ? "border-neutral-red"
-                      : "border-gray-300"
-                  } rounded w-full mb-4`}
-                  type='text'
-                  placeholder='Company Name eg. Google'
-                  value={experience.company}
-                  onChange={(e) => {
-                    const workExperience = [...experiences]
-                    workExperience[index].company = e.target.value
-                    setExperiences(workExperience)
-                  }}
-                />
+                <div className='mb-4'>
+                  <input
+                    className={`px-5 py-2 outline-none border ${
+                      experiencesError[index] && experiencesError[index].company
+                        ? "border-neutral-red"
+                        : "border-gray-300"
+                    } rounded w-full`}
+                    type='text'
+                    placeholder='Company Name eg. Google'
+                    value={experience.company}
+                    onChange={(e) => {
+                      const workExperience = [...experiences]
+                      workExperience[index].company = e.target.value
+                      setExperiences(workExperience)
+                    }}
+                  />
+                  {experiencesError[index].company && (
+                    <p className='text-xs font-extralight text-dark-red'>
+                      company name can&apos;t be empty
+                    </p>
+                  )}
+                </div>
                 <label className='font-sm text-gray-600 px-2' htmlFor='title'>
                   Title<span className='text-dark-red'>*</span>
                 </label>
-                <input
-                  className={`px-5 py-2 outline-none border ${
-                    experiencesError[index] && experiencesError[index].title
-                      ? "border-neutral-red"
-                      : "border-gray-300"
-                  } rounded w-full mb-4`}
-                  type='text'
-                  placeholder='Job Title eg. Software Engineer'
-                  value={experience.title}
-                  onChange={(e) => {
-                    const workExperience = [...experiences]
-                    workExperience[index].title = e.target.value
-                    setExperiences(workExperience)
-                  }}
-                />
+                <div className='mb-4'>
+                  <input
+                    className={`px-5 py-2 outline-none border ${
+                      experiencesError[index] && experiencesError[index].title
+                        ? "border-neutral-red"
+                        : "border-gray-300"
+                    } rounded w-full`}
+                    type='text'
+                    placeholder='Job Title eg. Software Engineer'
+                    value={experience.title}
+                    onChange={(e) => {
+                      const workExperience = [...experiences]
+                      workExperience[index].title = e.target.value
+                      setExperiences(workExperience)
+                    }}
+                  />
+                  {experiencesError[index].title && (
+                    <p className='text-xs font-extralight text-dark-red'>
+                      job title can&apos;t be empty
+                    </p>
+                  )}
+                </div>
                 <label className='font-sm text-gray-600 px-2'>
                   Job Description
                 </label>
@@ -223,47 +239,85 @@ export default function WorkExperience({
                     setExperiences(workExperience)
                   }}
                 />
-                <div className='flex gap-x-6 items-center'>
+                <div className='flex gap-x-6 items-center mb-2 xs:flex-col'>
                   <div className='w-full'>
                     <label className='font-sm text-gray-600 px-2'>
                       Start Date<span className='text-dark-red'>*</span>
                     </label>
-                    <input
-                      className='px-5 py-2 outline-none border border-gray-300 rounded w-full  mb-2'
-                      type='date'
-                      value={
-                        experience.starts_at
-                          ? formatDateAs_YYYY_MM_DD(experience.starts_at)
-                          : ""
-                      }
-                      onChange={(e) => {
-                        const workExperience = [...experiences]
-                        workExperience[index].starts_at =
-                          convert_YYYY_MM_DD_toDate(e.target.value)
-                        setExperiences(workExperience)
-                      }}
-                    />
+                    <div className='xs:mb-2'>
+                      <input
+                        className={`px-5 py-2 outline-none border rounded w-full disabled:text-gray-300 ${
+                          experiencesError[index].starts_at
+                            ? "border-neutral-red"
+                            : "border-gray-300"
+                        }`}
+                        type='date'
+                        value={
+                          experience.starts_at
+                            ? formatDateAs_YYYY_MM_DD(experience.starts_at)
+                            : ""
+                        }
+                        onChange={(e) => {
+                          const workExperience = [...experiences]
+                          workExperience[index].starts_at =
+                            convert_YYYY_MM_DD_toDate(e.target.value)
+                          setExperiences(workExperience)
+                        }}
+                      />
+                      <p className='text-xs font-extralight text-dark-red h-4'>
+                        {experiencesError[index].starts_at
+                          ? "start date can't be empty"
+                          : ""}
+                      </p>
+                    </div>
                   </div>
                   <div className='w-full'>
                     <label className='font-sm text-gray-600 px-2'>
                       End Date<span className='text-dark-red'>*</span>
                     </label>
-                    <input
-                      className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
-                      type='date'
-                      value={
-                        experience.ends_at
-                          ? formatDateAs_YYYY_MM_DD(experience.ends_at)
-                          : ""
-                      }
-                      onChange={(e) => {
-                        const workExperience = [...experiences]
-                        workExperience[index].ends_at =
-                          convert_YYYY_MM_DD_toDate(e.target.value)
-                        setExperiences(workExperience)
-                      }}
-                    />
+                    <div>
+                      <input
+                        className={`px-5 py-2 outline-none border rounded w-full  disabled:text-gray-300 ${
+                          experiencesError[index].ends_at
+                            ? "border-neutral-red"
+                            : "border-gray-300"
+                        }`}
+                        type='date'
+                        value={
+                          experience.ends_at
+                            ? formatDateAs_YYYY_MM_DD(experience.ends_at)
+                            : ""
+                        }
+                        disabled={experience.currently_working}
+                        onChange={(e) => {
+                          const workExperience = [...experiences]
+                          workExperience[index].ends_at =
+                            convert_YYYY_MM_DD_toDate(e.target.value)
+                          setExperiences(workExperience)
+                        }}
+                      />
+
+                      <p className='text-xs font-extralight text-dark-red h-4'>
+                        {experiencesError[index].ends_at
+                          ? " end date can't be empty"
+                          : ""}
+                      </p>
+                    </div>
                   </div>
+                </div>
+                <div className='flex gap-x-4'>
+                  <input
+                    type='checkbox'
+                    checked={experience.currently_working}
+                    onChange={(e) => {
+                      const workExperience = [...experiences]
+                      workExperience[index].currently_working = e.target.checked
+                      if (e.target.checked)
+                        workExperience[index].ends_at = undefined
+                      setExperiences(workExperience)
+                    }}
+                  />
+                  <span>I currently work here</span>
                 </div>
                 <button
                   className='absolute bottom-2 right-0 text-dark-red border rounded p-2 border-neutral-red'
@@ -290,7 +344,7 @@ export default function WorkExperience({
           </button>
         </div>
       </section>
-      <section className='fixed bottom-0 w-screen bg-white -shadow-2xl'>
+      <section className='fixed bottom-0 w-screen bg-white -shadow-2xl px-6'>
         <div className='max-w-website mx-auto'>
           <div className=' max-w-medium-website py-8 flex gap-x-6 justify-end'>
             <button
