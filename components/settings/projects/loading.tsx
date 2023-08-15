@@ -1,7 +1,7 @@
 export default function ProjectsLoading() {
   return (
     <>
-      <section className='mx-auto max-w-website py-6 h-full mb-32'>
+      <section className='mx-auto max-w-website py-6  mb-32 px-6'>
         <div className='max-w-medium-website'>
           <div className='my-12 relative pb-14'>
             <div className='animate-pulse rounded  bg-slate-200 h-9 w-full mb-4'></div>

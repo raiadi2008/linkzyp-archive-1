@@ -87,13 +87,15 @@ export default function Projects({
 
   return (
     <>
-      <section className='mx-auto max-w-website py-6 h-full mb-32'>
+      <section className='mx-auto max-w-website py-6 mb-32 px-6'>
         <div className='max-w-medium-website'>
           {projects.map((value, index) => {
             return (
               <div key={index} className='my-12 relative pb-14'>
                 <input
-                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
+                  className={`px-5 py-2 outline-none border rounded w-full mb-2 ${
+                    errors[index] ? "border-neutral-red" : "border-gray-300"
+                  }`}
                   type='text'
                   placeholder='Project Title eg. My Awesome Project'
                   value={value.title}
