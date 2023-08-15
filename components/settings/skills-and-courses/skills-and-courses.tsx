@@ -58,7 +58,7 @@ export default function SkillsAndCourses({
 
   return (
     <>
-      <section className='mx-auto max-w-website py-6 h-full mb-32'>
+      <section className='mx-auto max-w-website py-6 mb-32 px-6'>
         <div className='max-w-medium-website overflow-hidden'>
           <h2 className='text-2xl font-semibold mb-4'>Your Skills</h2>
           <div className='flex flex-wrap gap-2 p-4 border border-neutral-200 rounded mb-4'>
@@ -80,9 +80,9 @@ export default function SkillsAndCourses({
                 </button>
               </div>
             ))}
-            <div className='mt-8 flex w-full  gap-x-12'>
+            <div className='mt-8 flex w-full  gap-x-12 sm:gap-x-4 xs:flex-col'>
               <input
-                className='px-5 py-2 outline-none border border-gray-300 rounded w-full'
+                className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
                 type='text'
                 value={newSkill}
                 placeholder='Add new skill eg. Content Writing'
@@ -91,7 +91,7 @@ export default function SkillsAndCourses({
                 }}
               />
               <button
-                className='text-primary px-12 border border-primary rounded whitespace-nowrap '
+                className='text-primary px-12 border border-primary rounded whitespace-nowrap sm:px-4 xs:py-2'
                 onClick={(e) => {
                   if (newSkill.trim().length > 0) {
                     setSkills([...skills, newSkill])
@@ -123,9 +123,9 @@ export default function SkillsAndCourses({
                 </button>
               </div>
             ))}
-            <div className='mt-8 flex w-full  gap-x-12'>
+            <div className='mt-8 flex w-full  gap-x-12 sm:gap-x-4 xs:flex-col '>
               <input
-                className='px-5 py-2 outline-none border border-gray-300 rounded w-full'
+                className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-3'
                 type='text'
                 value={newCourse}
                 placeholder='Add new course eg. Basic Computing'
@@ -134,7 +134,7 @@ export default function SkillsAndCourses({
                 }}
               />
               <button
-                className='text-primary px-12 border border-primary rounded whitespace-nowrap '
+                className='text-primary px-12 border border-primary rounded whitespace-nowrap sm:px-4 xs:py-2'
                 onClick={(e) => {
                   if (newCourse.trim().length > 0) {
                     setCourses([...courses, newCourse])
@@ -148,20 +148,20 @@ export default function SkillsAndCourses({
           </div>
         </div>
       </section>
-      <section className='fixed bottom-0 w-screen bg-white -shadow-2xl'>
+      <section className='fixed bottom-0 left-0 w-screen bg-white -shadow-2xl px-6'>
         <div className='max-w-website mx-auto'>
-          <div className=' max-w-medium-website py-8 flex gap-x-6 justify-end'>
+          <div className=' max-w-medium-website py-6 flex gap-x-6 justify-end'>
             <button
               onClick={discardSkillAndCourseChanges}
               disabled={!valuesChanged}
-              className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light'
+              className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light sm:font-normal sm:text-sm sm:border-1'
             >
               Discard Changes
             </button>
             <button
               onClick={saveSkillAndCourseChanges}
               disabled={!valuesChanged}
-              className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light'
+              className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light sm:font-normal sm:text-sm sm:border-1'
             >
               Save Changes
             </button>

@@ -249,20 +249,20 @@ export default function Education({
           </button>
         </div>
       </section>
-      <section className='fixed bottom-0 w-screen bg-white -shadow-2xl'>
+      <section className='fixed bottom-0 left-0 w-screen bg-white -shadow-2xl px-6'>
         <div className='max-w-website mx-auto'>
-          <div className=' max-w-medium-website py-8 flex gap-x-6 justify-end'>
+          <div className=' max-w-medium-website py-6 flex gap-x-6 justify-end'>
             <button
               onClick={discardEducationChanges}
               disabled={!valuesChanged}
-              className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light'
+              className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light sm:font-normal sm:text-sm sm:border-1'
             >
               Discard Changes
             </button>
             <button
               onClick={saveEducationChanges}
               disabled={!valuesChanged}
-              className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light'
+              className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light sm:font-normal sm:text-sm sm:border-1'
             >
               Save Changes
             </button>
