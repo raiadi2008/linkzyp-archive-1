@@ -83,7 +83,7 @@ export default function Education({
         field_of_study:
           !value.field_of_study || value.field_of_study.length === 0,
         starts_at: !value.starts_at,
-        ends_at: !value.starts_at,
+        ends_at: !value.ends_at,
       } as EducationError
     })
     setErrors(_error)
@@ -138,9 +138,12 @@ export default function Education({
           {education.map((edu, index) => {
             return (
               <div key={index} className='my-12 relative pb-14'>
+                <label className='font-sm text-gray-600 px-2' htmlFor='company'>
+                  School Name<span className='text-dark-red'>*</span>
+                </label>
                 <input
-                  className={`px-5 py-2 outline-none border rounded w-full mb-2 ${
-                    errors[index].school
+                  className={`px-5 py-2 outline-none border rounded w-full mb-4 ${
+                    errors[index]?.school ?? false
                       ? "border-neutral-red"
                       : "border-gray-300"
                   }`}
@@ -153,9 +156,12 @@ export default function Education({
                     setEducation(_edu)
                   }}
                 />
+                <label className='font-sm text-gray-600 px-2' htmlFor='company'>
+                  Degree Name<span className='text-dark-red'>*</span>
+                </label>
                 <input
-                  className={`px-5 py-2 outline-none border rounded w-full mb-2 ${
-                    errors[index].degree_name
+                  className={`px-5 py-2 outline-none border rounded w-full mb-4 ${
+                    errors[index]?.degree_name ?? false
                       ? "border-neutral-red"
                       : "border-gray-300"
                   }`}
@@ -168,9 +174,12 @@ export default function Education({
                     setEducation(_edu)
                   }}
                 />
+                <label className='font-sm text-gray-600 px-2' htmlFor='company'>
+                  Field of Study<span className='text-dark-red'>*</span>
+                </label>
                 <input
-                  className={`px-5 py-2 outline-none border rounded w-full mb-2 ${
-                    errors[index].field_of_study
+                  className={`px-5 py-2 outline-none border rounded w-full mb-4 ${
+                    errors[index]?.field_of_study ?? false
                       ? "border-neutral-red"
                       : "border-gray-300"
                   }`}
@@ -183,46 +192,62 @@ export default function Education({
                     setEducation(_edu)
                   }}
                 />
-                <div className='flex gap-x-6 items-center'>
-                  <input
-                    className={`px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2 resize-none ${
-                      errors[index].starts_at
-                        ? "border-neutral-red"
-                        : "border-gray-300"
-                    }`}
-                    type='date'
-                    value={
-                      edu.starts_at
-                        ? formatDateAs_YYYY_MM_DD(edu.starts_at)
-                        : ""
-                    }
-                    onChange={(e) => {
-                      const _edu = [...education]
-                      _edu[index].starts_at = convert_YYYY_MM_DD_toDate(
-                        e.target.value
-                      )
-                      setEducation(_edu)
-                    }}
-                  />
-
-                  <input
-                    className={`px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2 resize-none ${
-                      errors[index].ends_at
-                        ? "border-neutral-red"
-                        : "border-gray-300"
-                    }`}
-                    type='date'
-                    value={
-                      edu.ends_at ? formatDateAs_YYYY_MM_DD(edu.ends_at) : ""
-                    }
-                    onChange={(e) => {
-                      const _edu = [...education]
-                      _edu[index].ends_at = convert_YYYY_MM_DD_toDate(
-                        e.target.value
-                      )
-                      setEducation(_edu)
-                    }}
-                  />
+                <div className='flex gap-x-6 items-center mb-4'>
+                  <div className='w-full'>
+                    <label
+                      className='font-sm text-gray-600 px-2'
+                      htmlFor='company'
+                    >
+                      Start Date<span className='text-dark-red'>*</span>
+                    </label>
+                    <input
+                      className={`px-5 py-2 outline-none border border-gray-300 rounded w-full resize-none ${
+                        errors[index]?.starts_at ?? false
+                          ? "border-neutral-red"
+                          : "border-gray-300"
+                      }`}
+                      type='date'
+                      value={
+                        edu.starts_at
+                          ? formatDateAs_YYYY_MM_DD(edu.starts_at)
+                          : ""
+                      }
+                      onChange={(e) => {
+                        const _edu = [...education]
+                        _edu[index].starts_at = convert_YYYY_MM_DD_toDate(
+                          e.target.value
+                        )
+                        setEducation(_edu)
+                      }}
+                    />
+                  </div>
+                  <div className='w-full'>
+                    <label
+                      className='font-sm text-gray-600 px-2'
+                      htmlFor='company'
+                    >
+                      End Date (expected)
+                      <span className='text-dark-red'>*</span>
+                    </label>
+                    <input
+                      className={`px-5 py-2 outline-none border border-gray-300 w-full rounded resize-none ${
+                        errors[index]?.ends_at ?? false
+                          ? "border-neutral-red"
+                          : "border-gray-300"
+                      }`}
+                      type='date'
+                      value={
+                        edu.ends_at ? formatDateAs_YYYY_MM_DD(edu.ends_at) : ""
+                      }
+                      onChange={(e) => {
+                        const _edu = [...education]
+                        _edu[index].ends_at = convert_YYYY_MM_DD_toDate(
+                          e.target.value
+                        )
+                        setEducation(_edu)
+                      }}
+                    />
+                  </div>
                 </div>
                 <button
                   className='absolute bottom-2 right-0 text-dark-red border rounded p-2 border-neutral-red'

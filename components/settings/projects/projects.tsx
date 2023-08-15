@@ -92,8 +92,11 @@ export default function Projects({
           {projects.map((value, index) => {
             return (
               <div key={index} className='my-12 relative pb-14'>
+                <label className='font-sm text-gray-600 px-2' htmlFor='company'>
+                  Project Name<span className='text-dark-red'>*</span>
+                </label>
                 <input
-                  className={`px-5 py-2 outline-none border rounded w-full mb-2 ${
+                  className={`px-5 py-2 outline-none border rounded w-full mb-4 ${
                     errors[index] ? "border-neutral-red" : "border-gray-300"
                   }`}
                   type='text'
@@ -105,6 +108,9 @@ export default function Projects({
                     setProjects(_projects)
                   }}
                 />
+                <label className='font-sm text-gray-600 px-2' htmlFor='company'>
+                  Project Description
+                </label>
                 <textarea
                   className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2 resize-none'
                   rows={4}
@@ -116,8 +122,11 @@ export default function Projects({
                     setProjects(_projects)
                   }}
                 />
+                <label className='font-sm text-gray-600 px-2' htmlFor='company'>
+                  Project URL
+                </label>
                 <input
-                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
+                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-4'
                   type='text'
                   placeholder='Link to the project eg. https://github.com/user/repo'
                   value={value.url}

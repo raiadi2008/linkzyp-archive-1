@@ -166,7 +166,7 @@ export default function WorkExperience({
                 <div className='mb-4'>
                   <input
                     className={`px-5 py-2 outline-none border ${
-                      experiencesError[index] && experiencesError[index].company
+                      experiencesError[index]?.company ?? false
                         ? "border-neutral-red"
                         : "border-gray-300"
                     } rounded w-full`}
@@ -179,7 +179,7 @@ export default function WorkExperience({
                       setExperiences(workExperience)
                     }}
                   />
-                  {experiencesError[index].company && (
+                  {(experiencesError[index]?.company ?? false) && (
                     <p className='text-xs font-extralight text-dark-red'>
                       company name can&apos;t be empty
                     </p>
@@ -191,7 +191,7 @@ export default function WorkExperience({
                 <div className='mb-4'>
                   <input
                     className={`px-5 py-2 outline-none border ${
-                      experiencesError[index] && experiencesError[index].title
+                      experiencesError[index]?.title ?? false
                         ? "border-neutral-red"
                         : "border-gray-300"
                     } rounded w-full`}
@@ -204,7 +204,7 @@ export default function WorkExperience({
                       setExperiences(workExperience)
                     }}
                   />
-                  {experiencesError[index].title && (
+                  {(experiencesError[index]?.title ?? false) && (
                     <p className='text-xs font-extralight text-dark-red'>
                       job title can&apos;t be empty
                     </p>
@@ -247,7 +247,7 @@ export default function WorkExperience({
                     <div className='xs:mb-2'>
                       <input
                         className={`px-5 py-2 outline-none border rounded w-full disabled:text-gray-300 ${
-                          experiencesError[index].starts_at
+                          experiencesError[index]?.starts_at ?? false
                             ? "border-neutral-red"
                             : "border-gray-300"
                         }`}
@@ -265,7 +265,7 @@ export default function WorkExperience({
                         }}
                       />
                       <p className='text-xs font-extralight text-dark-red h-4'>
-                        {experiencesError[index].starts_at
+                        {experiencesError[index]?.starts_at ?? false
                           ? "start date can't be empty"
                           : ""}
                       </p>
@@ -278,7 +278,7 @@ export default function WorkExperience({
                     <div>
                       <input
                         className={`px-5 py-2 outline-none border rounded w-full  disabled:text-gray-300 ${
-                          experiencesError[index].ends_at
+                          experiencesError[index]?.ends_at ?? false
                             ? "border-neutral-red"
                             : "border-gray-300"
                         }`}
@@ -298,7 +298,7 @@ export default function WorkExperience({
                       />
 
                       <p className='text-xs font-extralight text-dark-red h-4'>
-                        {experiencesError[index].ends_at
+                        {experiencesError[index]?.ends_at ?? false
                           ? " end date can't be empty"
                           : ""}
                       </p>
