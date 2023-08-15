@@ -59,7 +59,7 @@ export function convert_YYYY_MM_DD_toDate(
   if (!dateString) return undefined
   try {
     const dateObject = new Date(dateString)
-    console.log("dateObject", dateObject)
+
     return dateObject
   } catch (error) {
     return undefined

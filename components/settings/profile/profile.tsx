@@ -61,14 +61,13 @@ export default function ProfileSettings({
       const res = await fetch(`/api/site/username?username=${username}`)
       if (res.ok && res.status === HttpStatus.SUCCESS) {
         const data = await res.json()
-        console.log("data", data)
+
         if (data["available"]) {
           setUsernameAvailablity(UsernameAvailablityCheck.AVAILABLE)
         } else {
           setUsernameAvailablity(UsernameAvailablityCheck.UNAVAILABLE)
         }
       }
-      console.log("username availabality", usernameAvailablity)
     }
     checkUsernameAvailablity()
       .then()

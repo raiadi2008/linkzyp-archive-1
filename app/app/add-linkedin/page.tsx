@@ -43,7 +43,7 @@ export default function Page() {
     const userInfo = await fetch(`/api/linkedin-data?${urlParms}`)
     if (userInfo.status === HttpStatus.SUCCESS && userInfo.ok) {
       const data = await userInfo.json()
-      console.log("returned data", data)
+
       await update({
         ...session,
         user: {

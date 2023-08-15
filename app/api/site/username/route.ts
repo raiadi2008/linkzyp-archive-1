@@ -30,7 +30,6 @@ export async function GET(req: NextRequest) {
     )
 
   const site = await getSiteByUsernameDB(username)
-  console.log(site)
 
   return NextResponse.json({ available: !site }, { status: HttpStatus.SUCCESS })
 }
