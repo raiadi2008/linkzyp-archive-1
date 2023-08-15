@@ -76,7 +76,7 @@ export default function Education({
   }, [education])
 
   function validateEducationData() {
-    const _error = siteInfo.education!.map((value) => {
+    const _error = education.map((value) => {
       return {
         school: !value.school || value.school.length === 0,
         degree_name: !value.degree_name || value.degree_name.length === 0,
@@ -133,9 +133,9 @@ export default function Education({
 
   return (
     <>
-      <section className='mx-auto max-w-website py-6 h-full mb-32 px-6'>
+      <section className='mx-auto max-w-website py-6 mb-32 px-6'>
         <div className='max-w-medium-website'>
-          {education.map((value, index) => {
+          {education.map((edu, index) => {
             return (
               <div key={index} className='my-12 relative pb-14'>
                 <input
@@ -146,76 +146,90 @@ export default function Education({
                   }`}
                   type='text'
                   placeholder='School Name for eg. Harvard University'
-                  value={value.school}
+                  value={edu.school}
                   onChange={(e) => {
-                    const edu = [...education]
-                    edu[index].school = e.target.value
-                    setEducation(edu)
+                    const _edu = [...education]
+                    _edu[index].school = e.target.value
+                    setEducation(_edu)
                   }}
                 />
                 <input
-                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2 '
+                  className={`px-5 py-2 outline-none border rounded w-full mb-2 ${
+                    errors[index].degree_name
+                      ? "border-neutral-red"
+                      : "border-gray-300"
+                  }`}
                   type='text'
                   placeholder='Degree Name for eg. Bachelor of Science'
-                  value={value.degree_name}
+                  value={edu.degree_name}
                   onChange={(e) => {
-                    const edu = [...education]
-                    edu[index].degree_name = e.target.value
-                    setEducation(edu)
+                    const _edu = [...education]
+                    _edu[index].degree_name = e.target.value
+                    setEducation(_edu)
                   }}
                 />
                 <input
-                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
+                  className={`px-5 py-2 outline-none border rounded w-full mb-2 ${
+                    errors[index].field_of_study
+                      ? "border-neutral-red"
+                      : "border-gray-300"
+                  }`}
                   type='text'
                   placeholder='Field of study for eg. Computer Science'
-                  value={value.field_of_study}
+                  value={edu.field_of_study}
                   onChange={(e) => {
-                    const edu = [...education]
-                    edu[index].field_of_study = e.target.value
-                    setEducation(edu)
+                    const _edu = [...education]
+                    _edu[index].field_of_study = e.target.value
+                    setEducation(_edu)
                   }}
                 />
                 <div className='flex gap-x-6 items-center'>
                   <input
-                    className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2 resize-none'
+                    className={`px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2 resize-none ${
+                      errors[index].starts_at
+                        ? "border-neutral-red"
+                        : "border-gray-300"
+                    }`}
                     type='date'
                     value={
-                      value.starts_at
-                        ? formatDateAs_YYYY_MM_DD(value.starts_at)
+                      edu.starts_at
+                        ? formatDateAs_YYYY_MM_DD(edu.starts_at)
                         : ""
                     }
                     onChange={(e) => {
-                      const edu = [...education]
-                      edu[index].starts_at = convert_YYYY_MM_DD_toDate(
+                      const _edu = [...education]
+                      _edu[index].starts_at = convert_YYYY_MM_DD_toDate(
                         e.target.value
                       )
-                      setEducation(edu)
+                      setEducation(_edu)
                     }}
                   />
 
                   <input
-                    className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2 resize-none'
+                    className={`px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2 resize-none ${
+                      errors[index].ends_at
+                        ? "border-neutral-red"
+                        : "border-gray-300"
+                    }`}
                     type='date'
                     value={
-                      value.ends_at
-                        ? formatDateAs_YYYY_MM_DD(value.ends_at)
-                        : ""
+                      edu.ends_at ? formatDateAs_YYYY_MM_DD(edu.ends_at) : ""
                     }
                     onChange={(e) => {
-                      const edu = [...education]
-                      edu[index].ends_at = convert_YYYY_MM_DD_toDate(
+                      const _edu = [...education]
+                      _edu[index].ends_at = convert_YYYY_MM_DD_toDate(
                         e.target.value
                       )
-                      setEducation(edu)
+                      setEducation(_edu)
                     }}
                   />
                 </div>
                 <button
                   className='absolute bottom-2 right-0 text-dark-red border rounded p-2 border-neutral-red'
                   onClick={() => {
-                    const edu = [...education]
-                    removeItemAtIndex(edu, index)
-                    setEducation(edu)
+                    const _edu = [...education]
+                    removeItemAtIndex(_edu, index)
+                    setEducation(_edu)
                   }}
                 >
                   remove education
@@ -226,9 +240,9 @@ export default function Education({
           <button
             className='px-5 py-2 border border-gray-300 rounded w-full mb-2 resize-none'
             onClick={() => {
-              const edu = [...education]
-              edu.push({} as IEducation)
-              setEducation(edu)
+              const _edu = [...education]
+              _edu.push({} as IEducation)
+              setEducation(_edu)
             }}
           >
             + Add Another Education
