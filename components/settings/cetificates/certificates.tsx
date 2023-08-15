@@ -54,6 +54,8 @@ export default function Certificates({
         authority: !value.authority || value.authority.length === 0,
       }
     })
+    console.log("certificates", certificates)
+    console.log("errors", _errors)
     setErrors(_errors)
   }
 
@@ -93,6 +95,7 @@ export default function Certificates({
   }
 
   useEffect(() => {
+    console.log("certifiaces here", certificates)
     validateInputs()
     if (compareCertificates(certificates, siteInfo.certificates!)) {
       setValuesChanged(true)
@@ -102,51 +105,68 @@ export default function Certificates({
 
   return (
     <>
-      <section className='mx-auto max-w-website py-6 h-full mb-32'>
+      <section className='mx-auto max-w-website py-6 mb-32 px-6'>
         <div className='max-w-medium-website'>
-          {certificates.map((value, index) => {
+          {certificates.map((certificate, index) => {
             return (
               <div key={index} className='my-12 relative pb-14'>
+                <label className='font-sm text-gray-600 px-2'>
+                  Certifiacte Title<span className='text-dark-red'>*</span>
+                </label>
                 <input
-                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
+                  className={`px-5 py-2 outline-none border  rounded w-full mb-4 ${
+                    errors[index]?.name ?? false
+                      ? "border-neutral-red"
+                      : "border-gray-300"
+                  }`}
                   type='text'
                   placeholder='Certificate Title eg. Chartered Accountant Diploma tier-1'
-                  value={value.name}
+                  value={certificate.name}
                   onChange={(e) => {
-                    const edu = [...certificates]
-                    edu[index].name = e.target.value
-                    setCertificates(edu)
+                    const _certificates = [...certificates]
+                    _certificates[index].name = e.target.value
+                    setCertificates(_certificates)
                   }}
                 />
+                <label className='font-sm text-gray-600 px-2'>
+                  Issued by<span className='text-dark-red'>*</span>
+                </label>
                 <input
-                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
+                  className={`px-5 py-2 outline-none border  rounded w-full mb-4 ${
+                    errors[index]?.authority ?? false
+                      ? "border-neutral-red"
+                      : "border-gray-300"
+                  }`}
                   type='text'
                   placeholder='Issued by eg. Chartered Accountant Association USA'
-                  value={value.authority}
+                  value={certificate.authority}
                   onChange={(e) => {
-                    const edu = [...certificates]
-                    edu[index].authority = e.target.value
-                    setCertificates(edu)
+                    const _certificates = [...certificates]
+                    _certificates[index].authority = e.target.value
+                    setCertificates(_certificates)
                   }}
                 />
+                <label className='font-sm text-gray-600 px-2'>
+                  Certifiacate URL
+                </label>
                 <input
                   className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
                   type='text'
                   placeholder='Url of the certificate eg. https://bit.ly/tech-cert'
-                  value={value.url}
+                  value={certificate.url}
                   onChange={(e) => {
-                    const edu = [...certificates]
-                    edu[index].url = e.target.value
-                    setCertificates(edu)
+                    const _certificates = [...certificates]
+                    _certificates[index].url = e.target.value
+                    setCertificates(_certificates)
                   }}
                 />
 
                 <button
                   className='absolute bottom-2 right-0 text-dark-red border rounded p-2 border-neutral-red'
                   onClick={() => {
-                    const edu = [...certificates]
-                    removeItemAtIndex(edu, index)
-                    setCertificates(edu)
+                    const _certificates = [...certificates]
+                    removeItemAtIndex(_certificates, index)
+                    setCertificates(_certificates)
                   }}
                 >
                   remove certificates
@@ -157,9 +177,13 @@ export default function Certificates({
           <button
             className='px-5 py-2 border border-gray-300 rounded w-full mb-2 resize-none'
             onClick={() => {
-              const edu = [...certificates]
-              edu.push({ name: "", authority: "", url: "" } as ICertificate)
-              setCertificates(edu)
+              const _certificates = [...certificates]
+              _certificates.push({
+                name: "",
+                authority: "",
+                url: "",
+              } as ICertificate)
+              setCertificates(_certificates)
             }}
           >
             + Add Another Certificate
