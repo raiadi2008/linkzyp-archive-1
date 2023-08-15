@@ -1,7 +1,7 @@
 export default function EducationLoading() {
   return (
     <>
-      <section className='mx-auto max-w-website py-6 h-full mb-32'>
+      <section className='mx-auto max-w-website py-6 mb-32 px-6'>
         <div className='max-w-medium-website'>
           <div className='my-12 relative pb-14'>
             <div className='animate-pulse rounded  bg-slate-200 h-9 w-full mb-4'></div>
@@ -9,7 +9,7 @@ export default function EducationLoading() {
             <div className='animate-pulse rounded  bg-slate-200 h-9 w-full mb-4'></div>
             <div className='flex gap-x-6 items-center mb-4'>
               <div className='animate-pulse rounded  bg-slate-200 h-9 flex-1 '></div>
-              <p>to</p>
+
               <div className='animate-pulse rounded  bg-slate-200 h-9 flex-1 '></div>
             </div>
             <button
@@ -27,7 +27,7 @@ export default function EducationLoading() {
           </button>
         </div>
       </section>
-      <section className='fixed bottom-0 w-screen bg-white -shadow-2xl'>
+      <section className='fixed bottom-0 w-screen bg-white -shadow-2xl px-6'>
         <div className='max-w-website mx-auto'>
           <div className=' max-w-medium-website py-8 flex gap-x-6 justify-end'>
             <button

@@ -76,14 +76,14 @@ export default function Education({
   }, [education])
 
   function validateEducationData() {
-    const _error = siteInfo.education!.map((value) => {
+    const _error = education.map((value) => {
       return {
         school: !value.school || value.school.length === 0,
         degree_name: !value.degree_name || value.degree_name.length === 0,
         field_of_study:
           !value.field_of_study || value.field_of_study.length === 0,
         starts_at: !value.starts_at,
-        ends_at: !value.starts_at,
+        ends_at: !value.ends_at,
       } as EducationError
     })
     setErrors(_error)
@@ -112,7 +112,7 @@ export default function Education({
         ee.ends_at ||
         ee.field_of_study ||
         ee.school ||
-        ee.school
+        ee.starts_at
       ) {
         return
       }
@@ -133,85 +133,128 @@ export default function Education({
 
   return (
     <>
-      <section className='mx-auto max-w-website py-6 h-full mb-32'>
+      <section className='mx-auto max-w-website py-6 mb-32 px-6'>
         <div className='max-w-medium-website'>
-          {education.map((value, index) => {
+          {education.map((edu, index) => {
             return (
               <div key={index} className='my-12 relative pb-14'>
+                <label className='font-sm text-gray-600 px-2' htmlFor='company'>
+                  School Name<span className='text-dark-red'>*</span>
+                </label>
                 <input
-                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
+                  className={`px-5 py-2 outline-none border rounded w-full mb-4 ${
+                    errors[index]?.school ?? false
+                      ? "border-neutral-red"
+                      : "border-gray-300"
+                  }`}
                   type='text'
                   placeholder='School Name for eg. Harvard University'
-                  value={value.school}
+                  value={edu.school}
                   onChange={(e) => {
-                    const edu = [...education]
-                    edu[index].school = e.target.value
-                    setEducation(edu)
+                    const _edu = [...education]
+                    _edu[index].school = e.target.value
+                    setEducation(_edu)
                   }}
                 />
+                <label className='font-sm text-gray-600 px-2' htmlFor='company'>
+                  Degree Name<span className='text-dark-red'>*</span>
+                </label>
                 <input
-                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
+                  className={`px-5 py-2 outline-none border rounded w-full mb-4 ${
+                    errors[index]?.degree_name ?? false
+                      ? "border-neutral-red"
+                      : "border-gray-300"
+                  }`}
                   type='text'
                   placeholder='Degree Name for eg. Bachelor of Science'
-                  value={value.degree_name}
+                  value={edu.degree_name}
                   onChange={(e) => {
-                    const edu = [...education]
-                    edu[index].degree_name = e.target.value
-                    setEducation(edu)
+                    const _edu = [...education]
+                    _edu[index].degree_name = e.target.value
+                    setEducation(_edu)
                   }}
                 />
+                <label className='font-sm text-gray-600 px-2' htmlFor='company'>
+                  Field of Study<span className='text-dark-red'>*</span>
+                </label>
                 <input
-                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
+                  className={`px-5 py-2 outline-none border rounded w-full mb-4 ${
+                    errors[index]?.field_of_study ?? false
+                      ? "border-neutral-red"
+                      : "border-gray-300"
+                  }`}
                   type='text'
                   placeholder='Field of study for eg. Computer Science'
-                  value={value.field_of_study}
+                  value={edu.field_of_study}
                   onChange={(e) => {
-                    const edu = [...education]
-                    edu[index].field_of_study = e.target.value
-                    setEducation(edu)
+                    const _edu = [...education]
+                    _edu[index].field_of_study = e.target.value
+                    setEducation(_edu)
                   }}
                 />
-                <div className='flex gap-x-6 items-center'>
-                  <input
-                    className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2 resize-none'
-                    type='date'
-                    value={
-                      value.starts_at
-                        ? formatDateAs_YYYY_MM_DD(value.starts_at)
-                        : ""
-                    }
-                    onChange={(e) => {
-                      const edu = [...education]
-                      edu[index].starts_at = convert_YYYY_MM_DD_toDate(
-                        e.target.value
-                      )
-                      setEducation(edu)
-                    }}
-                  />
-                  <p>to</p>
-                  <input
-                    className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2 resize-none'
-                    type='date'
-                    value={
-                      value.ends_at
-                        ? formatDateAs_YYYY_MM_DD(value.ends_at)
-                        : ""
-                    }
-                    onChange={(e) => {
-                      const edu = [...education]
-                      edu[index].ends_at = convert_YYYY_MM_DD_toDate(
-                        e.target.value
-                      )
-                      setEducation(edu)
-                    }}
-                  />
+                <div className='flex gap-x-6 items-center mb-4'>
+                  <div className='w-full'>
+                    <label
+                      className='font-sm text-gray-600 px-2'
+                      htmlFor='company'
+                    >
+                      Start Date<span className='text-dark-red'>*</span>
+                    </label>
+                    <input
+                      className={`px-5 py-2 outline-none border border-gray-300 rounded w-full resize-none ${
+                        errors[index]?.starts_at ?? false
+                          ? "border-neutral-red"
+                          : "border-gray-300"
+                      }`}
+                      type='date'
+                      value={
+                        edu.starts_at
+                          ? formatDateAs_YYYY_MM_DD(edu.starts_at)
+                          : ""
+                      }
+                      onChange={(e) => {
+                        const _edu = [...education]
+                        _edu[index].starts_at = convert_YYYY_MM_DD_toDate(
+                          e.target.value
+                        )
+                        setEducation(_edu)
+                      }}
+                    />
+                  </div>
+                  <div className='w-full'>
+                    <label
+                      className='font-sm text-gray-600 px-2'
+                      htmlFor='company'
+                    >
+                      End Date (expected)
+                      <span className='text-dark-red'>*</span>
+                    </label>
+                    <input
+                      className={`px-5 py-2 outline-none border border-gray-300 w-full rounded resize-none ${
+                        errors[index]?.ends_at ?? false
+                          ? "border-neutral-red"
+                          : "border-gray-300"
+                      }`}
+                      type='date'
+                      value={
+                        edu.ends_at ? formatDateAs_YYYY_MM_DD(edu.ends_at) : ""
+                      }
+                      onChange={(e) => {
+                        const _edu = [...education]
+                        _edu[index].ends_at = convert_YYYY_MM_DD_toDate(
+                          e.target.value
+                        )
+                        setEducation(_edu)
+                      }}
+                    />
+                  </div>
                 </div>
                 <button
                   className='absolute bottom-2 right-0 text-dark-red border rounded p-2 border-neutral-red'
                   onClick={() => {
-                    const edu = [...education]
-                    removeItemAtIndex(edu, index)
-                    setEducation(edu)
+                    const _edu = [...education]
+                    removeItemAtIndex(_edu, index)
+                    setEducation(_edu)
                   }}
                 >
                   remove education
@@ -222,29 +265,29 @@ export default function Education({
           <button
             className='px-5 py-2 border border-gray-300 rounded w-full mb-2 resize-none'
             onClick={() => {
-              const edu = [...education]
-              edu.push({} as IEducation)
-              setEducation(edu)
+              const _edu = [...education]
+              _edu.push({} as IEducation)
+              setEducation(_edu)
             }}
           >
             + Add Another Education
           </button>
         </div>
       </section>
-      <section className='fixed bottom-0 w-screen bg-white -shadow-2xl'>
+      <section className='fixed bottom-0 left-0 w-screen bg-white -shadow-2xl px-6'>
         <div className='max-w-website mx-auto'>
-          <div className=' max-w-medium-website py-8 flex gap-x-6 justify-end'>
+          <div className=' max-w-medium-website py-6 flex gap-x-6 justify-end'>
             <button
               onClick={discardEducationChanges}
               disabled={!valuesChanged}
-              className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light'
+              className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light sm:font-normal sm:text-sm sm:border-1'
             >
               Discard Changes
             </button>
             <button
               onClick={saveEducationChanges}
               disabled={!valuesChanged}
-              className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light'
+              className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light sm:font-normal sm:text-sm sm:border-1'
             >
               Save Changes
             </button>

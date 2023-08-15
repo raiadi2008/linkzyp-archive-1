@@ -87,13 +87,18 @@ export default function Projects({
 
   return (
     <>
-      <section className='mx-auto max-w-website py-6 h-full mb-32'>
+      <section className='mx-auto max-w-website py-6 mb-32 px-6'>
         <div className='max-w-medium-website'>
           {projects.map((value, index) => {
             return (
               <div key={index} className='my-12 relative pb-14'>
+                <label className='font-sm text-gray-600 px-2' htmlFor='company'>
+                  Project Name<span className='text-dark-red'>*</span>
+                </label>
                 <input
-                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
+                  className={`px-5 py-2 outline-none border rounded w-full mb-4 ${
+                    errors[index] ? "border-neutral-red" : "border-gray-300"
+                  }`}
                   type='text'
                   placeholder='Project Title eg. My Awesome Project'
                   value={value.title}
@@ -103,6 +108,9 @@ export default function Projects({
                     setProjects(_projects)
                   }}
                 />
+                <label className='font-sm text-gray-600 px-2' htmlFor='company'>
+                  Project Description
+                </label>
                 <textarea
                   className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2 resize-none'
                   rows={4}
@@ -114,8 +122,11 @@ export default function Projects({
                     setProjects(_projects)
                   }}
                 />
+                <label className='font-sm text-gray-600 px-2' htmlFor='company'>
+                  Project URL
+                </label>
                 <input
-                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-2'
+                  className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-4'
                   type='text'
                   placeholder='Link to the project eg. https://github.com/user/repo'
                   value={value.url}
@@ -154,20 +165,20 @@ export default function Projects({
           </button>
         </div>
       </section>
-      <section className='fixed bottom-0 w-screen bg-white -shadow-2xl'>
+      <section className='fixed bottom-0 left-0 w-screen bg-white -shadow-2xl px-6'>
         <div className='max-w-website mx-auto'>
-          <div className=' max-w-medium-website py-8 flex gap-x-6 justify-end'>
+          <div className=' max-w-medium-website py-6 flex gap-x-6 justify-end'>
             <button
               onClick={discardProjectChanges}
               disabled={!valuesChanged}
-              className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light'
+              className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light sm:font-normal sm:text-sm sm:border-1'
             >
               Discard Changes
             </button>
             <button
               onClick={saveProjectChanges}
               disabled={!valuesChanged}
-              className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light'
+              className='rounded-full border-2 border-primary bg-primary text-white px-4 py-2 font-medium disabled:border-primary-light disabled:bg-primary-light sm:font-normal sm:text-sm sm:border-1'
             >
               Save Changes
             </button>
