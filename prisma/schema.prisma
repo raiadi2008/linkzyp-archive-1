@@ -43,6 +43,11 @@ type Certificate {
   url       String?
 }
 
+type Faq {
+  question String
+  answer   String
+}
+
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
   userId            String  @db.ObjectId
@@ -90,6 +95,16 @@ model Site {
   skills          String[]
   projects        Project[]
   certificates    Certificate[]
+  faqs            Faq[]
+  resume_link     String?
+  instagram_url   String?
+  twitter_url     String?
+  youtube_url     String?
+  medium_url      String?
+  github_url      String?
+  dribbble_url    String?
+  hire_me         String?
+  publication     String?
 
   user User @relation(fields: [userId], references: [id])
 }

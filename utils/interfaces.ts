@@ -34,12 +34,6 @@ export interface ICertificate {
   url?: string
 }
 
-export interface ILinksAndSocial {
-  url: string
-  name: string
-  type: LinksEnum
-}
-
 export interface IFaq {
   question: string
   answer: string
@@ -61,8 +55,16 @@ export interface ISite {
   skills?: string[]
   projects?: IProject[]
   certificates?: ICertificate[]
-  links_and_social?: ILinksAndSocial[]
   faqs?: IFaq[]
+  resume_link?: string
+  instagram_url?: string
+  twitter_url?: string
+  youtube_url?: string
+  medium_url?: string
+  github_url?: string
+  dribbble_url?: string
+  hire_me?: string
+  publication?: string
 }
 
 export interface ISiteUpdates {
