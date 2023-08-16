@@ -2,6 +2,8 @@ import {
   ICertificate,
   IEducation,
   IExperience,
+  IFaq,
+  ILinksAndSocial,
   IProject,
   ISite,
 } from "./interfaces"
@@ -120,6 +122,10 @@ export function parseSiteDataFromJSON(data: any) {
       certificates: data["certificates"] as ICertificate[],
       skills: data["skills"] as string[],
       courses: data["courses"] as string[],
+      links_and_social: data["links_and_social"]
+        ? (data["links_and_social"] as ILinksAndSocial[])
+        : ([] as ILinksAndSocial[]),
+      faqs: data["faqs"] ? (data["faqs"] as IFaq[]) : ([] as IFaq[]),
     } as ISite
     return result
   } catch (e) {

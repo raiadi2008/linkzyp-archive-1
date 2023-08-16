@@ -19,6 +19,8 @@ import { navbar, navbarMap } from "@/constants/settings_navbar"
 import CurrentSettingsSection from "./tab_selector"
 import getUserInfo from "./fetch"
 import Link from "next/link"
+import { parse } from "path"
+import { parseSiteDataFromJSON } from "@/utils/functions"
 
 const TAB = "tab"
 
@@ -47,22 +49,8 @@ export default function Page() {
     setIsLoading(true)
     getUserInfo()
       .then((data) => {
-        updateSiteInfo({
-          id: data["id"],
-          userId: data["userId"],
-          username: data["username"],
-          profile_picture: data["profile_picture"],
-          first_name: data["first_name"],
-          last_name: data["last_name"],
-          linkedin_url: data["linkedin_url"],
-          occupation: data["occupation"],
-          experiences: data["experiences"] as IExperience[],
-          education: data["education"] as IEducation[],
-          projects: data["projects"] as IProject[],
-          certificates: data["certificates"] as ICertificate[],
-          skills: data["skills"] as string[],
-          courses: data["courses"] as string[],
-        } as ISite)
+        const parsedData = parseSiteDataFromJSON(data)
+        updateSiteInfo(parsedData)
       })
       .catch((err) => {
         router.push("/app/login")

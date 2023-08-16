@@ -13,6 +13,10 @@ import EducationLoading from "@/components/settings/education/loading"
 import SkillsAndCoursesLoading from "@/components/settings/skills-and-courses/loading"
 import ProjectsLoading from "@/components/settings/projects/loading"
 import CertificatesLoading from "@/components/settings/cetificates/loading"
+import LinksAndSocial from "@/components/settings/links-and-social/links-and-social"
+import LinksAndSocialLoading from "@/components/settings/links-and-social/loading"
+import FAQs from "@/components/settings/faqs/faqs"
+import FAQsLoading from "@/components/settings/faqs/loading"
 
 export default function CurrentSettingsSection(
   tab: string | null,
@@ -107,6 +111,34 @@ export default function CurrentSettingsSection(
         )
       } else {
         return <CertificatesLoading />
+      }
+    case "links-and-socials":
+      if (!isLoading && siteInfo) {
+        return (
+          <LinksAndSocial
+            siteInfo={siteInfo}
+            valuesChanged={valuesChanged}
+            setValuesChanged={setValuesChanged}
+            setSiteInfo={updateSiteInfo}
+            setIsLoading={setIsLoading}
+          />
+        )
+      } else {
+        return <LinksAndSocialLoading />
+      }
+    case "faqs":
+      if (!isLoading && siteInfo) {
+        return (
+          <FAQs
+            setIsLoading={setIsLoading}
+            setSiteInfo={updateSiteInfo}
+            setValuesChanged={setValuesChanged}
+            siteInfo={siteInfo}
+            valuesChanged={valuesChanged}
+          />
+        )
+      } else {
+        return <FAQsLoading />
       }
   }
 }
