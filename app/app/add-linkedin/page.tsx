@@ -40,7 +40,7 @@ export default function Page() {
       ? `?linkedinURL=${url}&withLinkedin=true`
       : "withLinkedin=false"
 
-    const userInfo = await fetch(`/api/linkedin-data?${urlParms}`)
+    const userInfo = await fetch(`/api/add-linkedin?${urlParms}`)
     if (userInfo.status === HttpStatus.SUCCESS && userInfo.ok) {
       const data = await userInfo.json()
 

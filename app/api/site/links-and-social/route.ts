@@ -25,6 +25,7 @@ export async function PUT(req: NextRequest) {
   const payload = await req.json()
   const {
     resume_link,
+    linkedin_url,
     instagram_url,
     twitter_url,
     youtube_url,
@@ -38,6 +39,7 @@ export async function PUT(req: NextRequest) {
   // update site data
   const siteData: ISite = {
     resume_link,
+    linkedin_url,
     instagram_url,
     twitter_url,
     youtube_url,

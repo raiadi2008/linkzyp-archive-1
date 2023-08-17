@@ -43,6 +43,7 @@ export default function FAQs({
   )
 
   useEffect(() => {
+    validateChanges()
     if (compareFAQs(faqs, siteInfo.faqs!)) {
       setValuesChanged(true)
     } else {
