@@ -18,10 +18,14 @@ export default function SkillsAndCourses({
   setSiteInfo,
   setValuesChanged,
 }: ISiteUpdates) {
-  const [skills, setSkills] = useState<string[]>([...siteInfo.skills!])
+  const [skills, setSkills] = useState<string[]>(
+    siteInfo.skills ? [...siteInfo.skills!] : []
+  )
   const [newSkill, setNewSkill] = useState<string>("")
   const [newCourse, setNewCourse] = useState<string>("")
-  const [courses, setCourses] = useState<string[]>([...siteInfo.courses!])
+  const [courses, setCourses] = useState<string[]>(
+    siteInfo.courses ? [...siteInfo.courses!] : []
+  )
 
   useEffect(() => {
     if (

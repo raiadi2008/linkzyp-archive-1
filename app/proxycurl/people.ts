@@ -88,6 +88,8 @@ export async function fetchPeopleLinkedinData(linkedinURL: string) {
       courses,
       skills: data["skills"],
     } as ISite
+
+    return siteInfo
   }
   return null
 }
