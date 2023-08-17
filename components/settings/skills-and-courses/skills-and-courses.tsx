@@ -82,7 +82,7 @@ export default function SkillsAndCourses({
             ))}
             <div className='mt-8 flex w-full  gap-x-12 sm:gap-x-4 xs:flex-col'>
               <input
-                className='px-5 py-2 outline-none border border-gray-300 rounded w-full xs:mb2'
+                className='px-5 py-2 outline-none border border-gray-300 rounded w-full xs:mb-2'
                 type='text'
                 value={newSkill}
                 placeholder='Add new skill eg. Content Writing'

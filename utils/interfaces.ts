@@ -1,3 +1,4 @@
+import { LinksEnum } from "@/constants/links_enum"
 import { Dispatch, SetStateAction } from "react"
 
 export interface IExperience {
@@ -33,6 +34,10 @@ export interface ICertificate {
   url?: string
 }
 
+export interface IFaq {
+  question: string
+  answer: string
+}
 export interface ISite {
   id?: string
   userId?: string
@@ -50,6 +55,16 @@ export interface ISite {
   skills?: string[]
   projects?: IProject[]
   certificates?: ICertificate[]
+  faqs?: IFaq[]
+  resume_link?: string
+  instagram_url?: string
+  twitter_url?: string
+  youtube_url?: string
+  medium_url?: string
+  github_url?: string
+  dribbble_url?: string
+  hire_me?: string
+  publication?: string
 }
 
 export interface ISiteUpdates {

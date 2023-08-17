@@ -192,7 +192,7 @@ export default function Education({
                     setEducation(_edu)
                   }}
                 />
-                <div className='flex gap-x-6 items-center mb-4'>
+                <div className='flex gap-x-6 items-center mb-4 sm:flex-col'>
                   <div className='w-full'>
                     <label
                       className='font-sm text-gray-600 px-2'
@@ -205,7 +205,7 @@ export default function Education({
                         errors[index]?.starts_at ?? false
                           ? "border-neutral-red"
                           : "border-gray-300"
-                      }`}
+                      } sm:mb-4`}
                       type='date'
                       value={
                         edu.starts_at

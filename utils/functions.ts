@@ -2,6 +2,7 @@ import {
   ICertificate,
   IEducation,
   IExperience,
+  IFaq,
   IProject,
   ISite,
 } from "./interfaces"
@@ -59,7 +60,7 @@ export function convert_YYYY_MM_DD_toDate(
   if (!dateString) return undefined
   try {
     const dateObject = new Date(dateString)
-    console.log("dateObject", dateObject)
+
     return dateObject
   } catch (error) {
     return undefined
@@ -120,6 +121,16 @@ export function parseSiteDataFromJSON(data: any) {
       certificates: data["certificates"] as ICertificate[],
       skills: data["skills"] as string[],
       courses: data["courses"] as string[],
+      faqs: data["faqs"] ? (data["faqs"] as IFaq[]) : ([] as IFaq[]),
+      resume_link: data["resume_link"],
+      instagram_url: data["instagram_url"],
+      twitter_url: data["twitter_url"],
+      youtube_url: data["youtube_url"],
+      medium_url: data["medium_url"],
+      github_url: data["github_url"],
+      dribbble_url: data["dribbble_url"],
+      hire_me: data["hire_me"],
+      publication: data["publication"],
     } as ISite
     return result
   } catch (e) {
