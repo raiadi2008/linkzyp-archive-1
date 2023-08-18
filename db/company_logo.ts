@@ -22,12 +22,28 @@ export async function saveCompanyLogoDB(
 
 /**
  * @param company_url string
- * @returns companyLogo in database
+ * @returns companyLogo in database based on company url
  */
 export async function getCompanyLogoDB(company_url: string) {
   const companyLogo = await prisma.companyLogo.findUnique({
     where: {
       company: company_url,
+    },
+  })
+  return companyLogo
+}
+/**
+ * @param logo_url string
+ * @param id ObjectID
+ * @return updated companyLogo in database
+ */
+export async function updateCompanyLogoDB(logo_url: string, id: string) {
+  const companyLogo = await prisma.companyLogo.update({
+    data: {
+      logo: logo_url,
+    },
+    where: {
+      id: id,
     },
   })
   return companyLogo

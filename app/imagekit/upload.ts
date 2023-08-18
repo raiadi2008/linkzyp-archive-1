@@ -5,13 +5,14 @@ import { UploadResponse } from "imagekit/dist/libs/interfaces"
 
 async function uploadImage(
   url: string,
-  unique: boolean = true
+  unique: boolean = true,
+  filename: string = "logo.jpeg"
 ): Promise<UploadResponse | null> {
   try {
     const response: UploadResponse = await imagekit.upload({
       file: url,
 
-      fileName: "logo.jpeg",
+      fileName: filename,
       useUniqueFileName: unique,
       folder: "/logos",
       isPrivateFile: false,

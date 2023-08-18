@@ -6,6 +6,7 @@ import HttpStatus from "@/constants/http_status"
 import { IExperience, ISite } from "@/utils/interfaces"
 import { updateSiteDB } from "@/db/site"
 import { parseDateString } from "@/utils/functions"
+import fetchLogo from "./fetch_logo"
 
 /**
  * @param req
@@ -64,6 +65,19 @@ export async function PUT(req: NextRequest) {
       logo: value.logo,
     } as IExperience
   })
+
+  const logos = experiences.map((exp) =>
+    exp.company_linkedin_profile_url
+      ? fetchLogo(exp.company_linkedin_profile_url)
+      : null
+  )
+
+  await Promise.all(logos).then((fetchedLogos) => {
+    for (let i = 0; i < fetchedLogos.length; i++) {
+      experiences[i].logo = fetchedLogos[i] ?? undefined
+    }
+  })
+
   const siteData: ISite = { experiences }
 
   const updatedSite = await updateSiteDB(siteData, userId)

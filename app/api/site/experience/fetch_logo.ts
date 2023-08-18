@@ -1,7 +1,10 @@
 import uploadImage from "@/app/imagekit/upload"
 import fetchCompanyLogo from "@/app/proxycurl/company"
-import { saveCompanyLogoDB } from "@/db/company_logo"
-import { url } from "inspector"
+import {
+  getCompanyLogoDB,
+  saveCompanyLogoDB,
+  updateCompanyLogoDB,
+} from "@/db/company_logo"
 
 /**
  * @param companyURL
@@ -14,14 +17,15 @@ export default async function fetchLogo(
   const parsedCompanyUrl = new URL(companyURL).toString()
   const temp_CDN_URL: string | null = await fetchCompanyLogo(parsedCompanyUrl)
   if (!temp_CDN_URL) return null
-  const imagekitURL = await uploadImage(temp_CDN_URL)
+  const dbCompanyLogo = await getCompanyLogoDB(parsedCompanyUrl)
+  const imagekitURL = dbCompanyLogo
+    ? await uploadImage(temp_CDN_URL, false, dbCompanyLogo.file_name)
+    : await uploadImage(temp_CDN_URL)
   if (!imagekitURL) return null
   const parsedImagekitURL = new URL(imagekitURL.url).toString()
   const filename = imagekitURL.name
-  const savedCompanyLogo = await saveCompanyLogoDB(
-    parsedCompanyUrl,
-    parsedImagekitURL,
-    filename
-  )
+  const savedCompanyLogo = dbCompanyLogo
+    ? await updateCompanyLogoDB(parsedImagekitURL, dbCompanyLogo.id)
+    : await saveCompanyLogoDB(parsedCompanyUrl, parsedImagekitURL, filename)
   return savedCompanyLogo.logo
 }
