@@ -14,10 +14,14 @@ import {
 export default async function fetchLogo(
   companyURL: string
 ): Promise<string | null> {
-  const parsedCompanyUrl = new URL(companyURL).toString()
-  const temp_CDN_URL: string | null = await fetchCompanyLogo(parsedCompanyUrl)
+  const parsedCompanyUrl = new URL(companyURL)
+  const baseCompanyUrl = new URL(
+    parsedCompanyUrl.pathname,
+    parsedCompanyUrl.origin
+  ).toString()
+  const temp_CDN_URL: string | null = await fetchCompanyLogo(baseCompanyUrl)
   if (!temp_CDN_URL) return null
-  const dbCompanyLogo = await getCompanyLogoDB(parsedCompanyUrl)
+  const dbCompanyLogo = await getCompanyLogoDB(baseCompanyUrl)
   const imagekitURL = dbCompanyLogo
     ? await uploadImage(temp_CDN_URL, false, dbCompanyLogo.file_name)
     : await uploadImage(temp_CDN_URL)
@@ -26,6 +30,6 @@ export default async function fetchLogo(
   const filename = imagekitURL.name
   const savedCompanyLogo = dbCompanyLogo
     ? await updateCompanyLogoDB(parsedImagekitURL, dbCompanyLogo.id)
-    : await saveCompanyLogoDB(parsedCompanyUrl, parsedImagekitURL, filename)
+    : await saveCompanyLogoDB(baseCompanyUrl, parsedImagekitURL, filename)
   return savedCompanyLogo.logo
 }
