@@ -230,7 +230,7 @@ export default function WorkExperience({
                 <input
                   className='px-5 py-2 outline-none border border-gray-300 rounded w-full mb-4'
                   type='text'
-                  placeholder='Company Name eg. Google'
+                  placeholder='Company Linkedin profile url eg. https://www.linkedin.com/company/google'
                   value={experience.company_linkedin_profile_url}
                   onChange={(e) => {
                     const workExperience = [...experiences]

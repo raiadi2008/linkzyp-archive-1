@@ -39,6 +39,10 @@ const authOptions: NextAuthOptions = {
       return session
     },
   },
+  pages: {
+    signIn: "/app/login",
+    error: "/app/login",
+  },
   debug: process.env.NODE_ENV === "development",
 }
 
