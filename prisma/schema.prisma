@@ -116,3 +116,10 @@ model Theme {
   path String
   img  String?
 }
+
+model CompanyLogo {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  company   String @unique
+  logo      String @unique
+  file_name String @unique
+}
