@@ -155,3 +155,36 @@ export function parseDateString(
   }
   return date
 }
+
+/**
+ * @param url
+ * @returns boolean
+ * @description checks if a string is a valid url returns true for valid url false for invalid
+ */
+export function isStringValidUrl(url: string): boolean {
+  try {
+    new URL(url)
+    return true
+  } catch (_) {
+    return false
+  }
+}
+
+/**
+ * @param domain string
+ * @returns true if domain is toplevel false if subdomain
+ * @description checks if domain is toplevel of subdomain
+ * @example - www.example.com => true
+ * @example - example.com => true
+ * @example - sub.example.com => false
+ * @example - sub.sub.example.com => false
+ * @example - www.sub.example.com => false
+ */
+
+export function isDomainTopLevel(domain: string): boolean {
+  const domainParts = domain.split(".")
+  return (
+    (domainParts[0] === "www" && domainParts.length === 3) ||
+    domainParts.length === 2
+  )
+}
