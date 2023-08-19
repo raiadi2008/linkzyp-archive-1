@@ -1,7 +1,7 @@
 import { use, useEffect, useState } from "react"
 
-import { IFaq, IProject, ISite, ISiteUpdates } from "@/utils/interfaces"
-import { parseSiteDataFromJSON, removeItemAtIndex } from "@/utils/functions"
+import { IFaq, IProject, ISite, ISiteUpdates } from "@/app/utils/interfaces"
+import { parseSiteDataFromJSON, removeItemAtIndex } from "@/app/utils/functions"
 import HttpStatus from "@/constants/http_status"
 
 interface FaqError {

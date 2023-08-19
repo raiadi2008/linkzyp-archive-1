@@ -2,8 +2,8 @@
 
 import HttpStatus from "@/constants/http_status"
 import useDebouncer from "@/hooks/useDebouncer"
-import { parseSiteDataFromJSON } from "@/utils/functions"
-import { ISite, ISiteUpdates } from "@/utils/interfaces"
+import { parseSiteDataFromJSON } from "@/app/utils/functions"
+import { ISite, ISiteUpdates } from "@/app/utils/interfaces"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 

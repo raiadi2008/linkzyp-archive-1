@@ -1,12 +1,13 @@
 import HttpStatus from "@/constants/http_status"
-import { convertJSONIntoDate } from "@/utils/functions"
+import { convertJSONIntoDate } from "@/app/utils/functions"
 import {
   ISite,
   IExperience,
   IEducation,
   IProject,
   ICertificate,
-} from "@/utils/interfaces"
+} from "@/app/utils/interfaces"
+import fetchLogo from "../utils/fetch_logo"
 
 /**
  * @param linkedinURL string
@@ -73,6 +74,18 @@ export async function fetchPeopleLinkedinData(linkedinURL: string) {
 
     const courses = (data["courses"] as any[]).map((value, index) => {
       return value["name"]
+    })
+
+    const logos = experiences.map((value) =>
+      value.company_linkedin_profile_url
+        ? fetchLogo(value.company_linkedin_profile_url)
+        : null
+    )
+
+    await Promise.all(logos).then((fetchedLogos) => {
+      for (let i = 0; i < fetchedLogos.length; i++) {
+        experiences[i].logo = fetchedLogos[i] ?? undefined
+      }
     })
 
     const siteInfo = {

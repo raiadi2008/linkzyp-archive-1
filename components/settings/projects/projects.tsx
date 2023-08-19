@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
-import { IProject, ISite, ISiteUpdates } from "@/utils/interfaces"
-import { parseSiteDataFromJSON, removeItemAtIndex } from "@/utils/functions"
+import { IProject, ISite, ISiteUpdates } from "@/app/utils/interfaces"
+import { parseSiteDataFromJSON, removeItemAtIndex } from "@/app/utils/functions"
 import HttpStatus from "@/constants/http_status"
 
 function compareProjects(a: IProject[], b: IProject[]): boolean {

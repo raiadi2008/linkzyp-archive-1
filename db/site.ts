@@ -1,6 +1,6 @@
 import Themes from "@/constants/themes"
 import { prisma } from "@/lib/prismadb"
-import { ISite } from "@/utils/interfaces"
+import { ISite } from "@/app/utils/interfaces"
 import { v4 as uuidv4 } from "uuid"
 import { getThemeByName } from "./theme"
 

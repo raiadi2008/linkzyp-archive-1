@@ -5,7 +5,7 @@ import HttpStatus from "@/constants/http_status"
 import { getSiteByUserId, getSiteByUsernameDB, updateSiteDB } from "@/db/site"
 
 import { NextRequest, NextResponse } from "next/server"
-import { ISite } from "@/utils/interfaces"
+import { ISite } from "@/app/utils/interfaces"
 
 /**
  * @method GET
