@@ -7,7 +7,7 @@ import authOptions from "@/lib/auth"
 import { createSiteDB } from "@/db/site"
 import { updateUserLinkedinAdded } from "@/db/user"
 import Themes from "@/constants/themes"
-import { ISite } from "@/utils/interfaces"
+import { ISite } from "@/app/utils/interfaces"
 import { fetchPeopleLinkedinData } from "@/app/proxycurl/people"
 
 /**

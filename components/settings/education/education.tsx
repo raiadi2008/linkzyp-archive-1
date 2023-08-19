@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 
-import { IEducation, ISiteUpdates } from "@/utils/interfaces"
+import { IEducation, ISiteUpdates } from "@/app/utils/interfaces"
 import {
   convert_YYYY_MM_DD_toDate,
   formatDateAs_YYYY_MM_DD,
   parseSiteDataFromJSON,
   removeItemAtIndex,
-} from "@/utils/functions"
+} from "@/app/utils/functions"
 import HttpStatus from "@/constants/http_status"
 
 interface EducationError {

@@ -1,8 +1,8 @@
 import { useState } from "react"
 
-import { ISite, ISiteUpdates } from "@/utils/interfaces"
+import { ISite, ISiteUpdates } from "@/app/utils/interfaces"
 import HttpStatus from "@/constants/http_status"
-import { parseSiteDataFromJSON } from "@/utils/functions"
+import { parseSiteDataFromJSON } from "@/app/utils/functions"
 
 export default function LinksAndSocial({
   setIsLoading,

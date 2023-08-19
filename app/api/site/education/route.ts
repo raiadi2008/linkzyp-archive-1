@@ -3,9 +3,9 @@ import { getServerSession } from "next-auth"
 
 import authOptions from "@/lib/auth"
 import HttpStatus from "@/constants/http_status"
-import { IEducation, ISite } from "@/utils/interfaces"
+import { IEducation, ISite } from "@/app/utils/interfaces"
 import { updateSiteDB } from "@/db/site"
-import { parseDateString } from "@/utils/functions"
+import { parseDateString } from "@/app/utils/functions"
 
 /**
  * @param req

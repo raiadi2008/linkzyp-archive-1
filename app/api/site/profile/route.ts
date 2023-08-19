@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth"
 
 import authOptions from "@/lib/auth"
 import HttpStatus from "@/constants/http_status"
-import { ISite } from "@/utils/interfaces"
+import { ISite } from "@/app/utils/interfaces"
 import { updateSiteDB } from "@/db/site"
 
 /**

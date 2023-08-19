@@ -1,4 +1,4 @@
-import { ISite } from "@/utils/interfaces"
+import { ISite } from "@/app/utils/interfaces"
 import { Dispatch, SetStateAction } from "react"
 
 import ProfileSettings from "@/components/settings/profile/profile"

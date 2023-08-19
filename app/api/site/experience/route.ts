@@ -3,10 +3,10 @@ import { getServerSession } from "next-auth"
 
 import authOptions from "@/lib/auth"
 import HttpStatus from "@/constants/http_status"
-import { IExperience, ISite } from "@/utils/interfaces"
+import { IExperience, ISite } from "@/app/utils/interfaces"
 import { updateSiteDB } from "@/db/site"
-import { parseDateString } from "@/utils/functions"
-import fetchLogo from "./fetch_logo"
+import { parseDateString } from "@/app/utils/functions"
+import fetchLogo from "../../../utils/fetch_logo"
 
 /**
  * @param req
