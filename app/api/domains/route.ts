@@ -7,6 +7,12 @@ import { isDomainTopLevel, isStringValidUrl } from "@/app/utils/functions"
 import { getSiteByDomainDB, getSiteByUserId, updateSiteDB } from "@/db/site"
 import { ISite } from "@/app/utils/interfaces"
 
+/**
+ * @param req
+ * @returns domain verification data
+ * @description adds custom domain to users site
+ * @method POST
+ */
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session)
@@ -96,11 +102,22 @@ export async function POST(req: NextRequest) {
   )
 
   return NextResponse.json(
-    { domain: site.domain, verification: verifications },
+    {
+      domain: site.domain,
+      www_sub_domain: site.www_sub_domain,
+      verification: verifications,
+      verified: false,
+    },
     { status: HttpStatus.SUCCESS }
   )
 }
 
+/**
+ * @param req
+ * @returns site verifiation data
+ * @description checks if the users site has been verified by the vercel and live
+ * @method GET
+ */
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session)
@@ -116,16 +133,44 @@ export async function GET(req: NextRequest) {
       { status: HttpStatus.NOT_FOUND }
     )
   }
-  const host = site.domain
+
   let isVerified = false
   const verifications: any[] = []
   const headers = {
     Authorization: `Bearer ${process.env.VERCEL_ACCESS_TOKEN}`,
   }
+  const vercelDomainVerifyEndpoint = `${process.env.VERCEL_URL}/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains/${site.domain}/verify`
+  const resultDomain = await fetch(vercelDomainVerifyEndpoint, {
+    headers,
+    method: "POST",
+  })
+  if (resultDomain.ok && resultDomain.status === HttpStatus.SUCCESS) {
+    const data = await resultDomain.json()
+    if (data["verification"]) verifications.push(data["verification"])
+    isVerified = isVerified && data["verified"]
+  }
 
-  // if () {
-  //   const vercelDomainVerifyEndpoint = `${process.env.VERCEL_URL}/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains/${site.domain}/verify`
-  // }
+  if (site.www_sub_domain) {
+    const vercelSubDomainVerifyEndpoint = `${process.env.VERCEL_URL}/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains/${site.www_sub_domain}/verify`
+    const resultSubDomain = await fetch(vercelSubDomainVerifyEndpoint, {
+      headers,
+      method: "POST",
+    })
+    if (resultSubDomain.ok && resultSubDomain.status === HttpStatus.SUCCESS) {
+      const dataSubDomain = await resultSubDomain.json()
+      if (dataSubDomain["verification"])
+        verifications.push(dataSubDomain["verification"])
+      isVerified = isVerified && dataSubDomain["verified"]
+    }
+  }
 
-  // const vercelDomainVerifyEndpoint = `${process.env.VERCEL_URL}/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains/${site.www_sub_domain}/verify`
+  return NextResponse.json(
+    {
+      domain: site.domain,
+      www_sub_domain: site.www_sub_domain,
+      verified: isVerified,
+      verifications: verifications,
+    },
+    { status: HttpStatus.SUCCESS }
+  )
 }
