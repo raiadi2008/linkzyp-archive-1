@@ -5,6 +5,7 @@ import authOptions from "@/lib/auth"
 import HttpStatus from "@/constants/http_status"
 import { ICertificate, ISite } from "@/app/utils/interfaces"
 import { updateSiteDB } from "@/db/site"
+import { revalidatePortfolioData } from "@/app/utils/revalidate"
 
 /**
  * @param req
@@ -45,5 +46,6 @@ export async function PUT(req: NextRequest) {
   const siteData: ISite = { certificates }
 
   const updatedSite = await updateSiteDB(siteData, userId)
+  revalidatePortfolioData(updatedSite.username)
   return NextResponse.json(updatedSite, { status: HttpStatus.SUCCESS })
 }
