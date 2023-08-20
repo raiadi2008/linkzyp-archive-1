@@ -85,8 +85,8 @@ export default async function Page({
               Linkedin
             </div>
           </Link>
-          {data["resume_url"] && (
-            <Link href={data["resume_url"]} target='_blank'>
+          {data["resume_link"] && (
+            <Link href={data["resume_link"]} target='_blank'>
               <div className='px-6 py-2 border rounded text-blue-800 border-blue-800 font-medium'>
                 Resume
               </div>
