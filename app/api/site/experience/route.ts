@@ -7,6 +7,7 @@ import { IExperience, ISite } from "@/app/utils/interfaces"
 import { updateSiteDB } from "@/db/site"
 import { parseDateString } from "@/app/utils/functions"
 import fetchLogo from "../../../utils/fetch_logo"
+import { revalidatePortfolioData } from "@/app/utils/revalidate"
 
 /**
  * @param req
@@ -81,5 +82,6 @@ export async function PUT(req: NextRequest) {
   const siteData: ISite = { experiences }
 
   const updatedSite = await updateSiteDB(siteData, userId)
+  revalidatePortfolioData(updatedSite.username)
   return NextResponse.json(updatedSite, { status: HttpStatus.SUCCESS })
 }
