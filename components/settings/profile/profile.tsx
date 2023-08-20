@@ -303,6 +303,7 @@ export default function ProfileSettings({
                 } sm:text-left sm:mt-2`}
                 value={profileInfo.username}
                 onChange={(e) => {
+                  setUsernameAvailablity(UsernameAvailablityCheck.IDLE)
                   const value = e.target.value
                   if (value.length < 4) {
                     setProfileInputError({

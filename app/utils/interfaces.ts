@@ -42,6 +42,7 @@ export interface ISite {
   id?: string
   userId?: string
   domain?: string
+  www_sub_domain?: string
   username?: string
   themeId?: string
   profile_picture?: string

@@ -82,6 +82,7 @@ model Site {
   id              String        @id @default(auto()) @map("_id") @db.ObjectId
   userId          String        @unique @db.ObjectId
   domain          String?
+  www_sub_domain  String?
   username        String        @unique
   themeId         String        @db.ObjectId
   profile_picture String?

@@ -41,6 +41,11 @@ export async function createSiteDB(
   return user_site
 }
 
+/**
+ * @param username
+ * @returns site of given username
+ * @description gets the site of given username from database
+ */
 export async function getSiteByUsernameDB(username: string) {
   const site = await prisma.site.findFirst({
     where: {
@@ -50,6 +55,11 @@ export async function getSiteByUsernameDB(username: string) {
   return site
 }
 
+/**
+ * @param user_id
+ * @returns site of given user_id
+ * @description gets the site of given user_id from database
+ */
 export async function getSiteByUserId(user_id: string) {
   const site = await prisma.site.findUnique({
     where: {
@@ -60,6 +70,12 @@ export async function getSiteByUserId(user_id: string) {
   return site
 }
 
+/**
+ * @param siteData
+ * @param user_id
+ * @returns updated site data
+ * @description updates site of data for given user_id
+ */
 export async function updateSiteDB(siteData: ISite, user_id: string) {
   const updatedSite = await prisma.site.update({
     where: {
@@ -71,4 +87,19 @@ export async function updateSiteDB(siteData: ISite, user_id: string) {
   })
 
   return updatedSite
+}
+
+/**
+ * @param domain
+ * @returns site with which domain is associated
+ * @description gets the site with which domain is associated from database
+ */
+export async function getSiteByDomainDB(domain: string) {
+  const site = await prisma.site.findFirst({
+    where: {
+      domain: domain,
+    },
+  })
+
+  return site
 }
