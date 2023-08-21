@@ -106,6 +106,47 @@ export function convertJSONIntoDate(
 
 export function parseSiteDataFromJSON(data: any) {
   try {
+    const experiences: IExperience[] = (data["experiences"] ??
+      []) as IExperience[]
+    const education: IEducation[] = (data["education"] ?? []) as IEducation[]
+    const projects: IProject[] = (data["projects"] ?? []) as IProject[]
+    const certificates: ICertificate[] = (data["certificates"] ??
+      []) as ICertificate[]
+    const faqs: IFaq[] = (data["faqs"] ?? []) as IFaq[]
+
+    experiences.forEach((exp) => {
+      exp.starts_at = parseDateString(exp.starts_at)
+      exp.ends_at = parseDateString(exp.ends_at)
+    })
+    education.forEach((edu) => {
+      edu.starts_at = parseDateString(edu.starts_at)
+      edu.ends_at = parseDateString(edu.ends_at)
+    })
+
+    experiences.sort((a, b) => {
+      if (a.starts_at && b.starts_at) {
+        return b.starts_at.getTime() - a.starts_at.getTime()
+      } else if (a.starts_at) {
+        return -1
+      } else if (b.starts_at) {
+        return 1
+      } else {
+        return 0
+      }
+    })
+
+    education.sort((a, b) => {
+      if (a.starts_at && b.starts_at) {
+        return b.starts_at.getTime() - a.starts_at.getTime()
+      } else if (a.starts_at) {
+        return -1
+      } else if (b.starts_at) {
+        return 1
+      } else {
+        return 0
+      }
+    })
+
     const result = {
       id: data["id"],
       userId: data["userId"],
@@ -115,13 +156,13 @@ export function parseSiteDataFromJSON(data: any) {
       last_name: data["last_name"],
       linkedin_url: data["linkedin_url"],
       occupation: data["occupation"],
-      experiences: data["experiences"] as IExperience[],
-      education: data["education"] as IEducation[],
-      projects: data["projects"] as IProject[],
-      certificates: data["certificates"] as ICertificate[],
+      experiences,
+      education,
+      projects,
+      certificates,
       skills: data["skills"] as string[],
       courses: data["courses"] as string[],
-      faqs: data["faqs"] ? (data["faqs"] as IFaq[]) : ([] as IFaq[]),
+      faqs,
       resume_link: data["resume_link"],
       instagram_url: data["instagram_url"],
       twitter_url: data["twitter_url"],
@@ -145,7 +186,7 @@ export function parseSiteDataFromJSON(data: any) {
  * @returns Date | null
  */
 export function parseDateString(
-  inputDate: string | null | undefined
+  inputDate: Date | string | null | undefined
 ): Date | null {
   if (!inputDate) return null
   const date = new Date(inputDate)

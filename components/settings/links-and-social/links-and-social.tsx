@@ -42,7 +42,7 @@ export default function LinksAndSocial({
 
   async function saveChanges() {
     setIsLoading(true)
-    console.log("site data", links)
+
     const res = await fetch("/api/site/links-and-social", {
       method: "PUT",
       body: JSON.stringify(links),

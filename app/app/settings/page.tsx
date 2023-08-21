@@ -25,7 +25,7 @@ import { parseSiteDataFromJSON } from "@/app/utils/functions"
 const TAB = "tab"
 
 export default function Page() {
-  const { data: session, status } = useSession()
+  const { data: session, status, update } = useSession()
 
   const [isLoading, setIsLoading] = useState(true)
   const [valuesChanged, setValuesChanged] = useState(false)
@@ -42,15 +42,35 @@ export default function Page() {
   }, [status])
 
   useEffect(() => {
-    setIsLoading(true)
+    if (!session?.user.added_linkedin) {
+      router.push("/app/add-linkedin")
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session])
+
+  useEffect(() => {
     if (!searchParams.get(TAB)) {
       router.push(`?${TAB}=profile`)
     }
+    async function getUserSiteData() {
+      const siteData = await getUserInfo()
+      const parsedSiteData = parseSiteDataFromJSON(siteData)
+      if (!parsedSiteData) {
+        await update({
+          ...session,
+          user: {
+            added_linkedin: false,
+          },
+        })
+        return null
+      } else {
+        return parsedSiteData
+      }
+    }
     setIsLoading(true)
-    getUserInfo()
+    getUserSiteData()
       .then((data) => {
-        const parsedData = parseSiteDataFromJSON(data)
-        updateSiteInfo(parsedData)
+        updateSiteInfo(data)
       })
       .catch((err) => {
         router.push("/app/login")
@@ -59,6 +79,10 @@ export default function Page() {
       .finally(() => {
         setIsLoading(false)
       })
+
+    return () => {
+      getUserSiteData()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

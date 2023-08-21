@@ -1,3 +1,4 @@
+import { parseSiteDataFromJSON } from "@/app/utils/functions"
 import {
   ICertificate,
   IEducation,
@@ -25,68 +26,25 @@ export default async function Page({
   params: { username: string }
 }) {
   const data = await getUserInfo(params.username)
-  const work_experience = data["experiences"] as IExperience[]
-  const education = data["education"] as IEducation[]
-  const projects = data["projects"] as IProject[]
-  const certificates = data["certificates"] as ICertificate[]
-
-  work_experience.forEach((exp) => {
-    if (exp.starts_at) {
-      exp.starts_at = new Date(exp.starts_at)
-    }
-    if (exp.ends_at) {
-      exp.ends_at = new Date(exp.ends_at)
-    }
-  })
-
-  education.forEach((exp) => {
-    if (exp.starts_at) {
-      exp.starts_at = new Date(exp.starts_at)
-    }
-    if (exp.ends_at) {
-      exp.ends_at = new Date(exp.ends_at)
-    }
-  })
-
-  work_experience.sort((a, b) => {
-    if (a.starts_at && b.starts_at) {
-      return b.starts_at.getTime() - a.starts_at.getTime()
-    } else if (a.starts_at) {
-      return -1
-    } else if (b.starts_at) {
-      return 1
-    } else {
-      return 0
-    }
-  })
-
-  education.sort((a, b) => {
-    if (a.starts_at && b.starts_at) {
-      return b.starts_at.getTime() - a.starts_at.getTime()
-    } else if (a.starts_at) {
-      return -1
-    } else if (b.starts_at) {
-      return 1
-    } else {
-      return 0
-    }
-  })
+  const site = parseSiteDataFromJSON(data)
 
   return (
     <main className='max-w-small-website mx-auto'>
       <section id='hero' className='py-8'>
         <h1 className='text-6xl font-bold mb-4'>
           <div>Hi, I&apos;m</div>
-          <div className='text-blue-800 font-black'>{data["occupation"]}</div>
+          <div className='text-blue-800 font-black'>{site?.occupation}</div>
         </h1>
         <div className='flex gap-x-4'>
-          <Link href={data["linkedin_url"]} target='_blank'>
-            <div className='px-6 py-2 border rounded text-gray-50 bg-blue-800 border-blue-800 font-medium'>
-              Linkedin
-            </div>
-          </Link>
-          {data["resume_link"] && (
-            <Link href={data["resume_link"]} target='_blank'>
+          {site?.linkedin_url && (
+            <Link href={site?.linkedin_url} target='_blank'>
+              <div className='px-6 py-2 border rounded text-gray-50 bg-blue-800 border-blue-800 font-medium'>
+                Linkedin
+              </div>
+            </Link>
+          )}
+          {site?.resume_link && (
+            <Link href={site?.resume_link} target='_blank'>
               <div className='px-6 py-2 border rounded text-blue-800 border-blue-800 font-medium'>
                 Resume
               </div>
@@ -94,11 +52,11 @@ export default async function Page({
           )}
         </div>
       </section>
-      {work_experience.length > 0 && (
+      {site?.experiences?.length! > 0 && (
         <section id='work-exp' className='py-8'>
           <h2 className='text-3xl font-semibold mb-4'>Work Expierence</h2>
           <div>
-            {(work_experience as any[]).map((value, idx) => {
+            {site?.experiences!.map((value, idx) => {
               return (
                 <div key={idx} className='mb-4 '>
                   <h3 className='text-lg font-medium mb-2'>{value.title}</h3>
@@ -108,7 +66,7 @@ export default async function Page({
                       {new Intl.DateTimeFormat("en-US", {
                         year: "numeric",
                         month: "long",
-                      }).format(value.starts_at)}{" "}
+                      }).format(value.starts_at!)}{" "}
                       -{" "}
                       {value.ends_at
                         ? new Intl.DateTimeFormat("en-US", {
@@ -125,11 +83,11 @@ export default async function Page({
           </div>
         </section>
       )}
-      {data["skills"].length > 0 && (
+      {site?.skills?.length! > 0 && (
         <section id='skills' className='py-8'>
           <h2 className='text-3xl font-semibold mb-4'>Skills</h2>
           <div className='flex flex-wrap gap-x-3 gap-y-2'>
-            {(data["skills"] as string[]).map((value, index) => {
+            {site?.skills!.map((value, index) => {
               return (
                 <p className='bg-blue-200 rounded-full px-4 py-1' key={index}>
                   {value}
@@ -139,11 +97,11 @@ export default async function Page({
           </div>
         </section>
       )}
-      {education.length > 0 && (
+      {site?.education?.length! > 0 && (
         <section id='education' className='py-8'>
           <h2 className='text-3xl font-semibold mb-4'>Education</h2>
           <div className=''>
-            {education.map((value, index) => {
+            {site?.education!.map((value, index) => {
               return (
                 <div
                   key={index}
@@ -154,7 +112,7 @@ export default async function Page({
                     {new Intl.DateTimeFormat("en-US", {
                       year: "numeric",
                       month: "long",
-                    }).format(value.starts_at)}{" "}
+                    }).format(value.starts_at!)}{" "}
                     -{" "}
                     {value.ends_at
                       ? new Intl.DateTimeFormat("en-US", {
@@ -171,11 +129,11 @@ export default async function Page({
           </div>
         </section>
       )}
-      {projects.length > 0 && (
+      {site?.projects?.length! > 0 && (
         <section id='projects' className='py-8'>
           <h2 className='text-3xl font-semibold mb-4'>Projects</h2>
           <div className='flex flex-wrap gap-x-12'>
-            {projects.map((value, index) => {
+            {site?.projects?.map((value, index) => {
               if (index < 2) {
                 return (
                   <div
@@ -198,10 +156,10 @@ export default async function Page({
           </div>
         </section>
       )}
-      {certificates.length > 0 && (
+      {site?.certificates?.length! > 0 && (
         <section id='certificates' className='py-8'>
           <h2 className='text-3xl font-semibold mb-4'>Certificates</h2>
-          {certificates.map((value, index) => {
+          {site?.certificates?.map((value, index) => {
             return (
               <Link href={value.url ?? "#"} key={index}>
                 <p>

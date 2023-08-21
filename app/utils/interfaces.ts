@@ -2,8 +2,8 @@ import { LinksEnum } from "@/constants/links_enum"
 import { Dispatch, SetStateAction } from "react"
 
 export interface IExperience {
-  starts_at?: Date
-  ends_at?: Date
+  starts_at?: Date | null
+  ends_at?: Date | null
   company?: string
   company_linkedin_profile_url?: string
   title?: string
@@ -14,8 +14,8 @@ export interface IExperience {
 }
 
 export interface IEducation {
-  starts_at?: Date
-  ends_at?: Date
+  starts_at?: Date | null
+  ends_at?: Date | null
   field_of_study?: string
   degree_name?: string
   school?: string
