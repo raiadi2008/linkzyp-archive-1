@@ -17,9 +17,16 @@ module.exports = {
       xxs: { max: '320px' },
     },
     extend: {
+      backgroundImage: {
+        'notion-theme-image': "url('../public/themes-heros/notion-theme.svg')"
+      },
+      backgroundColor: {
+        'notion-theme-image-opacity': 'rgba(0, 0, 0, 0.5)' // Adjust the opacity value as needed
+      },
       boxShadow: {
 
-        '-2xl': '0px -2px 13px 3px rgba(0, 0, 0, 0.05)'
+        '-2xl': '0px -2px 13px  rgba(0, 0, 0, 0.05)',
+        '-8xl': '0px -3px 32px  rgba(0, 0, 0, 0.1)'
       },
       colors: {
         // main colors
@@ -52,6 +59,8 @@ module.exports = {
     function ({ addVariant }) {
       addVariant('child', '& > *');
       addVariant('child-hover', '& > *:hover');
+
     }
+
   ],
 }

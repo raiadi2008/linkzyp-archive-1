@@ -6,19 +6,7 @@ import {
   IProject,
 } from "@/app/utils/interfaces"
 import Link from "next/link"
-
-async function getUserInfo(username: string) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/site?username=${username} `,
-    { next: { revalidate: 86400, tags: [username] } }
-  )
-  if (res.ok) {
-    const data = await res.json()
-
-    return data
-  }
-  return null
-}
+import getUserInfo from "@/app/themes/get_user_info"
 
 export default async function Page({
   params,
