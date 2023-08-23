@@ -52,6 +52,9 @@ module.exports = {
         'medium-website': "840px",
         'small-website': "680px",
         'micro-website': "480px"
+      },
+      width: {
+        '112': '32rem'
       }
     }
   },
