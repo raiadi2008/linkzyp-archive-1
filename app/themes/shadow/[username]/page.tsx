@@ -13,6 +13,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons"
 import mac from "@/public/themes-heros/Mac.svg"
 import keyboard from "@/public/themes-heros/Keyboard.svg"
+import megaphone from "@/public/icons/megaphone.svg"
 
 import getUserInfo from "@/app/themes/get_user_info"
 import { parseSiteDataFromJSON } from "@/app/utils/functions"
@@ -200,6 +201,260 @@ export default async function Page({
           </div>
         </section>
       )}
+      {site?.projects?.length! > 0 && (
+        <section className='py-20' id='projects'>
+          <div className='mx-auto max-w-website '>
+            <h2 className='text-center text-4xl font-black'>My Projects</h2>
+            <div className='grid grid-cols-2 gap-16 grice mt-16'>
+              {site?.projects?.map((value, index) => {
+                return (
+                  <div key={index} className='w-112 h-72 mx-auto relative'>
+                    <div className='absolute top-3 w-112 h-72 left-3 rounded-xl  bg-gray-800'></div>
+                    <div
+                      className={`relative rounded-xl p-6 bg-${
+                        randomBgColors[index % randomBgColors.length]
+                      } border-2 border-black w-112 h-72`}
+                    >
+                      <p className='font-bold text-lg'>{value.title}</p>
+                      <p className='mt-3 h-60 overflow-scroll'>
+                        {value.description}
+                      </p>
+                      {value.url && (
+                        <Link href={value.url} target='_blank'>
+                          <button className='absolute bottom-6 right-6'>
+                            <span className='absolute h-12 w-28 bg-white left-2 top-2 inline-block z-0 rounded border-2 border-black'></span>
+                            <span className='inline-block py-3 px-6  bg-white text-black h-12 w-28 border-2 border-black font-semibold relative rounded '>
+                              View
+                            </span>
+                          </button>
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+      {site?.skills?.length! + site?.courses?.length! > 0 && (
+        <section
+          className='py-20 mx-auto max-w-website '
+          id='skills-and-courses'
+        >
+          <div>
+            <h2 className='text-center text-4xl font-black'>
+              My Skills and Courses
+            </h2>
+            <div className='flex flex-col gap-y-12 mt-16'>
+              {site?.skills?.length! > 0 && (
+                <div className='flex'>
+                  <h3 className='w-1/4 py-6 text-3xl font-semibold'>Skills</h3>
+                  <div id='skills' className='flex gap-6 w-3/4 flex-wrap'>
+                    {site?.skills?.map((value, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className='px-6 py-3 border-2 border-black rounded bg-white'
+                        >
+                          {value}
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+              {site?.courses?.length! > 0 && (
+                <div className='flex mt-8'>
+                  <h3 className='w-1/4 py-6 text-3xl font-semibold'>Courses</h3>
+                  <div id='skills' className='flex gap-6 w-3/4 flex-wrap'>
+                    {site?.courses?.map((value, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className='px-6 py-3 border-2 border-black rounded bg-white'
+                        >
+                          {value}
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+      <section
+        className='mx-auto max-w-website bg-shadow-theme-image rounded-xl '
+        id='hire-me'
+      >
+        <div className='py-20 px-16 flex justify-between'>
+          <div className='flex flex-col justify-center'>
+            <p className='text-4xl font-black text-white'>
+              Did you like my work?
+            </p>
+            <p className='text-4xl font-black text-white'>Hire me.</p>
+            <Link
+              href={
+                site?.hire_me ?? site?.linkedin_url ?? site?.resume_link ?? ""
+              }
+              target='_blank'
+            >
+              <button className='relative mt-8'>
+                <span className='absolute h-12 w-28 bg-white left-2 top-2 inline-block z-0 rounded border-2 border-black'></span>
+                <span className='inline-block py-3 px-6  bg-black h-12 w-28 text-white font-semibold relative rounded '>
+                  Hire Me
+                </span>
+              </button>
+            </Link>
+          </div>
+          <div>
+            <Image src={megaphone} alt='' height={360} width={360} />
+          </div>
+        </div>
+      </section>
+      {site?.faqs?.length! > 0 && (
+        <section id='courses' className='max-w-website mx-auto py-24'>
+          <h2 className='text-center text-4xl font-black'>FAQs</h2>
+          <p className='mt-4 text-center'>Frequently Asked Questions</p>
+          <div className='w-3/4 flex flex-col gap-8 mt-8 mx-auto'>
+            {site?.faqs?.map((value, index) => {
+              return (
+                <div key={index}>
+                  <p className='mb-2 font-semibold text-lg'>{value.question}</p>
+                  <p className='font-light text-gray-700 text-sm'>
+                    {value.answer}
+                  </p>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+      )}
+      <section id='footer' className=''>
+        <div className='max-w-website mx-auto py-16 bg-shadow-theme-image px-8 rounded-t-3xl'>
+          <div>
+            <h2 className='text-white text-6xl font-black'>Say Hi!</h2>
+            <div className='mt-8 flex gap-x-8'>
+              {site?.instagram_url && (
+                <Link href={site.instagram_url} target='_blank'>
+                  <FontAwesomeIcon
+                    icon={faInstagram}
+                    className='text-white h-8 w-8'
+                  />
+                </Link>
+              )}
+              {site?.linkedin_url && (
+                <Link href={site.linkedin_url} target='_blank'>
+                  <FontAwesomeIcon
+                    icon={faLinkedin}
+                    className='text-white h-8 w-8'
+                  />
+                </Link>
+              )}
+              {site?.twitter_url && (
+                <Link href={site.twitter_url} target='_blank'>
+                  <FontAwesomeIcon
+                    icon={faXTwitter}
+                    className='text-white h-8 w-8'
+                  />
+                </Link>
+              )}
+              {site?.youtube_url && (
+                <Link href={site.youtube_url} target='_blank'>
+                  <FontAwesomeIcon
+                    icon={faYoutube}
+                    className='text-white h-8 w-8'
+                  />
+                </Link>
+              )}
+            </div>
+          </div>
+          <div className='mt-32 flex justify-between'>
+            <div>
+              <h2 className='text-white text-xl font-black'>
+                Check out my work here
+              </h2>
+              <div className='flex flex-col gap-y-4 mt-8'>
+                {site?.github_url && (
+                  <Link
+                    href={site.github_url}
+                    target='_blank'
+                    className='flex items-center gap-x-4'
+                  >
+                    <FontAwesomeIcon
+                      icon={faGithub}
+                      className='text-white h-8 w-8'
+                    />
+                    <span className='text-white'>Github</span>
+                  </Link>
+                )}
+                {site?.medium_url && (
+                  <Link
+                    href={site.medium_url}
+                    target='_blank'
+                    className='flex items-center gap-x-4'
+                  >
+                    <FontAwesomeIcon
+                      icon={faMedium}
+                      className='text-white h-8 w-8'
+                    />
+                    <span className='text-white'>Medium</span>
+                  </Link>
+                )}
+                {site?.dribbble_url && (
+                  <Link
+                    href={site.dribbble_url}
+                    target='_blank'
+                    className='flex items-center gap-x-4'
+                  >
+                    <FontAwesomeIcon
+                      icon={faDribbble}
+                      className='text-white h-8 w-8'
+                    />
+                    <span className='text-white'>Dribbble</span>
+                  </Link>
+                )}
+                {site?.publication && (
+                  <Link
+                    href={site.publication}
+                    target='_blank'
+                    className='flex items-center gap-x-4'
+                  >
+                    <FontAwesomeIcon
+                      icon={faBlogger}
+                      className='text-white h-8 w-8'
+                    />
+                    <span className='text-white'>Publication</span>
+                  </Link>
+                )}
+              </div>
+            </div>
+            <div>
+              <h2 className='text-white text-xl font-black'>Quick Links</h2>
+              <div className='flex flex-col gap-y-4 mt-8 text-white'>
+                {navbar.map((value) => {
+                  return value
+                })}
+              </div>
+            </div>
+            <div>
+              <h2 className='text-white text-3xl font-black'>
+                Liked my work so far? <span className='block'>Hire me</span>
+              </h2>
+              <Link
+                href={site?.hire_me ?? site?.linkedin_url ?? ""}
+                target='_blank'
+              >
+                <div className='bg-white text-black px-8 py-4 rounded-lg font-medium mt-12 inline-block'>
+                  Hire Me
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   )
 }
