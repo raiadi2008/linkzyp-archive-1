@@ -2,7 +2,7 @@ export default function SkillsAndCoursesLoading() {
   return (
     <>
       <section className='mx-auto max-w-website py-6  mb-32 px-6'>
-        <div className='max-w-medium-website overflow-hidden'>
+        <div className='max-w-medium overflow-hidden'>
           <h2 className='text-2xl font-semibold mb-4'>Your Skills</h2>
           <div className='flex flex-wrap gap-2 p-4 border border-neutral-200 rounded mb-4'>
             <div className='animate-pulse rounded-full  bg-slate-200 h-10 w-36'></div>
@@ -48,7 +48,7 @@ export default function SkillsAndCoursesLoading() {
       </section>
       <section className='fixed bottom-0 left-0 w-screen bg-white -shadow-2xl px-6'>
         <div className='max-w-website mx-auto'>
-          <div className=' max-w-medium-website py-6 flex gap-x-6 justify-end'>
+          <div className=' max-w-medium py-6 flex gap-x-6 justify-end'>
             <button
               disabled={true}
               className='rounded-full border-2 border-primary text-primary px-4 py-2 font-medium bg-white disabled:border-primary-light disabled:text-primary-light sm:font-normal sm:text-sm sm:border-1'

@@ -42,7 +42,7 @@ export default function LinksAndSocial({
 
   async function saveChanges() {
     setIsLoading(true)
-    console.log("site data", links)
+
     const res = await fetch("/api/site/links-and-social", {
       method: "PUT",
       body: JSON.stringify(links),
@@ -60,7 +60,7 @@ export default function LinksAndSocial({
   return (
     <>
       <section className='mx-auto max-w-website py-6 mb-32 px-6'>
-        <div className='max-w-medium-website '>
+        <div className='max-w-medium '>
           <div className='flex items-center justify-between mb-8 md:flex-col md:items-start'>
             <div>
               <label>Resume Link</label>
@@ -319,7 +319,7 @@ export default function LinksAndSocial({
       </section>
       <section className='fixed bottom-0 left-0 w-screen bg-white -shadow-2xl px-6'>
         <div className='max-w-website mx-auto'>
-          <div className=' max-w-medium-website py-6 flex gap-x-6 justify-end'>
+          <div className=' max-w-medium py-6 flex gap-x-6 justify-end'>
             <button
               onClick={resetChanges}
               disabled={!valuesChanged}

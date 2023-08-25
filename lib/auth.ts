@@ -18,8 +18,8 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     jwt({ token, user, account, profile, trigger, session }) {
       if (trigger === "update") {
-        if (session && session.user?.added_linkedin) {
-          token.added_linkedin = session.user.added_linkedin
+        if (session && session.user) {
+          token.added_linkedin = session.user.added_linkedin ?? true
         }
         return token
       }

@@ -20,7 +20,8 @@ export default function Page() {
     if (session?.user.added_linkedin) {
       router.push("/app/settings")
     }
-  }, [router, session, status, update])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session, status])
 
   function handleLinkedinChange(event: React.ChangeEvent<HTMLInputElement>) {
     setLinkedinURL(event.target.value)
@@ -58,8 +59,8 @@ export default function Page() {
   }
 
   return (
-    <main className='linkedin-url-page'>
-      <div className='max-w-micro-website mx-auto flex flex-col  py-24'>
+    <main className='px-6' id='linkedin-url-page'>
+      <div className='max-w-micro mx-auto flex flex-col  py-24'>
         <h1 className='text-3xl font-medium capitalize mb-8 text-center lg:text-2xl sm:text-xl'>
           Add your LinkedIn profile URL
         </h1>

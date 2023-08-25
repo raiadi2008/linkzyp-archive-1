@@ -19,7 +19,6 @@ import { fetchPeopleLinkedinData } from "@/app/proxycurl/people"
  */
 
 export async function GET(request: NextRequest) {
-  console.log("anything reacheed hree")
   try {
     const session = await getServerSession(authOptions)
     if (!session) {
@@ -67,7 +66,6 @@ export async function GET(request: NextRequest) {
     }
     return NextResponse.json(userSite, { status: HttpStatus.SUCCESS })
   } catch (e) {
-    console.log(e)
     return NextResponse.json(
       {
         error: "Something went wrong",

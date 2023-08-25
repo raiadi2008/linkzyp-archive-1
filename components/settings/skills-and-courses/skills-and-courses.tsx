@@ -63,7 +63,7 @@ export default function SkillsAndCourses({
   return (
     <>
       <section className='mx-auto max-w-website py-6 mb-32 px-6'>
-        <div className='max-w-medium-website overflow-hidden'>
+        <div className='max-w-medium overflow-hidden'>
           <h2 className='text-2xl font-semibold mb-4'>Your Skills</h2>
           <div className='flex flex-wrap gap-2 p-4 border border-neutral-200 rounded mb-4'>
             {skills.map((value, index) => (
@@ -154,7 +154,7 @@ export default function SkillsAndCourses({
       </section>
       <section className='fixed bottom-0 left-0 w-screen bg-white -shadow-2xl px-6'>
         <div className='max-w-website mx-auto'>
-          <div className=' max-w-medium-website py-6 flex gap-x-6 justify-end'>
+          <div className=' max-w-medium py-6 flex gap-x-6 justify-end'>
             <button
               onClick={discardSkillAndCourseChanges}
               disabled={!valuesChanged}
