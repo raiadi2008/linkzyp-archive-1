@@ -24,13 +24,18 @@ const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
 })
-const randomBgColors = ["blue-100", "red-100", "green-100", "amber-100"]
 
 export default async function Page({
   params,
 }: {
   params: { username: string }
 }) {
+  const randomBgColors = [
+    "bg-blue-100",
+    "bg-red-100",
+    "bg-green-100",
+    "bg-amber-100",
+  ]
   const data = await getUserInfo(params.username)
   const site = parseSiteDataFromJSON(data)
   const navbar: JSX.Element[] = []
@@ -111,13 +116,14 @@ export default async function Page({
 
           <div className='grid grid-cols-2 gap-16 grice mt-16'>
             {site?.experiences?.map((value, index) => {
+              const color = randomBgColors[index % randomBgColors.length]
+
+              console.log(color)
               return (
                 <div key={index} className='w-112 h-112 mx-auto relative'>
-                  <div className='absolute top-3 w-112 h-112 left-3 rounded-xl  bg-gray-800'></div>
+                  <div className='absolute top-3 w-112 h-112 left-3 rounded-xl  bg-gray-800 z-0'></div>
                   <div
-                    className={`relative rounded-xl p-6 bg-${
-                      randomBgColors[index % randomBgColors.length]
-                    }  border-2 border-black w-112 h-112`}
+                    className={`relative rounded-xl p-6 ${color}  border-2 border-black w-112 h-112 z-50`}
                   >
                     <div className='flex gap-x-6'>
                       <Image
@@ -211,7 +217,7 @@ export default async function Page({
                   <div key={index} className='w-112 h-72 mx-auto relative'>
                     <div className='absolute top-3 w-112 h-72 left-3 rounded-xl  bg-gray-800'></div>
                     <div
-                      className={`relative rounded-xl p-6 bg-${
+                      className={`relative rounded-xl p-6 ${
                         randomBgColors[index % randomBgColors.length]
                       } border-2 border-black w-112 h-72`}
                     >
