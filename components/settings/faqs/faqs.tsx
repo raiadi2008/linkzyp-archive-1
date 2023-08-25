@@ -97,7 +97,7 @@ export default function FAQs({
   return (
     <>
       <section className='mx-auto max-w-website py-6 mb-32 px-6'>
-        <div className='max-w-medium-website'>
+        <div className='max-w-medium'>
           {faqs.map((value, index) => {
             return (
               <div key={index} className='my-12 relative pb-14'>
@@ -181,7 +181,7 @@ export default function FAQs({
       </section>
       <section className='fixed bottom-0 left-0 w-screen bg-white -shadow-2xl px-6'>
         <div className='max-w-website mx-auto'>
-          <div className=' max-w-medium-website py-6 flex gap-x-6 justify-end'>
+          <div className=' max-w-medium py-6 flex gap-x-6 justify-end'>
             <button
               onClick={discardChanges}
               disabled={!valuesChanged}

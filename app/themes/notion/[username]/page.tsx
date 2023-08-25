@@ -262,14 +262,19 @@ export default async function Page({
             </div>
             <div className='flex flex-col  flex-1'>
               {site?.projects?.map((value, index) => {
+                console.log(value.description)
                 return (
                   <div
                     key={index}
                     className=' py-8 first:pt-0 border-b border-gray-600 last:border-none'
                   >
                     <p className='font-medium text-lg'>{value.title}</p>
-                    <p className='font-light text-gray-600'>
-                      {value.description}
+                    <p className='font-light text-gray-500'>
+                      {value.description?.split("\n").map((value, index) => (
+                        <span className='block' key={index}>
+                          {value}
+                        </span>
+                      ))}
                     </p>
                     {value.url && (
                       <Link href={value.url} target='_blank'>

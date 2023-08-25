@@ -60,7 +60,7 @@ export default function Page() {
 
   return (
     <main className='px-6' id='linkedin-url-page'>
-      <div className='max-w-micro-website mx-auto flex flex-col  py-24'>
+      <div className='max-w-micro mx-auto flex flex-col  py-24'>
         <h1 className='text-3xl font-medium capitalize mb-8 text-center lg:text-2xl sm:text-xl'>
           Add your LinkedIn profile URL
         </h1>

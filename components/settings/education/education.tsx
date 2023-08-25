@@ -134,7 +134,7 @@ export default function Education({
   return (
     <>
       <section className='mx-auto max-w-website py-6 mb-32 px-6'>
-        <div className='max-w-medium-website'>
+        <div className='max-w-medium'>
           {education.map((edu, index) => {
             return (
               <div key={index} className='my-12 relative pb-14'>
@@ -276,7 +276,7 @@ export default function Education({
       </section>
       <section className='fixed bottom-0 left-0 w-screen bg-white -shadow-2xl px-6'>
         <div className='max-w-website mx-auto'>
-          <div className=' max-w-medium-website py-6 flex gap-x-6 justify-end'>
+          <div className=' max-w-medium py-6 flex gap-x-6 justify-end'>
             <button
               onClick={discardEducationChanges}
               disabled={!valuesChanged}
