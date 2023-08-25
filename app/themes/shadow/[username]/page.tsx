@@ -57,7 +57,7 @@ export default async function Page({
 
   return (
     <main className='text-black bg-orange-50 '>
-      <section className='max-w-website mx-auto py-6' id='navbar'>
+      <section className='max-w-website mx-auto py-6 px-8' id='navbar'>
         <div className='flex justify-between items-center'>
           <div className='flex gap-x-8 items-center'>
             <div>{Logo}</div>
@@ -83,9 +83,9 @@ export default async function Page({
         </div>
       </section>
       <section id='hero' className='bg-shadow-theme-image'>
-        <div className='flex mx-auto max-w-website py-24 items-center'>
+        <div className='flex mx-auto max-w-website py-24 items-center px-8'>
           <div className='w-3/5'>
-            <h1 className='font-black text-7xl text-white font-outline-2 leading-tight'>
+            <h1 className='font-black text-7xl text-white font-outline-2 leading-tight xxl:text-6xl'>
               <span className='block'>Hey! {site?.first_name} </span>
               <span className='block'>this side. I am </span>
               <span className='block'>{site?.occupation}</span>
@@ -109,21 +109,22 @@ export default async function Page({
         </div>
       </section>
       {site?.experiences?.length! > 0 && (
-        <section className='mx-auto max-w-website py-20' id='experience'>
+        <section className='mx-auto max-w-website py-20 px-8' id='experience'>
           <h2 className='text-center text-4xl font-black'>
             My Work Experience
           </h2>
 
-          <div className='grid grid-cols-2 gap-16 grice mt-16'>
+          <div className='grid grid-cols-2 gap-16 mt-16 xxl:gap-8'>
             {site?.experiences?.map((value, index) => {
               const color = randomBgColors[index % randomBgColors.length]
-
-              console.log(color)
               return (
-                <div key={index} className='w-112 h-112 mx-auto relative'>
-                  <div className='absolute top-3 w-112 h-112 left-3 rounded-xl  bg-gray-800 z-0'></div>
+                <div
+                  key={index}
+                  className='w-112 h-112 mx-auto relative xxl:w-102'
+                >
+                  <div className='absolute top-3 w-112 h-112 left-3 rounded-xl  bg-gray-800 xxl:w-102'></div>
                   <div
-                    className={`relative rounded-xl p-6 ${color}  border-2 border-black w-112 h-112 z-50`}
+                    className={`relative rounded-xl p-6 ${color}  border-2 border-black w-112 h-112 z-10 xxl:w-102`}
                   >
                     <div className='flex gap-x-6'>
                       <Image
@@ -153,7 +154,7 @@ export default async function Page({
                         }
                       </div>
                     </div>
-                    <p className='mt-6 h-96 overflow-scroll'>
+                    <p className='mt-6 mb-4 h-96 overflow-scroll'>
                       {value.description}
                     </p>
                   </div>
@@ -164,17 +165,20 @@ export default async function Page({
         </section>
       )}
       {site?.education?.length! > 0 && (
-        <section className='bg-white py-20' id='education'>
+        <section className='bg-white py-20 px-8' id='education'>
           <div className='mx-auto max-w-website '>
             <h2 className='text-center text-4xl font-black'>
               My Educational Background
             </h2>
-            <div className='grid grid-cols-2 gap-16 grice mt-16'>
+            <div className='grid grid-cols-2 gap-16 mt-16 xxl:gap-8'>
               {site?.education?.map((value, index) => {
                 return (
-                  <div key={index} className='w-112 h-52 mx-auto relative'>
-                    <div className='absolute top-3 w-112 h-52 left-3 rounded-xl  bg-gray-800'></div>
-                    <div className='relative rounded-xl p-6 bg-zinc-50 border-2 border-black w-112 h-52'>
+                  <div
+                    key={index}
+                    className='w-112 h-52 mx-auto relative xxl:w-102'
+                  >
+                    <div className='absolute top-3 w-112 h-52 left-3 rounded-xl  bg-gray-800 xxl:w-102'></div>
+                    <div className='relative rounded-xl p-6 bg-zinc-50 border-2 border-black w-112 h-52 xxl:w-102'>
                       <div className='flex gap-x-6'>
                         <div>
                           <p className='font-bold text-lg'>{value.school}</p>
@@ -208,18 +212,21 @@ export default async function Page({
         </section>
       )}
       {site?.projects?.length! > 0 && (
-        <section className='py-20' id='projects'>
-          <div className='mx-auto max-w-website '>
+        <section className='py-20 px-8' id='projects'>
+          <div className='mx-auto max-w-website'>
             <h2 className='text-center text-4xl font-black'>My Projects</h2>
-            <div className='grid grid-cols-2 gap-16 grice mt-16'>
+            <div className='grid grid-cols-2 gap-16 mt-16 xxl:gap-8'>
               {site?.projects?.map((value, index) => {
                 return (
-                  <div key={index} className='w-112 h-72 mx-auto relative'>
-                    <div className='absolute top-3 w-112 h-72 left-3 rounded-xl  bg-gray-800'></div>
+                  <div
+                    key={index}
+                    className='w-112 h-72 mx-auto relative xxl:w-102'
+                  >
+                    <div className='absolute top-3 w-112 h-72 left-3 rounded-xl  bg-gray-800 xxl:w-102'></div>
                     <div
                       className={`relative rounded-xl p-6 ${
                         randomBgColors[index % randomBgColors.length]
-                      } border-2 border-black w-112 h-72`}
+                      } border-2 border-black w-112 h-72 xxl:w-102`}
                     >
                       <p className='font-bold text-lg'>{value.title}</p>
                       <p className='mt-3 h-60 overflow-scroll'>
@@ -245,7 +252,7 @@ export default async function Page({
       )}
       {site?.skills?.length! + site?.courses?.length! > 0 && (
         <section
-          className='py-20 mx-auto max-w-website '
+          className='py-20 mx-auto max-w-website px-8'
           id='skills-and-courses'
         >
           <div>

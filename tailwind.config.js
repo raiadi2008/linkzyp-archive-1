@@ -56,6 +56,7 @@ module.exports = {
         'micro': "480px"
       },
       width: {
+        '102': '28rem',
         '112': '32rem'
       },
       height: {
