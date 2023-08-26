@@ -10,6 +10,7 @@ module.exports = {
     screens: {
       xxl: { max: '1240px' },
       xl: { max: '1040px' },
+      sxl: { max: '960px' },
       lg: { max: '840px' },
       md: { max: '720px' },
       sm: { max: '640px' },
@@ -56,6 +57,7 @@ module.exports = {
         'micro': "480px"
       },
       width: {
+        '102': '28rem',
         '112': '32rem'
       },
       height: {
@@ -72,4 +74,10 @@ module.exports = {
     }
 
   ],
+  safelist: [
+    "bg-blue-100",
+    "bg-red-100",
+    "bg-green-100",
+    "bg-amber-100",
+  ]
 }

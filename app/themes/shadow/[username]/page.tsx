@@ -24,13 +24,18 @@ const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
 })
-const randomBgColors = ["blue-100", "red-100", "green-100", "amber-100"]
 
 export default async function Page({
   params,
 }: {
   params: { username: string }
 }) {
+  const randomBgColors = [
+    "bg-blue-100",
+    "bg-red-100",
+    "bg-green-100",
+    "bg-amber-100",
+  ]
   const data = await getUserInfo(params.username)
   const site = parseSiteDataFromJSON(data)
   const navbar: JSX.Element[] = []
@@ -52,11 +57,11 @@ export default async function Page({
 
   return (
     <main className='text-black bg-orange-50 '>
-      <section className='max-w-website mx-auto py-6' id='navbar'>
+      <section className='max-w-website mx-auto py-6 px-8' id='navbar'>
         <div className='flex justify-between items-center'>
           <div className='flex gap-x-8 items-center'>
             <div>{Logo}</div>
-            <div className='flex gap-x-8 font-semibold text-[15px] '>
+            <div className='flex gap-x-8 font-semibold text-[15px] md:hidden'>
               {navbar.map((value) => value)}
             </div>
           </div>
@@ -78,9 +83,9 @@ export default async function Page({
         </div>
       </section>
       <section id='hero' className='bg-shadow-theme-image'>
-        <div className='flex mx-auto max-w-website py-24 items-center'>
-          <div className='w-3/5'>
-            <h1 className='font-black text-7xl text-white font-outline-2 leading-tight'>
+        <div className='flex mx-auto max-w-website py-24 items-center px-8'>
+          <div className='w-3/5 sxl:mx-auto sxl:w-full'>
+            <h1 className='font-black text-7xl text-white font-outline-2 leading-tight xxl:text-6xl  sxl:text-7xl lg:text-6xl md:text-5xl'>
               <span className='block'>Hey! {site?.first_name} </span>
               <span className='block'>this side. I am </span>
               <span className='block'>{site?.occupation}</span>
@@ -95,7 +100,7 @@ export default async function Page({
               )}
             </div>
           </div>
-          <div className='w-2/5'>
+          <div className='w-2/5 sxl:hidden'>
             <div className='flex flex-col justify-center items-center relative'>
               <Image src={mac} alt='' className='relative h-96' />
               <Image src={keyboard} alt='' className='relative h-24 mt-4' />
@@ -104,20 +109,25 @@ export default async function Page({
         </div>
       </section>
       {site?.experiences?.length! > 0 && (
-        <section className='mx-auto max-w-website py-20' id='experience'>
+        <section
+          className='mx-auto max-w-website py-20 px-8 sxl:px-16 md:px-4'
+          id='experience'
+        >
           <h2 className='text-center text-4xl font-black'>
             My Work Experience
           </h2>
 
-          <div className='grid grid-cols-2 gap-16 grice mt-16'>
+          <div className='grid grid-cols-2 gap-16 mt-16 xxl:gap-8 sxl:grid-cols-1'>
             {site?.experiences?.map((value, index) => {
+              const color = randomBgColors[index % randomBgColors.length]
               return (
-                <div key={index} className='w-112 h-112 mx-auto relative'>
-                  <div className='absolute top-3 w-112 h-112 left-3 rounded-xl  bg-gray-800'></div>
+                <div
+                  key={index}
+                  className='w-112 h-112 mx-auto relative xxl:w-102 xl:w-96 sxl:w-full'
+                >
+                  <div className='absolute top-3 w-112 h-112 left-3 rounded-xl  bg-gray-800 xxl:w-102 xl:w-96 sxl:w-full md:top-2 md:left-2'></div>
                   <div
-                    className={`relative rounded-xl p-6 bg-${
-                      randomBgColors[index % randomBgColors.length]
-                    }  border-2 border-black w-112 h-112`}
+                    className={`relative rounded-xl p-6 ${color}  border-2 border-black w-112 h-112 z-10 xxl:w-102 xl:w-96 sxl:w-full`}
                   >
                     <div className='flex gap-x-6'>
                       <Image
@@ -147,9 +157,11 @@ export default async function Page({
                         }
                       </div>
                     </div>
-                    <p className='mt-6 h-96 overflow-scroll'>
-                      {value.description}
-                    </p>
+                    <div className='overflow-hidden h-96'>
+                      <p className='mt-6 mb-4 h-96 overflow-scroll no-scrollbar'>
+                        {value.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
               )
@@ -158,17 +170,23 @@ export default async function Page({
         </section>
       )}
       {site?.education?.length! > 0 && (
-        <section className='bg-white py-20' id='education'>
+        <section
+          className='bg-white py-20 px-8 sxl:px-16 md:px-4'
+          id='education'
+        >
           <div className='mx-auto max-w-website '>
             <h2 className='text-center text-4xl font-black'>
               My Educational Background
             </h2>
-            <div className='grid grid-cols-2 gap-16 grice mt-16'>
+            <div className='grid grid-cols-2 gap-16 mt-16 xxl:gap-8 sxl:grid-cols-1'>
               {site?.education?.map((value, index) => {
                 return (
-                  <div key={index} className='w-112 h-52 mx-auto relative'>
-                    <div className='absolute top-3 w-112 h-52 left-3 rounded-xl  bg-gray-800'></div>
-                    <div className='relative rounded-xl p-6 bg-zinc-50 border-2 border-black w-112 h-52'>
+                  <div
+                    key={index}
+                    className='w-112 h-52 mx-auto relative xxl:w-102 xl:w-96 sxl:w-full'
+                  >
+                    <div className='absolute top-3 w-112 h-52 left-3 rounded-xl  bg-gray-800 xxl:w-102 xl:w-96 sxl:w-full'></div>
+                    <div className='relative rounded-xl p-6 bg-zinc-50 border-2 border-black w-112 h-52 xxl:w-102 xl:w-96 sxl:w-full'>
                       <div className='flex gap-x-6'>
                         <div>
                           <p className='font-bold text-lg'>{value.school}</p>
@@ -202,18 +220,21 @@ export default async function Page({
         </section>
       )}
       {site?.projects?.length! > 0 && (
-        <section className='py-20' id='projects'>
-          <div className='mx-auto max-w-website '>
+        <section className='py-20 px-8 sxl:px-16 md:px-4' id='projects'>
+          <div className='mx-auto max-w-website'>
             <h2 className='text-center text-4xl font-black'>My Projects</h2>
-            <div className='grid grid-cols-2 gap-16 grice mt-16'>
+            <div className='grid grid-cols-2 gap-16 mt-16 xxl:gap-8 sxl:grid-cols-1'>
               {site?.projects?.map((value, index) => {
                 return (
-                  <div key={index} className='w-112 h-72 mx-auto relative'>
-                    <div className='absolute top-3 w-112 h-72 left-3 rounded-xl  bg-gray-800'></div>
+                  <div
+                    key={index}
+                    className='w-112 h-72 mx-auto relative xxl:w-102 xl:w-96 sxl:w-full'
+                  >
+                    <div className='absolute top-3 w-112 h-72 left-3 rounded-xl  bg-gray-800 xxl:w-102 xl:w-96 sxl:w-full'></div>
                     <div
-                      className={`relative rounded-xl p-6 bg-${
+                      className={`relative rounded-xl p-6 ${
                         randomBgColors[index % randomBgColors.length]
-                      } border-2 border-black w-112 h-72`}
+                      } border-2 border-black w-112 h-72 xxl:w-102 xl:w-96 sxl:w-full`}
                     >
                       <p className='font-bold text-lg'>{value.title}</p>
                       <p className='mt-3 h-60 overflow-scroll'>
@@ -239,7 +260,7 @@ export default async function Page({
       )}
       {site?.skills?.length! + site?.courses?.length! > 0 && (
         <section
-          className='py-20 mx-auto max-w-website '
+          className='py-20 mx-auto max-w-website px-8 md:px-4'
           id='skills-and-courses'
         >
           <div>
@@ -248,9 +269,14 @@ export default async function Page({
             </h2>
             <div className='flex flex-col gap-y-12 mt-16'>
               {site?.skills?.length! > 0 && (
-                <div className='flex'>
-                  <h3 className='w-1/4 py-6 text-3xl font-semibold'>Skills</h3>
-                  <div id='skills' className='flex gap-6 w-3/4 flex-wrap'>
+                <div className='flex md:flex-col'>
+                  <h3 className='w-1/4 py-6 text-3xl font-semibold md:w-full'>
+                    Skills
+                  </h3>
+                  <div
+                    id='skills'
+                    className='flex gap-6 w-3/4 flex-wrap lg:gap-3 md:w-full'
+                  >
                     {site?.skills?.map((value, index) => {
                       return (
                         <div
@@ -265,9 +291,12 @@ export default async function Page({
                 </div>
               )}
               {site?.courses?.length! > 0 && (
-                <div className='flex mt-8'>
+                <div className='flex md:flex-col mt-8 md:w-full'>
                   <h3 className='w-1/4 py-6 text-3xl font-semibold'>Courses</h3>
-                  <div id='skills' className='flex gap-6 w-3/4 flex-wrap'>
+                  <div
+                    id='courses'
+                    className='flex gap-6 w-3/4 flex-wrap md:w-full md:gap-3'
+                  >
                     {site?.courses?.map((value, index) => {
                       return (
                         <div
@@ -286,15 +315,17 @@ export default async function Page({
         </section>
       )}
       <section
-        className='mx-auto max-w-website bg-shadow-theme-image rounded-xl '
+        className='mx-auto max-w-website bg-shadow-theme-image rounded-xl xxl:rounded-none '
         id='hire-me'
       >
-        <div className='py-20 px-16 flex justify-between'>
+        <div className='py-20 px-16 flex justify-between md:px-8'>
           <div className='flex flex-col justify-center'>
-            <p className='text-4xl font-black text-white'>
+            <p className='text-4xl font-black text-white sxl:text-5xl'>
               Did you like my work?
             </p>
-            <p className='text-4xl font-black text-white'>Hire me.</p>
+            <p className='text-4xl font-black text-white sxl:text-5xl'>
+              Hire me.
+            </p>
             <Link
               href={
                 site?.hire_me ?? site?.linkedin_url ?? site?.resume_link ?? ""
@@ -309,7 +340,7 @@ export default async function Page({
               </button>
             </Link>
           </div>
-          <div>
+          <div className='sxl:hidden'>
             <Image src={megaphone} alt='' height={360} width={360} />
           </div>
         </div>
@@ -439,7 +470,7 @@ export default async function Page({
                 })}
               </div>
             </div>
-            <div>
+            <div className='lg:hidden'>
               <h2 className='text-white text-3xl font-black'>
                 Liked my work so far? <span className='block'>Hire me</span>
               </h2>

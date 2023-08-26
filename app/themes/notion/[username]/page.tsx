@@ -43,11 +43,11 @@ export default async function Page({
   return (
     <main className={`${poppins.className} text-black`}>
       <section id='navbar' className='px-6 border-b border-gray-500'>
-        <div className='max-w-website mx-auto py-4 flex justify-between items-center'>
-          <div className='flex gap-x-12 font-normal'>
+        <div className='max-w-website mx-auto py-4 flex justify-between items-center md:justify-end '>
+          <div className='flex gap-x-12 font-normal md:hidden'>
             {navbar.map((value) => value)}
           </div>
-          <div>
+          <div className=''>
             {site?.linkedin_url && (
               <Link href={site.linkedin_url} target='_blank'>
                 <div className='bg-black border-2 text-white px-8 py-3 rounded-lg border-black'>
@@ -63,11 +63,11 @@ export default async function Page({
         className='px-6 max-w-website mx-auto py-28 bg-notion-theme-image bg-no-repeat bg-contain bg-right '
       >
         <div className='flex flex-col items-center'>
-          <h1 className='text-7xl text-center font-bold leading-tight text-black'>
+          <h1 className='text-7xl text-center font-bold leading-tight text-black xl:text-6xl sxl:text-5xl lg:text-4xl'>
             <span className='block'>Hello!, I am {site?.first_name}</span>
             <span className='block'>
               I am a{" "}
-              <span className='text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-blue-500 font-outline-4'>
+              <span className='text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-blue-500 font-outline-4 md:bg-gradient-to-r md:from-black md:to-black md:font-outline-0'>
                 {site?.occupation}
               </span>
             </span>
@@ -93,20 +93,20 @@ export default async function Page({
       </section>
       {site?.experiences?.length! > 0 && (
         <section id='experience' className='px-6 max-w-website mx-auto py-28'>
-          <div className='flex gap-x-12'>
-            <div className='w-1/4'>
+          <div className='flex gap-x-12 xxl:gap-x-4 sxl:flex-col'>
+            <div className='w-1/4 mx-auto sxl:w-full'>
               <h2 className='text-2xl font-semibold'>Work Experience</h2>
               <p className='text-sm mt-4 text-gray-500'>
                 Read all about my work experience and how I have contributed at
                 my current and previous companies in their growth.
               </p>
             </div>
-            <div className='w-3/4 flex flex-wrap gap-4'>
+            <div className='w-3/4 mx-auto grid grid-cols-2 gap-4 sxl:mt-6 sxl:w-full md:grid-cols-1'>
               {site?.experiences?.map((value, index) => {
                 return (
                   <div
                     key={index}
-                    className='border-2 rounded p-4 w-96 border-gray-600 h-96 relative overflow-hidden'
+                    className='border-2 rounded p-4 border-gray-600 h-96 relative overflow-hidden'
                   >
                     <div className='flex items-center gap-x-8 '>
                       <Image
@@ -158,9 +158,9 @@ export default async function Page({
       )}
 
       {site?.skills?.length! > 0 && (
-        <section id='skills' className='max-w-website mx-auto py-24'>
-          <div className='flex gap-x-12'>
-            <div className='w-1/4 '>
+        <section id='skills' className='max-w-website mx-auto py-24 px-8'>
+          <div className='flex gap-12 lg:flex-col '>
+            <div className='w-1/4 lg:w-full'>
               <h2 className='text-2xl font-semibold'>My Skills</h2>
               <p className='text-sm font-light mt-6'>
                 Here are some skills that I have learned throughout my career
@@ -168,7 +168,7 @@ export default async function Page({
               </p>
             </div>
 
-            <div className='w-3/4 flex flex-row flex-wrap justify-start items-end gap-4'>
+            <div className='w-3/4 flex flex-row flex-wrap justify-start items-end gap-4 lg:w-full'>
               {site?.skills?.map((value, index) => {
                 return (
                   <p
@@ -184,9 +184,9 @@ export default async function Page({
         </section>
       )}
       {site?.courses?.length! > 0 && (
-        <section id='courses' className='max-w-website mx-auto py-24'>
-          <div className='flex gap-x-12'>
-            <div className='w-1/4'>
+        <section id='courses' className='max-w-website mx-auto py-24 px-8'>
+          <div className='flex gap-12 lg:flex-col'>
+            <div className='w-1/4 lg:w-full'>
               <h2 className=' text-2xl font-semibold'>My Courses</h2>
               <p className='text-sm font-light mt-6'>
                 Here are some courses that I have taken throughout my
@@ -194,7 +194,7 @@ export default async function Page({
               </p>
             </div>
 
-            <div className='w-3/4 flex flex-row flex-wrap justify-start items-end gap-4'>
+            <div className='w-3/4 flex flex-row flex-wrap justify-start items-end gap-4 lg:w-full'>
               {site?.courses?.map((value, index) => {
                 return (
                   <p
@@ -211,9 +211,9 @@ export default async function Page({
       )}
 
       {site?.education?.length! > 0 && (
-        <section id='education' className='max-w-website mx-auto py-24'>
-          <div className='flex gap-x-12'>
-            <div className='w-1/4'>
+        <section id='education' className='max-w-website mx-auto py-24 px-8'>
+          <div className='flex gap-12 lg:flex-col'>
+            <div className='w-1/4 lg:w-full'>
               <h2 className=' text-2xl font-semibold'>Education</h2>
               <p className='text-sm font-light mt-6'>
                 Here are schools and colleges that I have attended along with my
@@ -252,9 +252,9 @@ export default async function Page({
         </section>
       )}
       {site?.projects?.length! > 0 && (
-        <section id='projects' className='max-w-website mx-auto py-24'>
-          <div className='flex gap-x-12'>
-            <div className='w-1/4'>
+        <section id='projects' className='max-w-website mx-auto py-24 px-8'>
+          <div className='flex gap-12 lg:flex-col'>
+            <div className='w-1/4 lg:w-full'>
               <h2 className=' text-2xl font-semibold'>Projects</h2>
               <p className='text-sm font-light mt-6'>
                 Here are a few projects that I have worked on so far
@@ -291,10 +291,11 @@ export default async function Page({
         </section>
       )}
       <section id='hire-me' className='max-w-website mx-auto py-8'>
-        <div className='flex bg-black rounded-lg px-20 py-20 justify-between'>
+        <div className='flex bg-black rounded-lg px-20 py-20 justify-between xl:rounded-none'>
           <div className=''>
             <h2 className='text-white text-4xl font-black'>
-              <span className='block'>Would you like to offer</span> me a role?
+              <span className='block lg:inline'>Would you like to offer</span>{" "}
+              me a role?
             </h2>
             <Link
               href={site?.hire_me ?? site?.linkedin_url ?? ""}
@@ -305,19 +306,19 @@ export default async function Page({
               </div>
             </Link>
           </div>
-          <Image src={hireMeImage} alt='' className='w-1/3' />
+          <Image src={hireMeImage} alt='' className='w-1/3 xl:hidden' />
         </div>
       </section>
       {site?.faqs?.length! > 0 && (
-        <section id='courses' className='max-w-website mx-auto py-24'>
-          <div className='flex gap-x-12'>
-            <div className='w-1/4'>
+        <section id='courses' className='max-w-website mx-auto py-24 px-8'>
+          <div className='flex gap-12 lg:flex-col'>
+            <div className='w-1/4 lg:w-full'>
               <h2 className=' text-2xl font-semibold'>FAQs</h2>
               <p className='text-sm font-light mt-2'>
                 Frequently Asked Questions
               </p>
             </div>
-            <div className='w-3/4 flex flex-col gap-8'>
+            <div className='w-3/4 flex flex-col gap-8 lg:w-full'>
               {site?.faqs?.map((value, index) => {
                 return (
                   <div key={index}>
@@ -333,7 +334,7 @@ export default async function Page({
         </section>
       )}
       <section id='footer' className='bg-black'>
-        <div className='max-w-website mx-auto py-16'>
+        <div className='max-w-website mx-auto py-16 px-8'>
           <div>
             <h2 className='text-white text-6xl font-black'>Say Hi!</h2>
             <div className='mt-8 flex gap-x-8'>
@@ -439,7 +440,7 @@ export default async function Page({
                 })}
               </div>
             </div>
-            <div>
+            <div className='lg:hidden'>
               <h2 className='text-white text-3xl font-black'>
                 Liked my work so far? <span className='block'>Hire me</span>
               </h2>
