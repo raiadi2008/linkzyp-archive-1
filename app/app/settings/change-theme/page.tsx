@@ -41,6 +41,7 @@ export default async function Page() {
             if (value.type === "PREMIUM")
               return (
                 <div key={index} className='relative border rounded-lg p-6'>
+                  <h3 className='mb-4 font-semibold text-lg'>{value.name}</h3>
                   <div className='relative'>
                     <Image
                       src={value.img ?? defaultTheme}
