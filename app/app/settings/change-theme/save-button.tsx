@@ -19,6 +19,8 @@ export function SaveButton({ theme_id }: ISaveButton) {
     })
     if (res.ok) {
       const data = await res.json()
+
+      router.push("/app/settings?tab=profile")
     }
     setLoading(false)
   }
