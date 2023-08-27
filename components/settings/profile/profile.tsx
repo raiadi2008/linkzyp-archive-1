@@ -355,6 +355,38 @@ export default function ProfileSettings({
               Copy Portfolio Url
             </p>
           </div>
+          <div className='flex items-center justify-between mt-8 sm:flex-col sm:items-start'>
+            <div>
+              <Link href='/app/settings/custom-domain'>
+                <p>Custom Domain</p>
+              </Link>
+              <p className='text-gray-500 font-extralight text-sm'>
+                <span className='block sm:inline'>
+                  Host your portfolio on your own
+                </span>
+                <span className='block sm:inline'>domain.eg www.jhon.me</span>
+              </p>
+            </div>
+            <div>
+              <Link
+                href='/app/settings/custom-domain'
+                className='text-gray-500'
+              >
+                {siteInfo.domain ?? "Add you domain"}
+                <span className='text-xs'>&#x2197;</span>
+              </Link>
+            </div>
+          </div>
+          <div className='flex items-center justify-between mt-8 sm:flex-col sm:items-start'>
+            <div>
+              <Link href='/app/settings/change-theme'>
+                <p>
+                  Change Portfolio Theme
+                  <span className='text-xs'>&#x2197;</span>
+                </p>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
