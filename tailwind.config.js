@@ -64,6 +64,9 @@ module.exports = {
         '112': '32rem'
 
       }
+    },
+    aspectRatio: {
+      '7/8': '7 / 8',
     }
   },
   plugins: [

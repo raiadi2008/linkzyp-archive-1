@@ -6,8 +6,9 @@ import HttpStatus from "@/constants/http_status"
 import { ISite } from "@/app/utils/interfaces"
 import { updateSiteDB } from "@/db/site"
 
-export async function GET(req: NextRequest) {
+export async function PUT(req: NextRequest) {
   const session = await getServerSession(authOptions)
+
   if (!session)
     return NextResponse.json(
       { error: "Unauthorized" },
@@ -25,5 +26,5 @@ export async function GET(req: NextRequest) {
     themeId: theme_id,
   }
   const updatedData = await updateSiteDB(siteData, session.user.id)
-  return NextResponse.json(updateSiteDB, { status: HttpStatus.SUCCESS })
+  return NextResponse.json(updatedData, { status: HttpStatus.SUCCESS })
 }
