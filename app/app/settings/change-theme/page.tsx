@@ -36,7 +36,7 @@ export default async function Page() {
         </div>
       </section>
       <section className='mx-auto max-w-website px-8 mt-12'>
-        <div className='grid grid-cols-2 gap-6 md:grid-cols-1'>
+        <div className='grid grid-cols-3 gap-6 sxl:grid-cols-2 sm:grid-cols-1'>
           {themes.map((value, index) => {
             if (value.type === "PREMIUM")
               return (

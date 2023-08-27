@@ -8,7 +8,6 @@ interface ISaveButton {
 }
 
 export function SaveButton({ theme_id }: ISaveButton) {
-  console.log("theme", theme_id)
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const payload = { theme_id: theme_id }
@@ -20,8 +19,8 @@ export function SaveButton({ theme_id }: ISaveButton) {
     })
     if (res.ok) {
       const data = await res.json()
-      router.push(`/${data["username"]}`)
     }
+    setLoading(false)
   }
   return (
     <button
