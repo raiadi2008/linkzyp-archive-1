@@ -8,18 +8,11 @@ import { signOut } from "next-auth/react"
 
 import logo from "@/public/logo.png"
 
-import {
-  ICertificate,
-  IEducation,
-  IExperience,
-  IProject,
-  ISite,
-} from "@/app/utils/interfaces"
+import { ISite } from "@/app/utils/interfaces"
 import { navbar, navbarMap } from "@/constants/settings_navbar"
 import CurrentSettingsSection from "./tab_selector"
 import getUserInfo from "./fetch"
 import Link from "next/link"
-import { parse } from "path"
 import { parseSiteDataFromJSON } from "@/app/utils/functions"
 
 const TAB = "tab"
@@ -49,6 +42,7 @@ export default function Page() {
   }, [session])
 
   useEffect(() => {
+    console.log("here we are")
     if (!searchParams.get(TAB)) {
       router.push(`?${TAB}=profile`)
     }

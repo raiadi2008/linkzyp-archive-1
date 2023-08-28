@@ -17,3 +17,8 @@ export async function getThemeByName(name: string) {
   })
   return theme
 }
+
+export async function getAllThemesDB() {
+  const themes = await prisma.theme.findMany()
+  return themes
+}

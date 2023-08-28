@@ -75,3 +75,11 @@ export interface ISiteUpdates {
   setValuesChanged: Dispatch<SetStateAction<boolean>>
   setSiteInfo: Dispatch<SetStateAction<ISite | null>>
 }
+
+export interface ITheme {
+  id: string
+  name: string
+  type: string
+  path: string
+  img?: string
+}
