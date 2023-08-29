@@ -13,16 +13,27 @@ interface IVerification {
   value: string
 }
 
+const genralVerification: IVerification[] = [
+  { name: "@", type: "A", value: "76.76.21.21" },
+  { name: "www", type: "CNAME", value: "cname.vercel-dns.com." },
+]
+
 export default function Page() {
   const [inputError, setInputError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [currentDomain, setCurrentDomain] = useState<string | null>(null)
-  const [verification, setVerification] = useState<IVerification[]>([
-    { name: "@", type: "A", value: "76.76.21.21" },
-    { name: "www", type: "CNAME", value: "cname.vercel-dns.com." },
-  ])
+  const [verification, setVerification] =
+    useState<IVerification[]>(genralVerification)
 
   async function addDomain() {
+    if (
+      !currentDomain ||
+      currentDomain.length === 0 ||
+      currentDomain.split(".").length !== 2
+    ) {
+      setInputError("Invalid domain. Add only top level domain")
+      return
+    }
     setLoading(true)
     const resp = await fetch(`/api/domain`, {
       method: "POST",
@@ -31,7 +42,7 @@ export default function Page() {
     if (resp.ok && resp.status === HttpStatus.SUCCESS) {
       const data = await resp.json()
       if (data.verification) {
-        const _verification = verification
+        const _verification = genralVerification
         for (let v of data.verification) {
           _verification.push({
             name: "_vercel",
@@ -43,6 +54,16 @@ export default function Page() {
       }
     }
     setLoading(false)
+  }
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value
+    if (value.length === 0 || value.split(".").length !== 2) {
+      setInputError("Invalid domain. Add only top level domain")
+    } else {
+      setInputError(null)
+    }
+    setCurrentDomain(e.target.value)
   }
 
   async function getDomainData() {
@@ -62,10 +83,8 @@ export default function Page() {
       .then((data) => {
         if (data) {
           setCurrentDomain(data.domain)
-          console.log(data)
           if (data.verification) {
-            console.log("test this")
-            const _verification = verification
+            const _verification = genralVerification
             for (let v of data.verification) {
               _verification.push({
                 name: "_vercel",
@@ -73,7 +92,6 @@ export default function Page() {
                 value: v.value,
               } as IVerification)
             }
-            console.log(_verification)
             setVerification(_verification)
           }
         } else {
@@ -122,12 +140,15 @@ export default function Page() {
           {loading ? (
             <div className='animate-pulse rounded  bg-slate-200 h-11 '></div>
           ) : (
-            <input
-              value={currentDomain ?? ""}
-              onChange={(e) => setCurrentDomain(e.target.value)}
-              placeholder='example.com'
-              className='px-4 py-2 rounded border border-gray-400 '
-            />
+            <div className='w-full'>
+              <input
+                value={currentDomain ?? ""}
+                onChange={handleInputChange}
+                placeholder='example.com'
+                className='px-4 py-2 rounded border border-gray-400 w-full '
+              />
+              <p className='text-sm text-neutral-red'>{inputError}</p>
+            </div>
           )}
           <button
             disabled={loading}
