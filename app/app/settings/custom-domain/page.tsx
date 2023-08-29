@@ -177,16 +177,16 @@ export default function Page() {
         <label className='block  mb-2 font-semibold text-lg'>DNS Values</label>
         <p className='text-sm text-gray-500 mb-8'>
           <span className='block sm:inline'>
-            Once you have added the domain. You will have to go to{" "}
+            After adding domain you can compy these values and add them{" "}
           </span>
           <span className='block sm:inline'>
-            your domain/DNS provider and add the following values.{" "}
+            to your domain/DNS provider. After adding the values you can{" "}
           </span>
           <span className='block sm:inline'>
-            Once added you can start using the domain. Values will be{" "}
+            use your domain to view your portfolio. It might take upto{" "}
           </span>
           <span className='block sm:inline'>
-            Visible after you have completed step 1{" "}
+            48 hours depening upon your domain provider.{" "}
           </span>
         </p>
         <div className='flex text-sm bg-gray-300 p-6 overflow-x-scroll whitespace-nowrap'>
