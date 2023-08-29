@@ -23,8 +23,9 @@ export default function Page() {
   const [loading, setLoading] = useState(false)
   const [currentDomain, setCurrentDomain] = useState<string | null>(null)
   const [inputDomain, setInputDomain] = useState<string | null>(null)
-  const [verification, setVerification] =
-    useState<IVerification[]>(genralVerification)
+  const [verification, setVerification] = useState<IVerification[]>([
+    ...genralVerification,
+  ])
 
   async function addDomain() {
     if (
@@ -47,7 +48,7 @@ export default function Page() {
       setCurrentDomain(data.domain)
       setInputDomain(data.domain)
       if (data.verification) {
-        const _verification = genralVerification
+        const _verification = [...genralVerification]
         for (let v of data.verification) {
           _verification.push({
             name: "_vercel",
@@ -94,7 +95,7 @@ export default function Page() {
           setInputDomain(data.domain)
           setCurrentDomain(data.domain)
           if (data.verification) {
-            const _verification = genralVerification
+            const _verification = [...genralVerification]
             for (let v of data.verification) {
               _verification.push({
                 name: "_vercel",
