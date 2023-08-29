@@ -23,6 +23,7 @@ export default function Page() {
   ])
 
   async function addDomain() {
+    setLoading(true)
     const resp = await fetch(`/api/domain`, {
       method: "POST",
       body: JSON.stringify({ domain: currentDomain }),
@@ -31,17 +32,17 @@ export default function Page() {
       const data = await resp.json()
       if (data.verification) {
         const _verification = verification
-        for (let v of data.verification)
+        for (let v of data.verification) {
           _verification.push({
             name: "_vercel",
             type: v.type,
             value: v.value,
           } as IVerification)
-
+        }
         setVerification(_verification)
       }
-      return data
     }
+    setLoading(false)
   }
 
   async function getDomainData() {
@@ -61,12 +62,27 @@ export default function Page() {
       .then((data) => {
         if (data) {
           setCurrentDomain(data.domain)
+          console.log(data)
+          if (data.verification) {
+            console.log("test this")
+            const _verification = verification
+            for (let v of data.verification) {
+              _verification.push({
+                name: "_vercel",
+                type: v.type,
+                value: v.value,
+              } as IVerification)
+            }
+            console.log(_verification)
+            setVerification(_verification)
+          }
         } else {
           setCurrentDomain(null)
         }
       })
       .catch((e) => console.log(e))
       .finally(() => setLoading(false))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

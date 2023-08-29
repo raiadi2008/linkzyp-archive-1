@@ -150,29 +150,31 @@ export async function GET(req: NextRequest) {
   const headers = {
     Authorization: `Bearer ${process.env.VERCEL_ACCESS_TOKEN}`,
   }
-  const vercelDomainVerifyEndpoint = `${process.env.VERCEL_URL}/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains/${site.domain}/verify`
+
+  const vercelDomainVerifyEndpoint = `${process.env.VERCEL_URL}/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains/${site.domain}?teamId=${process.env.VERCEL_TEAM_ID}`
+  const vercelSubDomainVerifyEndpoint = `${process.env.VERCEL_URL}/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains/${site.www_sub_domain}?teamId=${process.env.VERCEL_TEAM_ID}`
   const resultDomain = await fetch(vercelDomainVerifyEndpoint, {
     headers,
-    method: "POST",
+    method: "GET",
   })
+  const resultSubDomain = await fetch(vercelSubDomainVerifyEndpoint, {
+    headers,
+    method: "GET",
+  })
+
   if (resultDomain.ok && resultDomain.status === HttpStatus.SUCCESS) {
     const data = await resultDomain.json()
-    if (data["verification"]) verifications.push(data["verification"])
-    isVerified = isVerified && data["verified"]
-  }
-
-  if (site.www_sub_domain) {
-    const vercelSubDomainVerifyEndpoint = `${process.env.VERCEL_URL}/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains/${site.www_sub_domain}/verify`
-    const resultSubDomain = await fetch(vercelSubDomainVerifyEndpoint, {
-      headers,
-      method: "POST",
-    })
-    if (resultSubDomain.ok && resultSubDomain.status === HttpStatus.SUCCESS) {
-      const dataSubDomain = await resultSubDomain.json()
-      if (dataSubDomain["verification"])
-        verifications.push(dataSubDomain["verification"])
-      isVerified = isVerified && dataSubDomain["verified"]
+    if (data.verification) {
+      verifications.push(...data.verification)
     }
+    isVerified = isVerified && data.verified
+  }
+  if (resultSubDomain.ok && resultSubDomain.status === HttpStatus.SUCCESS) {
+    const data = await resultSubDomain.json()
+    if (data.verification) {
+      verifications.push(...data.verification)
+    }
+    isVerified = isVerified && data.verified
   }
 
   return NextResponse.json(
@@ -180,7 +182,7 @@ export async function GET(req: NextRequest) {
       domain: site.domain,
       www_sub_domain: site.www_sub_domain,
       verified: isVerified,
-      verifications: verifications,
+      verification: verifications,
     },
     { status: HttpStatus.SUCCESS }
   )
