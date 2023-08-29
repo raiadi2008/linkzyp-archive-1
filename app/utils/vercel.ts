@@ -18,8 +18,5 @@ export async function deleteDomain(user_id: string) {
     method: "DELETE",
   })
 
-  console.log(a)
-  console.log(b)
-
   return
 }

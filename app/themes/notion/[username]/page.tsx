@@ -262,7 +262,6 @@ export default async function Page({
             </div>
             <div className='flex flex-col  flex-1'>
               {site?.projects?.map((value, index) => {
-                console.log(value.description)
                 return (
                   <div
                     key={index}
