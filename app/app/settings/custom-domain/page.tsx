@@ -7,22 +7,39 @@ import logo from "@/public/logo.png"
 import { use, useEffect, useState } from "react"
 import HttpStatus from "@/constants/http_status"
 
+interface IVerification {
+  type: string
+  name: string
+  value: string
+}
+
 export default function Page() {
   const [inputError, setInputError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [currentDomain, setCurrentDomain] = useState<string | null>(null)
-  const [verification, setVerification] = useState<any[]>([])
+  const [verification, setVerification] = useState<IVerification[]>([
+    { name: "@", type: "A", value: "76.76.21.21" },
+    { name: "www", type: "CNAME", value: "cname.vercel-dns.com." },
+  ])
 
   async function addDomain() {
-    console.log(currentDomain)
     const resp = await fetch(`/api/domain`, {
       method: "POST",
       body: JSON.stringify({ domain: currentDomain }),
     })
     if (resp.ok && resp.status === HttpStatus.SUCCESS) {
       const data = await resp.json()
-      console.log(data.verification)
-      if (data.verification) setVerification(data.verification)
+      if (data.verification) {
+        const _verification = verification
+        for (let v of data.verification)
+          _verification.push({
+            name: "_vercel",
+            type: v.type,
+            value: v.value,
+          } as IVerification)
+
+        setVerification(_verification)
+      }
       return data
     }
   }
@@ -121,26 +138,25 @@ export default function Page() {
             Visible after you have completed step 1{" "}
           </span>
         </p>
-        <div className='grid grid-cols-3 gap-x-5 gap-y-1  text-sm bg-gray-300 p-6 overflow-x-scroll whitespace-nowrap'>
-          <h5 className='font-semibold mb-2'>type</h5>
-          <h5 className='font-semibold mb-2'>name</h5>
-          <h5 className='font-semibold mb-2'>value</h5>
-          <p>A</p>
-          <p>@</p>
-          <p>76.76.21.21</p>
-          <p>CNAME</p>
-          <p>www</p>
-          <p>cname.vercel-dns.com.</p>
-          {verification.length > 0 &&
-            verification.map((value, index) => {
-              return (
-                <>
-                  <p>{value.type}</p>
-                  <p>_vercel</p>
-                  <p>{value.value}</p>
-                </>
-              )
+        <div className='flex   text-sm bg-gray-300 p-6 overflow-x-scroll whitespace-nowrap'>
+          <div className='w-1/5'>
+            <h5 className='font-semibold mb-4'>Type</h5>
+            {verification.map((v, i) => {
+              return <p key={i}>{v.type}</p>
             })}
+          </div>
+          <div className='w-1/5'>
+            <h5 className='font-semibold mb-4'>Name</h5>
+            {verification.map((v, i) => {
+              return <p key={i}>{v.name}</p>
+            })}
+          </div>
+          <div className='w-3/5'>
+            <h5 className='font-semibold mb-4'>Value</h5>
+            {verification.map((v, i) => {
+              return <p key={i}>{v.value}</p>
+            })}
+          </div>
         </div>
       </section>
     </main>

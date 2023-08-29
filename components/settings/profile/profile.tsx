@@ -355,7 +355,7 @@ export default function ProfileSettings({
               Copy Portfolio Url
             </p>
           </div>
-          <div className='flex items-center justify-between mt-8 sm:flex-col sm:items-start'>
+          {/* <div className='flex items-center justify-between mt-8 sm:flex-col sm:items-start'>
             <div>
               <Link href='/app/settings/custom-domain'>
                 <p>Custom Domain</p>
@@ -376,7 +376,7 @@ export default function ProfileSettings({
                 <span className='text-xs'>&#x2197;</span>
               </Link>
             </div>
-          </div>
+          </div> */}
           <div className='flex items-center justify-between mt-8 sm:flex-col sm:items-start'>
             <div>
               <Link href='/app/settings/change-theme'>
