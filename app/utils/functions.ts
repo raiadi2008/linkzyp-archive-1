@@ -205,7 +205,6 @@ export function parseDateString(
 export function isStringValidUrl(url: string): boolean {
   try {
     const parsedURL = new URL(url)
-    console.log(parsedURL)
     return true
   } catch (e) {
     console.log(e)
