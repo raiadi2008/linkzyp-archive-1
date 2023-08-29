@@ -19,28 +19,33 @@ const genralVerification: IVerification[] = [
 ]
 
 export default function Page() {
-  const [inputError, setInputError] = useState<string | null>(null)
+  const [inputError, setInputError] = useState<boolean>(false)
   const [loading, setLoading] = useState(false)
   const [currentDomain, setCurrentDomain] = useState<string | null>(null)
+  const [inputDomain, setInputDomain] = useState<string | null>(null)
   const [verification, setVerification] =
     useState<IVerification[]>(genralVerification)
 
   async function addDomain() {
     if (
-      !currentDomain ||
-      currentDomain.length === 0 ||
-      currentDomain.split(".").length !== 2
+      !inputDomain ||
+      inputDomain.split(".").length !== 2 ||
+      inputDomain.split(".")[0].length === 0 ||
+      inputDomain.split(".")[1].length === 0
     ) {
-      setInputError("Invalid domain. Add only top level domain")
+      setInputError(true)
       return
     }
     setLoading(true)
     const resp = await fetch(`/api/domain`, {
       method: "POST",
-      body: JSON.stringify({ domain: currentDomain }),
+      body: JSON.stringify({ domain: inputDomain }),
     })
+
     if (resp.ok && resp.status === HttpStatus.SUCCESS) {
       const data = await resp.json()
+      setCurrentDomain(data.domain)
+      setInputDomain(data.domain)
       if (data.verification) {
         const _verification = genralVerification
         for (let v of data.verification) {
@@ -58,12 +63,16 @@ export default function Page() {
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value
-    if (value.length === 0 || value.split(".").length !== 2) {
-      setInputError("Invalid domain. Add only top level domain")
+    if (
+      value.split(".").length !== 2 ||
+      value.split(".")[0].length === 0 ||
+      value.split(".")[1].length === 0
+    ) {
+      setInputError(true)
     } else {
-      setInputError(null)
+      setInputError(false)
     }
-    setCurrentDomain(e.target.value)
+    setInputDomain(e.target.value)
   }
 
   async function getDomainData() {
@@ -82,6 +91,7 @@ export default function Page() {
     getDomainData()
       .then((data) => {
         if (data) {
+          setInputDomain(data.domain)
           setCurrentDomain(data.domain)
           if (data.verification) {
             const _verification = genralVerification
@@ -95,7 +105,7 @@ export default function Page() {
             setVerification(_verification)
           }
         } else {
-          setCurrentDomain(null)
+          setInputDomain(null)
         }
       })
       .catch((e) => console.log(e))
@@ -142,16 +152,20 @@ export default function Page() {
           ) : (
             <div className='w-full'>
               <input
-                value={currentDomain ?? ""}
+                value={inputDomain ?? ""}
                 onChange={handleInputChange}
                 placeholder='example.com'
                 className='px-4 py-2 rounded border border-gray-400 w-full '
               />
-              <p className='text-sm text-neutral-red'>{inputError}</p>
+              {inputError && (
+                <p className='text-sm text-neutral-red h-2'>
+                  Invalid domain. Add only top level domain
+                </p>
+              )}
             </div>
           )}
           <button
-            disabled={loading}
+            disabled={loading || currentDomain === inputDomain || inputError}
             onClick={addDomain}
             className='rounded bg-primary font-semibold text-lg text-white px-4 py-2 mt-5 disabled:bg-primary-light'
           >
