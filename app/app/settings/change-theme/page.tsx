@@ -8,10 +8,10 @@ import { SaveButton } from "./save-button"
 
 async function getAllThemes() {
   const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/themes`, {
-    next: { revalidate: 86400, tags: ["themes"] },
+    next: { revalidate: 86400, tags: ["all-themes"] },
   })
   const data = await resp.json()
-  return data as ITheme[]
+  return data["themes"] as ITheme[]
 }
 
 export default async function Page() {
