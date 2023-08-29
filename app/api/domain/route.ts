@@ -6,6 +6,7 @@ import authOptions from "@/lib/auth"
 import { isDomainTopLevel, isStringValidUrl } from "@/app/utils/functions"
 import { getSiteByDomainDB, getSiteByUserId, updateSiteDB } from "@/db/site"
 import { ISite } from "@/app/utils/interfaces"
+import { deleteDomain } from "@/app/utils/vercel"
 
 /**
  * @param req
@@ -44,11 +45,12 @@ export async function POST(req: NextRequest) {
     )
 
   const siteWithDomain = await getSiteByDomainDB(domain)
-  if (siteWithDomain && siteWithDomain.userId !== userId)
+  if (siteWithDomain)
     return NextResponse.json(
       { error: "The domain is already in use" },
       { status: HttpStatus.BAD_REQUEST }
     )
+
   const www_sub_domain = `www.${domain}`
   const verifications: any[] = []
   let verified = true
@@ -103,7 +105,7 @@ export async function POST(req: NextRequest) {
       { status: HttpStatus.INTERNAL_SERVER_ERROR }
     )
   }
-
+  deleteDomain(userId)
   const site = await updateSiteDB(
     {
       domain: domain,
