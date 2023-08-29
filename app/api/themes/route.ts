@@ -7,5 +7,5 @@ import { getAllThemesDB } from "@/db/theme"
 
 export async function GET(req: NextRequest) {
   const themes = await getAllThemesDB()
-  return NextResponse.json(themes, { status: HttpStatus.SUCCESS })
+  return NextResponse.json({ themes }, { status: HttpStatus.SUCCESS })
 }
