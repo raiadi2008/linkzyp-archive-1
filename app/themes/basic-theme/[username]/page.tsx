@@ -17,7 +17,7 @@ export default async function Page({
   const site = parseSiteDataFromJSON(data)
 
   return (
-    <main className='max-w-small-website mx-auto'>
+    <main className='max-w-small mx-auto'>
       <section id='hero' className='py-8'>
         <h1 className='text-6xl font-bold mb-4'>
           <div>Hi, I&apos;m</div>
