@@ -154,20 +154,20 @@ export default function Page() {
             Visible after you have completed step 1{" "}
           </span>
         </p>
-        <div className='flex   text-sm bg-gray-300 p-6 overflow-x-scroll whitespace-nowrap'>
-          <div className='w-1/5'>
+        <div className='flex text-sm bg-gray-300 p-6 overflow-x-scroll whitespace-nowrap'>
+          <div className='w-1/5 px-4 min-w-[30px]'>
             <h5 className='font-semibold mb-4'>Type</h5>
             {verification.map((v, i) => {
               return <p key={i}>{v.type}</p>
             })}
           </div>
-          <div className='w-1/5'>
+          <div className='w-1/5 px-4 min-w-[30px]'>
             <h5 className='font-semibold mb-4'>Name</h5>
             {verification.map((v, i) => {
               return <p key={i}>{v.name}</p>
             })}
           </div>
-          <div className='w-3/5'>
+          <div className='w-3/5 px-4 min-w-[120px]'>
             <h5 className='font-semibold mb-4'>Value</h5>
             {verification.map((v, i) => {
               return <p key={i}>{v.value}</p>
