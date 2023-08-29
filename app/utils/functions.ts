@@ -204,9 +204,11 @@ export function parseDateString(
  */
 export function isStringValidUrl(url: string): boolean {
   try {
-    new URL(url)
+    const parsedURL = new URL(url)
+    console.log(parsedURL)
     return true
-  } catch (_) {
+  } catch (e) {
+    console.log(e)
     return false
   }
 }
@@ -215,17 +217,11 @@ export function isStringValidUrl(url: string): boolean {
  * @param domain string
  * @returns true if domain is toplevel false if subdomain
  * @description checks if domain is toplevel of subdomain
- * @example - www.example.com => true
- * @example - example.com => true
- * @example - sub.example.com => false
- * @example - sub.sub.example.com => false
+ * @example example.com => true
  * @example - www.sub.example.com => false
  */
 
 export function isDomainTopLevel(domain: string): boolean {
   const domainParts = domain.split(".")
-  return (
-    (domainParts[0] === "www" && domainParts.length === 3) ||
-    domainParts.length === 2
-  )
+  return domainParts.length === 2
 }

@@ -31,61 +31,72 @@ export async function POST(req: NextRequest) {
   const { domain }: { domain: string } = payload
 
   // validate
-  if (!isStringValidUrl(domain))
+  if (!isDomainTopLevel(domain))
     return NextResponse.json(
-      { error: "the domain is not a valid url" },
+      { error: "the domain is not top level" },
       { status: HttpStatus.BAD_REQUEST }
     )
 
   if (domain.includes("vercel.pub"))
     return NextResponse.json(
-      { error: "Cannot use vercel.pub subdomain as your custom domain" },
+      { error: "Cannot use vercel.pub domain" },
       { status: HttpStatus.BAD_REQUEST }
     )
-  const domainHost = new URL(domain).host
-  const siteWithDomain = await getSiteByDomainDB(domainHost)
-  if (siteWithDomain)
+
+  const siteWithDomain = await getSiteByDomainDB(domain)
+  if (siteWithDomain && siteWithDomain.userId !== userId)
     return NextResponse.json(
       { error: "The domain is already in use" },
       { status: HttpStatus.BAD_REQUEST }
     )
-
+  const www_sub_domain = `www.${domain}`
   const verifications: any[] = []
-  if (isDomainTopLevel(domainHost)) {
-    const bodyMainDomain = {
-      name: `www.${domainHost}`,
-      gitBranch: process.env.VERCEL_GIT_BRANCH,
-    }
-    const result = await fetch(vercelDomainAddEndpoint, {
-      body: JSON.stringify(bodyMainDomain),
-      headers: headers,
-      method: "POST",
-    })
-    if (result.ok && result.status === HttpStatus.SUCCESS) {
-      const data = await result.json()
-      if (data["verification"]) verifications.push(data["verification"])
-    } else {
-      return NextResponse.json(
-        { error: "Something went wrong" },
-        { status: HttpStatus.INTERNAL_SERVER_ERROR }
-      )
-    }
-  }
+  let verified = true
+
   const bodySubDomain = {
-    name: domainHost,
+    name: www_sub_domain,
     gitBranch: process.env.VERCEL_GIT_BRANCH,
-    redirect: isDomainTopLevel(domainHost) ? `www.${domainHost}` : null,
-    redirectStatusCode: isDomainTopLevel(domainHost) ? 307 : null,
   }
-  const result = await fetch(vercelDomainAddEndpoint, {
+  const bodyMainDomain = {
+    name: domain,
+    redirect: www_sub_domain,
+    redirectStatusCode: 307,
+  }
+  const www_subdomain_result = await fetch(vercelDomainAddEndpoint, {
     body: JSON.stringify(bodySubDomain),
     headers: headers,
     method: "POST",
   })
+  if (
+    www_subdomain_result.ok &&
+    www_subdomain_result.status === HttpStatus.SUCCESS
+  ) {
+    const data = await www_subdomain_result.json()
+    verified = verified && data.verified
+    if (data.verification) {
+      verifications.push(...data.verification)
+    }
+  } else {
+    return NextResponse.json(
+      { error: "Something went wrong" },
+      { status: HttpStatus.INTERNAL_SERVER_ERROR }
+    )
+  }
+  const main_domain_result = await fetch(vercelDomainAddEndpoint, {
+    body: JSON.stringify(bodyMainDomain),
+    headers: headers,
+    method: "POST",
+  })
 
-  if (result.ok && result.status === HttpStatus.SUCCESS) {
-    const data = await result.json()
-    if (data["verification"]) verifications.push(data["verification"])
+  if (
+    main_domain_result.ok &&
+    main_domain_result.status === HttpStatus.SUCCESS
+  ) {
+    const data = await main_domain_result.json()
+    verified = verified && data.verified
+    if (data.verification) {
+      verifications.push(...data.verification)
+    }
   } else {
     return NextResponse.json(
       { error: "Something went wrong" },
@@ -95,8 +106,8 @@ export async function POST(req: NextRequest) {
 
   const site = await updateSiteDB(
     {
-      domain: domainHost,
-      www_sub_domain: isDomainTopLevel(domainHost) ? `www.${domainHost}` : null,
+      domain: domain,
+      www_sub_domain: www_sub_domain,
     } as ISite,
     userId
   )
@@ -106,7 +117,7 @@ export async function POST(req: NextRequest) {
       domain: site.domain,
       www_sub_domain: site.www_sub_domain,
       verification: verifications,
-      verified: false,
+      verified: verified,
     },
     { status: HttpStatus.SUCCESS }
   )
@@ -139,29 +150,31 @@ export async function GET(req: NextRequest) {
   const headers = {
     Authorization: `Bearer ${process.env.VERCEL_ACCESS_TOKEN}`,
   }
-  const vercelDomainVerifyEndpoint = `${process.env.VERCEL_URL}/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains/${site.domain}/verify`
+
+  const vercelDomainVerifyEndpoint = `${process.env.VERCEL_URL}/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains/${site.domain}?teamId=${process.env.VERCEL_TEAM_ID}`
+  const vercelSubDomainVerifyEndpoint = `${process.env.VERCEL_URL}/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains/${site.www_sub_domain}?teamId=${process.env.VERCEL_TEAM_ID}`
   const resultDomain = await fetch(vercelDomainVerifyEndpoint, {
     headers,
-    method: "POST",
+    method: "GET",
   })
+  const resultSubDomain = await fetch(vercelSubDomainVerifyEndpoint, {
+    headers,
+    method: "GET",
+  })
+
   if (resultDomain.ok && resultDomain.status === HttpStatus.SUCCESS) {
     const data = await resultDomain.json()
-    if (data["verification"]) verifications.push(data["verification"])
-    isVerified = isVerified && data["verified"]
-  }
-
-  if (site.www_sub_domain) {
-    const vercelSubDomainVerifyEndpoint = `${process.env.VERCEL_URL}/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains/${site.www_sub_domain}/verify`
-    const resultSubDomain = await fetch(vercelSubDomainVerifyEndpoint, {
-      headers,
-      method: "POST",
-    })
-    if (resultSubDomain.ok && resultSubDomain.status === HttpStatus.SUCCESS) {
-      const dataSubDomain = await resultSubDomain.json()
-      if (dataSubDomain["verification"])
-        verifications.push(dataSubDomain["verification"])
-      isVerified = isVerified && dataSubDomain["verified"]
+    if (data.verification) {
+      verifications.push(...data.verification)
     }
+    isVerified = isVerified && data.verified
+  }
+  if (resultSubDomain.ok && resultSubDomain.status === HttpStatus.SUCCESS) {
+    const data = await resultSubDomain.json()
+    if (data.verification) {
+      verifications.push(...data.verification)
+    }
+    isVerified = isVerified && data.verified
   }
 
   return NextResponse.json(
@@ -169,7 +182,7 @@ export async function GET(req: NextRequest) {
       domain: site.domain,
       www_sub_domain: site.www_sub_domain,
       verified: isVerified,
-      verifications: verifications,
+      verification: verifications,
     },
     { status: HttpStatus.SUCCESS }
   )

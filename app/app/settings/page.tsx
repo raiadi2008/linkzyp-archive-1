@@ -42,7 +42,6 @@ export default function Page() {
   }, [session])
 
   useEffect(() => {
-    console.log("here we are")
     if (!searchParams.get(TAB)) {
       router.push(`?${TAB}=profile`)
     }
