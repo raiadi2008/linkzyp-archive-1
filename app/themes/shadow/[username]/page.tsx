@@ -234,10 +234,10 @@ export default async function Page({
                     <div
                       className={`relative rounded-xl p-6 ${
                         randomBgColors[index % randomBgColors.length]
-                      } border-2 border-black w-112 h-72 xxl:w-102 xl:w-96 sxl:w-full`}
+                      } border-2 border-black w-112 h-80 xxl:w-102 xl:w-96 sxl:w-full`}
                     >
                       <p className='font-bold text-lg'>{value.title}</p>
-                      <p className='mt-3 h-60 overflow-scroll'>
+                      <p className='mt-3 h-60 overflow-scroll no-scrollbar'>
                         {value.description}
                       </p>
                       {value.url && (
@@ -275,7 +275,7 @@ export default async function Page({
                   </h3>
                   <div
                     id='skills'
-                    className='flex gap-6 w-3/4 flex-wrap lg:gap-3 md:w-full'
+                    className='flex gap-6 w-3/4 flex-wrap justify-start items-center lg:gap-3 md:w-full'
                   >
                     {site?.skills?.map((value, index) => {
                       return (
@@ -295,7 +295,7 @@ export default async function Page({
                   <h3 className='w-1/4 py-6 text-3xl font-semibold'>Courses</h3>
                   <div
                     id='courses'
-                    className='flex gap-6 w-3/4 flex-wrap md:w-full md:gap-3'
+                    className='flex gap-6 w-3/4 flex-wrap justify-start items-center lg:gap-3 md:w-full'
                   >
                     {site?.courses?.map((value, index) => {
                       return (
