@@ -65,6 +65,6 @@ export async function PUT(req: NextRequest) {
   }
 
   const updatedSite = await updateSiteDB(siteData, userId)
-  revalidatePortfolioData(updatedSite.username)
+  await revalidatePortfolioData(updatedSite.username)
   return NextResponse.json(updatedSite, { status: HttpStatus.SUCCESS })
 }
