@@ -170,7 +170,11 @@ export function parseSiteDataFromJSON(data: any) {
         !data["resume_link"] || data["resume_link"].length === 0
           ? null
           : data["resume_link"],
-
+      themeId: data["themeId"],
+      twitter_url:
+        !data["twitter_url"] || data["twitter_url"].length === 0
+          ? null
+          : data["twitter_url"],
       instagram_url:
         !data["instagram_url"] || data["instagram_url"].length === 0
           ? null
