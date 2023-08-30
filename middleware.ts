@@ -28,7 +28,10 @@ export async function middleware(req: NextRequest) {
       targetURL = new URL(`/api/portfolio-url?username=${username}`, origin)
     }
   } else {
-    targetURL = new URL(`/api/portfolio-url?domain=${host}`, origin)
+    targetURL = new URL(
+      `/api/portfolio-url?domain=${host.replace("www.", "")}`,
+      origin
+    )
   }
   const response = await fetch(targetURL)
   const data = await response.json()
