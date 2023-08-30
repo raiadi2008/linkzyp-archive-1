@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
       { status: HttpStatus.NOT_FOUND }
     )
   }
-  const themeUrl = new URL(`themes/${theme.path}/${username}`, origin)
+  const themeUrl = new URL(`themes/${theme.path}/${site.username}`, origin)
 
   return NextResponse.json(
     {
