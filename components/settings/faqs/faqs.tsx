@@ -111,7 +111,9 @@ export default function FAQs({
                       : "border-gray-300"
                   }`}
                   type='text'
-                  placeholder='Project Title eg. My Awesome Project'
+                  placeholder='FAQ question eg. How can my experience contribute to your growth?'
+                  name='company'
+                  id='company'
                   value={value.question}
                   onChange={(e) => {
                     const _faqs = [...faqs]
@@ -137,7 +139,7 @@ export default function FAQs({
                       : "border-gray-300"
                   }`}
                   rows={4}
-                  placeholder='Project Description eg. This is my awesome project. It does awesome things.'
+                  placeholder='FAQ answer eg. I have worked with a team that was target oriented and focused with specific skillsets. I have contributed a lot in achieving those objectives'
                   value={value.answer}
                   onChange={(e) => {
                     const _faqs = [...faqs]

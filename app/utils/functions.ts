@@ -154,7 +154,10 @@ export function parseSiteDataFromJSON(data: any) {
       profile_picture: data["profile_picture"],
       first_name: data["first_name"],
       last_name: data["last_name"],
-      linkedin_url: data["linkedin_url"],
+      linkedin_url:
+        !data["linkedin_url"] || data["linkedin_url"].length === 0
+          ? null
+          : data["linkedin_url"],
       occupation: data["occupation"],
       experiences,
       education,
@@ -163,15 +166,39 @@ export function parseSiteDataFromJSON(data: any) {
       skills: data["skills"] as string[],
       courses: data["courses"] as string[],
       faqs,
-      resume_link: data["resume_link"],
-      instagram_url: data["instagram_url"],
-      twitter_url: data["twitter_url"],
-      youtube_url: data["youtube_url"],
-      medium_url: data["medium_url"],
-      github_url: data["github_url"],
-      dribbble_url: data["dribbble_url"],
-      hire_me: data["hire_me"],
-      publication: data["publication"],
+      resume_link:
+        !data["resume_link"] || data["resume_link"].length === 0
+          ? null
+          : data["resume_link"],
+
+      instagram_url:
+        !data["instagram_url"] || data["instagram_url"].length === 0
+          ? null
+          : data["instagram_url"],
+      youtube_url:
+        !data["youtube_url"] || data["youtube_url"].length === 0
+          ? null
+          : data["youtube_url"],
+      medium_url:
+        !data["medium_url"] || data["medium_url"].length === 0
+          ? null
+          : data["medium_url"],
+      github_url:
+        !data["github_url"] || data["github_url"].length === 0
+          ? null
+          : data["github_url"],
+      dribbble_url:
+        !data["dribbble_url"] || data["dribbble_url"].length === 0
+          ? null
+          : data["dribbble_url"],
+      hire_me:
+        !data["hire_me"] || data["hire_me"].length === 0
+          ? null
+          : data["hire_me"],
+      publication:
+        !data["publication"] || data["publication"].length === 0
+          ? null
+          : data["publication"],
     } as ISite
     return result
   } catch (e) {
