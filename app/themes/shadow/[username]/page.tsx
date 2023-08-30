@@ -326,10 +326,10 @@ export default async function Page({
       >
         <div className='py-20 px-16 flex justify-between md:px-8'>
           <div className='flex flex-col justify-center'>
-            <p className='text-4xl font-black text-white sxl:text-5xl md:text-4xl'>
+            <p className='text-4xl font-black text-white sxl:text-5xl md:text-4xl xs:text-3xl xxs:text-2xl'>
               Did you like my work?
             </p>
-            <p className='text-4xl font-black text-white sxl:text-5xl'>
+            <p className='text-4xl font-black text-white sxl:text-5xl md:text-4xl xs:text-3xl xxs:text-2xl'>
               Hire me.
             </p>
             <Link
