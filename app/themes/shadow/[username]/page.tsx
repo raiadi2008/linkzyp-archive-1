@@ -237,9 +237,11 @@ export default async function Page({
                       } border-2 border-black w-112 h-80 xxl:w-102 xl:w-96 sxl:w-full`}
                     >
                       <p className='font-bold text-lg'>{value.title}</p>
-                      <p className='mt-3 h-60 overflow-scroll no-scrollbar'>
-                        {value.description}
-                      </p>
+                      <div className='h-60 overflow-hidden'>
+                        <p className='mt-3 h-60 overflow-scroll no-scrollbar'>
+                          {value.description}
+                        </p>
+                      </div>
                       {value.url && (
                         <Link href={value.url} target='_blank'>
                           <button className='absolute bottom-6 right-6'>
