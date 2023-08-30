@@ -230,11 +230,11 @@ export default async function Page({
                     key={index}
                     className='w-112 h-72 mx-auto relative xxl:w-102 xl:w-96 sxl:w-full'
                   >
-                    <div className='absolute top-3 w-112 h-72 left-3 rounded-xl  bg-gray-800 xxl:w-102 xl:w-96 sxl:w-full'></div>
+                    <div className='absolute top-3 w-112 h-96 left-3 rounded-xl  bg-gray-800 xxl:w-102 xl:w-96 sxl:w-full'></div>
                     <div
                       className={`relative rounded-xl p-6 ${
                         randomBgColors[index % randomBgColors.length]
-                      } border-2 border-black w-112 h-80 xxl:w-102 xl:w-96 sxl:w-full`}
+                      } border-2 border-black w-112 h-96 xxl:w-102 xl:w-96 sxl:w-full`}
                     >
                       <p className='font-bold text-lg'>{value.title}</p>
                       <div className='h-60 overflow-hidden'>
