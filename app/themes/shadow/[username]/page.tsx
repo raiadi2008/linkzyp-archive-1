@@ -83,7 +83,7 @@ export default async function Page({
         </div>
       </section>
       <section id='hero' className='bg-shadow-theme-image'>
-        <div className='flex mx-auto max-w-website py-24 items-center px-8'>
+        <div className='flex mx-auto max-w-website py-24 items-center px-8 md:py-20'>
           <div className='w-3/5 sxl:mx-auto sxl:w-full'>
             <h1 className='font-black text-7xl text-white font-outline-2 leading-tight xxl:text-6xl  sxl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl'>
               <span className='block'>Hey! {site?.first_name} </span>
@@ -113,7 +113,7 @@ export default async function Page({
           className='mx-auto max-w-website py-20 px-8 sxl:px-16 md:px-4'
           id='experience'
         >
-          <h2 className='text-center text-4xl font-black md:text-3xl mdfont-bold'>
+          <h2 className='text-center text-4xl font-black md:text-3xl md:font-bold'>
             My Work Experience
           </h2>
 
@@ -175,7 +175,7 @@ export default async function Page({
           id='education'
         >
           <div className='mx-auto max-w-website '>
-            <h2 className='text-center text-4xl font-black md:text-3xl mdfont-bold'>
+            <h2 className='text-center text-4xl font-black md:text-3xl md:font-bold'>
               My Educational Background
             </h2>
             <div className='grid grid-cols-2 gap-16 mt-16 xxl:gap-8 sxl:grid-cols-1'>
@@ -222,7 +222,7 @@ export default async function Page({
       {site?.projects?.length! > 0 && (
         <section className='py-20 px-8 sxl:px-16 md:px-4' id='projects'>
           <div className='mx-auto max-w-website'>
-            <h2 className='text-center text-4xl font-black md:text-3xl mdfont-bold'>
+            <h2 className='text-center text-4xl font-black md:text-3xl md:font-bold'>
               My Projects
             </h2>
             <div className='grid grid-cols-2 gap-16 mt-16 xxl:gap-8 sxl:grid-cols-1'>
@@ -268,7 +268,7 @@ export default async function Page({
           id='skills-and-courses'
         >
           <div>
-            <h2 className='text-center text-4xl font-black md:text-3xl mdfont-bold'>
+            <h2 className='text-center text-4xl font-black md:text-3xl md:font-bold'>
               My Skills and Courses
             </h2>
             <div className='flex flex-col gap-y-12 mt-16'>
@@ -353,7 +353,7 @@ export default async function Page({
       </section>
       {site?.faqs?.length! > 0 && (
         <section id='courses' className='max-w-website mx-auto py-24'>
-          <h2 className='text-center text-4xl font-black md:text-3xl mdfont-bold'>
+          <h2 className='text-center text-4xl font-black md:text-3xl md:font-bold'>
             FAQs
           </h2>
           <p className='mt-4 text-center'>Frequently Asked Questions</p>

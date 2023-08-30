@@ -60,7 +60,7 @@ export default async function Page({
       </section>
       <section
         id='hero'
-        className='px-6 max-w-website mx-auto py-28 bg-notion-theme-image bg-no-repeat bg-contain bg-right '
+        className='px-6 max-w-website mx-auto py-28 bg-notion-theme-image bg-no-repeat bg-contain bg-right md:py-24'
       >
         <div className='flex flex-col items-center'>
           <h1 className='text-7xl text-center font-bold leading-tight text-black xl:text-6xl sxl:text-5xl lg:text-4xl'>
@@ -92,7 +92,10 @@ export default async function Page({
         </div>
       </section>
       {site?.experiences?.length! > 0 && (
-        <section id='experience' className='px-6 max-w-website mx-auto py-28'>
+        <section
+          id='experience'
+          className='px-6 max-w-website mx-auto py-28 md:py-20 sm:py-16'
+        >
           <div className='flex gap-x-12 xxl:gap-x-4 sxl:flex-col'>
             <div className='w-1/4 mx-auto sxl:w-full'>
               <h2 className='text-2xl font-semibold'>Work Experience</h2>
@@ -158,7 +161,10 @@ export default async function Page({
       )}
 
       {site?.skills?.length! > 0 && (
-        <section id='skills' className='max-w-website mx-auto py-24 px-8'>
+        <section
+          id='skills'
+          className='max-w-website mx-auto py-24 px-8 md:py-20 sm:py-16'
+        >
           <div className='flex gap-12 lg:flex-col '>
             <div className='w-1/4 lg:w-full'>
               <h2 className='text-2xl font-semibold'>My Skills</h2>
@@ -168,12 +174,12 @@ export default async function Page({
               </p>
             </div>
 
-            <div className='w-3/4 flex flex-row flex-wrap justify-start items-end gap-4 lg:w-full'>
+            <div className='w-3/4 flex flex-row flex-wrap justify-start items-end gap-4 lg:w-full '>
               {site?.skills?.map((value, index) => {
                 return (
                   <p
                     key={index}
-                    className='px-6 py-2 border rounded border-black'
+                    className='px-6 py-2 border rounded border-black md:px-3 md:py-1'
                   >
                     {value}
                   </p>
@@ -184,7 +190,10 @@ export default async function Page({
         </section>
       )}
       {site?.courses?.length! > 0 && (
-        <section id='courses' className='max-w-website mx-auto py-24 px-8'>
+        <section
+          id='courses'
+          className='max-w-website mx-auto py-24 px-8 md:py-20 sm:py-16'
+        >
           <div className='flex gap-12 lg:flex-col'>
             <div className='w-1/4 lg:w-full'>
               <h2 className=' text-2xl font-semibold'>My Courses</h2>
@@ -211,7 +220,10 @@ export default async function Page({
       )}
 
       {site?.education?.length! > 0 && (
-        <section id='education' className='max-w-website mx-auto py-24 px-8'>
+        <section
+          id='education'
+          className='max-w-website mx-auto py-24 px-8 md:py-20 sm:py-16'
+        >
           <div className='flex gap-12 lg:flex-col'>
             <div className='w-1/4 lg:w-full'>
               <h2 className=' text-2xl font-semibold'>Education</h2>
@@ -252,7 +264,10 @@ export default async function Page({
         </section>
       )}
       {site?.projects?.length! > 0 && (
-        <section id='projects' className='max-w-website mx-auto py-24 px-8'>
+        <section
+          id='projects'
+          className='max-w-website mx-auto py-24 px-8 md:py-20 sm:py-16'
+        >
           <div className='flex gap-12 lg:flex-col'>
             <div className='w-1/4 lg:w-full'>
               <h2 className=' text-2xl font-semibold'>Projects</h2>
@@ -290,9 +305,9 @@ export default async function Page({
         </section>
       )}
       <section id='hire-me' className='max-w-website mx-auto py-8'>
-        <div className='flex bg-black rounded-lg px-20 py-20 justify-between xl:rounded-none'>
+        <div className='flex bg-black rounded-lg px-20 py-20 justify-between xl:rounded-none md:px-6'>
           <div className=''>
-            <h2 className='text-white text-4xl font-black'>
+            <h2 className='text-white text-4xl font-black md:text-3xl xs:text-2xl'>
               <span className='block lg:inline'>Would you like to offer</span>{" "}
               me a role?
             </h2>
@@ -309,7 +324,10 @@ export default async function Page({
         </div>
       </section>
       {site?.faqs?.length! > 0 && (
-        <section id='courses' className='max-w-website mx-auto py-24 px-8'>
+        <section
+          id='courses'
+          className='max-w-website mx-auto py-24 px-8 md:py-20 sm:py-16'
+        >
           <div className='flex gap-12 lg:flex-col'>
             <div className='w-1/4 lg:w-full'>
               <h2 className=' text-2xl font-semibold'>FAQs</h2>
@@ -333,7 +351,7 @@ export default async function Page({
         </section>
       )}
       <section id='footer' className='bg-black'>
-        <div className='max-w-website mx-auto py-16 px-8'>
+        <div className='max-w-website mx-auto py-16 px-8 md:py-12'>
           <div>
             <h2 className='text-white text-6xl font-black'>Say Hi!</h2>
             <div className='mt-8 flex gap-x-8'>
@@ -371,7 +389,7 @@ export default async function Page({
               )}
             </div>
           </div>
-          <div className='mt-32 flex justify-between'>
+          <div className='mt-32 flex gap-x-6 justify-between'>
             <div>
               <h2 className='text-white text-xl font-black'>
                 Check out my work here
