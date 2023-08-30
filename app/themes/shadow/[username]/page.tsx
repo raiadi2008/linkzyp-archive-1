@@ -85,7 +85,7 @@ export default async function Page({
       <section id='hero' className='bg-shadow-theme-image'>
         <div className='flex mx-auto max-w-website py-24 items-center px-8'>
           <div className='w-3/5 sxl:mx-auto sxl:w-full'>
-            <h1 className='font-black text-7xl text-white font-outline-2 leading-tight xxl:text-6xl  sxl:text-7xl lg:text-6xl md:text-5xl'>
+            <h1 className='font-black text-7xl text-white font-outline-2 leading-tight xxl:text-6xl  sxl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl'>
               <span className='block'>Hey! {site?.first_name} </span>
               <span className='block'>this side. I am </span>
               <span className='block'>{site?.occupation}</span>
@@ -113,7 +113,7 @@ export default async function Page({
           className='mx-auto max-w-website py-20 px-8 sxl:px-16 md:px-4'
           id='experience'
         >
-          <h2 className='text-center text-4xl font-black'>
+          <h2 className='text-center text-4xl font-black md:text-3xl mdfont-bold'>
             My Work Experience
           </h2>
 
@@ -175,7 +175,7 @@ export default async function Page({
           id='education'
         >
           <div className='mx-auto max-w-website '>
-            <h2 className='text-center text-4xl font-black'>
+            <h2 className='text-center text-4xl font-black md:text-3xl mdfont-bold'>
               My Educational Background
             </h2>
             <div className='grid grid-cols-2 gap-16 mt-16 xxl:gap-8 sxl:grid-cols-1'>
@@ -222,7 +222,9 @@ export default async function Page({
       {site?.projects?.length! > 0 && (
         <section className='py-20 px-8 sxl:px-16 md:px-4' id='projects'>
           <div className='mx-auto max-w-website'>
-            <h2 className='text-center text-4xl font-black'>My Projects</h2>
+            <h2 className='text-center text-4xl font-black md:text-3xl mdfont-bold'>
+              My Projects
+            </h2>
             <div className='grid grid-cols-2 gap-16 mt-16 xxl:gap-8 sxl:grid-cols-1'>
               {site?.projects?.map((value, index) => {
                 return (
@@ -237,8 +239,8 @@ export default async function Page({
                       } border-2 border-black w-112 h-96 xxl:w-102 xl:w-96 sxl:w-full`}
                     >
                       <p className='font-bold text-lg'>{value.title}</p>
-                      <div className='h-60 overflow-hidden'>
-                        <p className='mt-3 h-60 overflow-scroll no-scrollbar'>
+                      <div className='h-64 overflow-hidden'>
+                        <p className='mt-3 h-60 py-4 overflow-scroll no-scrollbar'>
                           {value.description}
                         </p>
                       </div>
@@ -266,13 +268,13 @@ export default async function Page({
           id='skills-and-courses'
         >
           <div>
-            <h2 className='text-center text-4xl font-black'>
+            <h2 className='text-center text-4xl font-black md:text-3xl mdfont-bold'>
               My Skills and Courses
             </h2>
             <div className='flex flex-col gap-y-12 mt-16'>
               {site?.skills?.length! > 0 && (
                 <div className='flex md:flex-col'>
-                  <h3 className='w-1/4 py-6 text-3xl font-semibold md:w-full'>
+                  <h3 className='w-1/4 py-6 text-3xl font-semibold md:w-full md:text-2xl'>
                     Skills
                   </h3>
                   <div
@@ -283,7 +285,7 @@ export default async function Page({
                       return (
                         <div
                           key={index}
-                          className='px-6 py-3 border-2 border-black rounded bg-white'
+                          className='px-6 py-3 border-2 border-black rounded bg-white md:px-4 md:py-2'
                         >
                           {value}
                         </div>
@@ -294,7 +296,9 @@ export default async function Page({
               )}
               {site?.courses?.length! > 0 && (
                 <div className='flex md:flex-col mt-8 md:w-full'>
-                  <h3 className='w-1/4 py-6 text-3xl font-semibold'>Courses</h3>
+                  <h3 className='w-1/4 py-6 text-3xl font-semibold md:w-full md:text-2xl'>
+                    Courses
+                  </h3>
                   <div
                     id='courses'
                     className='flex gap-6 w-3/4 flex-wrap justify-start items-center lg:gap-3 md:w-full'
@@ -303,7 +307,7 @@ export default async function Page({
                       return (
                         <div
                           key={index}
-                          className='px-6 py-3 border-2 border-black rounded bg-white'
+                          className='px-6 py-3 border-2 border-black rounded bg-white md:px-4 md:py-2'
                         >
                           {value}
                         </div>
@@ -322,7 +326,7 @@ export default async function Page({
       >
         <div className='py-20 px-16 flex justify-between md:px-8'>
           <div className='flex flex-col justify-center'>
-            <p className='text-4xl font-black text-white sxl:text-5xl'>
+            <p className='text-4xl font-black text-white sxl:text-5xl md:text-4xl'>
               Did you like my work?
             </p>
             <p className='text-4xl font-black text-white sxl:text-5xl'>
@@ -349,7 +353,9 @@ export default async function Page({
       </section>
       {site?.faqs?.length! > 0 && (
         <section id='courses' className='max-w-website mx-auto py-24'>
-          <h2 className='text-center text-4xl font-black'>FAQs</h2>
+          <h2 className='text-center text-4xl font-black md:text-3xl mdfont-bold'>
+            FAQs
+          </h2>
           <p className='mt-4 text-center'>Frequently Asked Questions</p>
           <div className='w-3/4 flex flex-col gap-8 mt-8 mx-auto'>
             {site?.faqs?.map((value, index) => {
@@ -404,9 +410,9 @@ export default async function Page({
               )}
             </div>
           </div>
-          <div className='mt-32 flex justify-between'>
+          <div className='mt-32 flex gap-x-4 justify-between'>
             <div>
-              <h2 className='text-white text-xl font-black'>
+              <h2 className='text-white text-xl font-black md:font-bold'>
                 Check out my work here
               </h2>
               <div className='flex flex-col gap-y-4 mt-8'>
@@ -465,7 +471,9 @@ export default async function Page({
               </div>
             </div>
             <div>
-              <h2 className='text-white text-xl font-black'>Quick Links</h2>
+              <h2 className='text-white text-xl font-black md:font-bold'>
+                Quick Links
+              </h2>
               <div className='flex flex-col gap-y-4 mt-8 text-white'>
                 {navbar.map((value) => {
                   return value
@@ -473,7 +481,7 @@ export default async function Page({
               </div>
             </div>
             <div className='lg:hidden'>
-              <h2 className='text-white text-3xl font-black'>
+              <h2 className='text-white text-3xl font-black md:font-bold'>
                 Liked my work so far? <span className='block'>Hire me</span>
               </h2>
               <Link
