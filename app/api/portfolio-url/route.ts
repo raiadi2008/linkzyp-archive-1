@@ -1,5 +1,5 @@
 import HttpStatus from "@/constants/http_status"
-import { getSiteByUsernameDB } from "@/db/site"
+import { getSiteByDomainDB, getSiteByUsernameDB } from "@/db/site"
 import { getThemeByIdDB } from "@/db/theme"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -9,17 +9,22 @@ export async function GET(req: NextRequest) {
 
   // find username in search params
   const username: string | null = searchParams.get("username")
-  if (!username)
+  const domain: string | null = searchParams.get("domain")
+
+  if (!username && !domain)
     return NextResponse.json(
       {
-        error: "Username is required",
+        error: "Eiter domain or username is required",
       },
       {
         status: HttpStatus.BAD_REQUEST,
       }
     )
   // extract site and theme from db
-  const site = await getSiteByUsernameDB(username)
+  const site = username
+    ? await getSiteByUsernameDB(username)
+    : await getSiteByDomainDB(domain!)
+
   if (!site) {
     return NextResponse.json(
       { error: "Site not found" },
