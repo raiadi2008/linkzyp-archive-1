@@ -27,6 +27,6 @@ export async function PUT(req: NextRequest) {
     themeId: theme_id,
   }
   const updatedData = await updateSiteDB(siteData, session.user.id)
-  revalidatePortfolioData(updatedData.username)
+  await revalidatePortfolioData(updatedData.username)
   return NextResponse.json(updatedData, { status: HttpStatus.SUCCESS })
 }
