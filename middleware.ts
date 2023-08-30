@@ -19,7 +19,7 @@ export async function middleware(req: NextRequest) {
   const not_found_url = new URL("/404", origin)
   let targetURL: URL
 
-  if (host === process.env.MAIN_HOST || host === process.env.VERCEL_HOST) {
+  if (host === process.env.MAIN_HOST || host.includes("vercel.app")) {
     if (pathname === "/" || pathname === "") {
       console.log("came here")
       return NextResponse.next()
