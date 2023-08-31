@@ -3,6 +3,7 @@ import type { NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import { prisma } from "@/lib/prismadb"
 import { getUserByIdDB } from "@/db/user"
+import { getUsersStripeIdDB } from "@/db/payments"
 
 const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -16,14 +17,23 @@ const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    jwt({ token, user, account, profile, trigger, session }) {
+    jwt({ token, user, account, trigger, session }) {
       if (trigger === "update") {
+        console.log("here 1111")
         if (session && session.user) {
-          token.added_linkedin = session.user.added_linkedin ?? true
+          token = {
+            ...token,
+            ...session.user,
+          }
         }
         return token
       }
       if (account) {
+        getUsersStripeIdDB(user.id)
+          .then(
+            (data) => (token.premium_user = data?.subscription_active ?? false)
+          )
+          .catch((e) => console.error(e))
         token.accessToken = account.access_token
         token.id = user.id
         token.added_linkedin = user.added_linkedin
@@ -34,6 +44,7 @@ const authOptions: NextAuthOptions = {
       if (token) {
         session.user.id = token.id
         session.user.added_linkedin = token.added_linkedin
+        session.user.premium_user = token.premium_user
       }
 
       return session
