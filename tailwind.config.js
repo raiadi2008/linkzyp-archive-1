@@ -54,7 +54,8 @@ module.exports = {
         'large-website': "960px",
         'medium': "840px",
         'small': "680px",
-        'micro': "480px"
+        'micro': "480px",
+        'extra-micro': "240px",
       },
       width: {
         '102': '28rem',

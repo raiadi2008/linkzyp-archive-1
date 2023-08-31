@@ -14,6 +14,7 @@ import CurrentSettingsSection from "./tab_selector"
 import getUserInfo from "./fetch"
 import Link from "next/link"
 import { parseSiteDataFromJSON } from "@/app/utils/functions"
+import PremiumPopup from "@/components/premium-popup/premium-popup"
 
 const TAB = "tab"
 
@@ -88,6 +89,7 @@ export default function Page() {
       className='w-screen relative h-screen overflow-y-scroll no-scrollbar'
       id='settings'
     >
+      <PremiumPopup />
       <section className='mx-auto max-w-website px-6'>
         <div className='relative flex justify-between items-center py-6'>
           <Link href='/'>
