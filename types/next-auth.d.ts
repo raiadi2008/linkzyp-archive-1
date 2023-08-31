@@ -6,6 +6,7 @@ declare module "next-auth" {
     user: {
       id: string
       added_linkedin: boolean
+      premium_user: boolean
     } & DefaultSession["user"]
   }
 

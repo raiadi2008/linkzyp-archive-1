@@ -15,12 +15,13 @@ import getUserInfo from "./fetch"
 import Link from "next/link"
 import { parseSiteDataFromJSON } from "@/app/utils/functions"
 import PremiumPopup from "@/components/premium-popup/premium-popup"
+import HttpStatus from "@/constants/http_status"
 
 const TAB = "tab"
 
 export default function Page() {
   const { data: session, status, update } = useSession()
-
+  const [showPremiumPopup, setShowPremiumPopup] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [valuesChanged, setValuesChanged] = useState(false)
   const [siteInfo, updateSiteInfo] = useState<ISite | null>(null)
@@ -36,13 +37,6 @@ export default function Page() {
   }, [status])
 
   useEffect(() => {
-    if (!session?.user.added_linkedin) {
-      router.push("/app/add-linkedin")
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session])
-
-  useEffect(() => {
     if (!searchParams.get(TAB)) {
       router.push(`?${TAB}=profile`)
     }
@@ -53,6 +47,7 @@ export default function Page() {
         await update({
           ...session,
           user: {
+            ...session?.user,
             added_linkedin: false,
           },
         })
@@ -75,7 +70,39 @@ export default function Page() {
       })
 
     return () => {
-      getUserSiteData()
+      getUserSiteData
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    async function getUsersPaymentStatus() {
+      const resp = await fetch("/api/payments/status")
+      if (resp.ok && resp.status === HttpStatus.SUCCESS) {
+        const payments = await resp.json()
+        if (payments.subscription_status) {
+          await update({
+            ...session,
+            user: {
+              ...session?.user,
+              premium_user: payments.subscription_status,
+            },
+          })
+        }
+        return payments.subscription_status
+      }
+      return null
+    }
+
+    getUsersPaymentStatus()
+      .then((data) => {
+        setShowPremiumPopup(!data)
+      })
+      .catch((error) => {})
+      .finally(() => {})
+
+    return () => {
+      getUsersPaymentStatus
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -89,7 +116,7 @@ export default function Page() {
       className='w-screen relative h-screen overflow-y-scroll no-scrollbar'
       id='settings'
     >
-      <PremiumPopup />
+      {showPremiumPopup && <PremiumPopup show={setShowPremiumPopup} />}
       <section className='mx-auto max-w-website px-6'>
         <div className='relative flex justify-between items-center py-6'>
           <Link href='/'>

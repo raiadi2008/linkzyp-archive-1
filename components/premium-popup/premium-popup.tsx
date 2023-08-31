@@ -1,6 +1,18 @@
-export default function PremiumPopup() {
+import { Dispatch, SetStateAction } from "react"
+
+interface IParams {
+  show: Dispatch<SetStateAction<boolean>>
+}
+
+export default function PremiumPopup({ show }: IParams) {
   return (
-    <div className='w-screen h-screen fixed top-0 left-0 bg-black bg-opacity-80 z-10'>
+    <div
+      className='w-screen h-screen fixed top-0 left-0 bg-black bg-opacity-80 z-10'
+      onClick={(e) => {
+        e.stopPropagation()
+        show(false)
+      }}
+    >
       <div className=' bg-white rounded-lg p-4 mx-auto mt-20 w-112'>
         <h4 className='text-sm font-black mb-5 text-black'>
           Boost your career for less than a cup of coffee
@@ -19,7 +31,8 @@ export default function PremiumPopup() {
           <li>Unlimited hosting storage</li>
           <li>Lightning fast loading speeds</li>
         </ul>
-        <div className='mt-12 flex justify-end'>
+        <div className='mt-12 flex justify-end gap-x-4'>
+          <button className='text-black font-thin'>Close</button>
           <button className='font-bold bg-black text-yellow-500 px-6 py-3 rounded-lg'>
             Go Premium
           </button>
