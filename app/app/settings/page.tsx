@@ -22,6 +22,7 @@ const TAB = "tab"
 export default function Page() {
   const { data: session, status, update } = useSession()
   const [showPremiumPopup, setShowPremiumPopup] = useState(false)
+  const [userPremium, setUserPremium] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [valuesChanged, setValuesChanged] = useState(false)
   const [siteInfo, updateSiteInfo] = useState<ISite | null>(null)
@@ -95,6 +96,7 @@ export default function Page() {
 
     getUsersPaymentStatus()
       .then((data) => {
+        setUserPremium(data)
         setShowPremiumPopup(!data)
       })
       .catch((error) => {})
@@ -162,7 +164,7 @@ export default function Page() {
               </h2>
             </div>
           </Link>
-          {!showPremiumPopup ? (
+          {userPremium ? (
             <button
               className='font-bold bg-black text-yellow-500 px-6 py-3 rounded-lg flex items-center gap-x-2'
               onClick={getPortalSession}
