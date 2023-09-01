@@ -168,12 +168,15 @@ export default function Page() {
             </div>
           </Link>
           {session?.user.premium_user ? (
-            <button className='' onClick={getPortalSession}>
-              {loadingCheckout && <Loader />}Subscription
+            <button
+              className='font-bold bg-black text-yellow-500 px-6 py-3 rounded-lg flex items-center gap-x-2'
+              onClick={getPortalSession}
+            >
+              {loadingCheckout && <Loader />}Premium
             </button>
           ) : (
             <button
-              className='font-bold bg-black text-yellow-500 px-6 py-3 rounded-lg'
+              className='font-bold bg-black text-yellow-500 px-6 py-3 rounded-lg flex items-center gap-x-2'
               onClick={getCheckoutSession}
             >
               {loadingCheckout && <Loader />}Go Premium

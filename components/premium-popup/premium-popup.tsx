@@ -1,6 +1,7 @@
 import HttpStatus from "@/constants/http_status"
 import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction } from "react"
+import Loader from "../loader/loader"
 
 interface IParams {
   show: Dispatch<SetStateAction<boolean>>
@@ -60,10 +61,10 @@ export default function PremiumPopup({
         <div className='mt-12 flex justify-end gap-x-4'>
           <button className='text-black font-thin'>Close</button>
           <button
-            className='font-bold bg-black text-yellow-500 px-6 py-3 rounded-lg'
+            className='font-bold bg-black text-yellow-500 px-6 py-3 rounded-lg flex items-center gap-x-2'
             onClick={getCheckoutSession}
           >
-            Go Premium
+            {loadingCheckout && <Loader />}Go Premium
           </button>
         </div>
       </div>
