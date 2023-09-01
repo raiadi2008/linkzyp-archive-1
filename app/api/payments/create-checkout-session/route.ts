@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
   try {
     const stripeSession = await stripe.checkout.sessions.create({
       billing_address_collection: "auto",
+      currency: "usd",
       customer: userStripeId,
       line_items: [
         {
