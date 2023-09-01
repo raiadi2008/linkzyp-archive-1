@@ -1,22 +1,33 @@
-import { POST } from "@/app/api/domain/route"
 import HttpStatus from "@/constants/http_status"
 import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction } from "react"
 
 interface IParams {
   show: Dispatch<SetStateAction<boolean>>
+  loadingCheckout: boolean
+  setLoadingCheckout: Dispatch<SetStateAction<boolean>>
 }
 
-export default function PremiumPopup({ show }: IParams) {
+export default function PremiumPopup({
+  show,
+  loadingCheckout,
+  setLoadingCheckout,
+}: IParams) {
   const router = useRouter()
-  async function getCheckoutSession() {
+  async function getCheckoutSession(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
+    e.stopPropagation()
+    setLoadingCheckout(true)
     const resp = await fetch("/api/payments/create-checkout-session", {
       method: "POST",
     })
     if (resp.ok && resp.status === HttpStatus.SUCCESS) {
       const { checkout_url } = await resp.json()
+      setLoadingCheckout(false)
       router.replace(checkout_url)
     }
+    setLoadingCheckout(false)
   }
 
   return (
@@ -24,6 +35,7 @@ export default function PremiumPopup({ show }: IParams) {
       className='w-screen h-screen fixed top-0 left-0 bg-black bg-opacity-80 z-10'
       onClick={(e) => {
         e.stopPropagation()
+        if (loadingCheckout) return
         show(false)
       }}
     >

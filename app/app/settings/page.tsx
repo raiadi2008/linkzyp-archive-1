@@ -16,6 +16,7 @@ import Link from "next/link"
 import { parseSiteDataFromJSON } from "@/app/utils/functions"
 import PremiumPopup from "@/components/premium-popup/premium-popup"
 import HttpStatus from "@/constants/http_status"
+import Loader from "@/components/loader/loader"
 
 const TAB = "tab"
 
@@ -25,6 +26,7 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(true)
   const [valuesChanged, setValuesChanged] = useState(false)
   const [siteInfo, updateSiteInfo] = useState<ISite | null>(null)
+  const [loadingCheckout, setLoadingCheckout] = useState(false)
 
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -113,12 +115,44 @@ export default function Page() {
     router.push(`?${TAB}=${navbarMap.get(navbar[index])}`)
   }
 
+  async function getCheckoutSession() {
+    setLoadingCheckout(true)
+    const resp = await fetch("/api/payments/create-checkout-session", {
+      method: "POST",
+    })
+    if (resp.ok && resp.status === HttpStatus.SUCCESS) {
+      const { checkout_url } = await resp.json()
+      setLoadingCheckout(false)
+      router.replace(checkout_url)
+    }
+    setLoadingCheckout(false)
+  }
+
+  async function getPortalSession() {
+    setLoadingCheckout(true)
+    const resp = await fetch("/api/payments/create-portal-session", {
+      method: "POST",
+    })
+    if (resp.ok && resp.status === HttpStatus.SUCCESS) {
+      const { url } = await resp.json()
+      setLoadingCheckout(false)
+      router.replace(url)
+    }
+    setLoadingCheckout(false)
+  }
+
   return (
     <main
       className='w-screen relative h-screen overflow-y-scroll no-scrollbar'
       id='settings'
     >
-      {showPremiumPopup && <PremiumPopup show={setShowPremiumPopup} />}
+      {showPremiumPopup && (
+        <PremiumPopup
+          show={setShowPremiumPopup}
+          loadingCheckout={loadingCheckout}
+          setLoadingCheckout={setLoadingCheckout}
+        />
+      )}
       <section className='mx-auto max-w-website px-6'>
         <div className='relative flex justify-between items-center py-6'>
           <Link href='/'>
@@ -133,12 +167,18 @@ export default function Page() {
               </h2>
             </div>
           </Link>
-          <button
-            onClick={() => signOut()}
-            className='text-neutral-white border-2 border-primary bg-primary rounded-full px-6 py-2 font-medium md:border'
-          >
-            Logout
-          </button>
+          {session?.user.premium_user ? (
+            <button className='' onClick={getPortalSession}>
+              {loadingCheckout && <Loader />}Subscription
+            </button>
+          ) : (
+            <button
+              className='font-bold bg-black text-yellow-500 px-6 py-3 rounded-lg'
+              onClick={getCheckoutSession}
+            >
+              {loadingCheckout && <Loader />}Go Premium
+            </button>
+          )}
         </div>
       </section>
       <section className='mx-auto max-w-website px-6'>
