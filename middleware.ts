@@ -39,8 +39,6 @@ export async function middleware(req: NextRequest) {
     return NextResponse.rewrite(not_found_url)
   }
   const url = data["themeUrl"]
-  console.log("url = ", url)
   const siteURL = new URL(url)
-  console.log("siteURL", siteURL)
   return NextResponse.rewrite(siteURL)
 }

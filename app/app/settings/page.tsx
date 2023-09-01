@@ -81,7 +81,6 @@ export default function Page() {
       const resp = await fetch("/api/payments/status")
       if (resp.ok && resp.status === HttpStatus.SUCCESS) {
         const payments = await resp.json()
-        console.log(payments)
         const test_ = await update({
           ...session,
           user: {
@@ -89,7 +88,6 @@ export default function Page() {
             premium_user: payments.subscription_status,
           },
         })
-        console.log(test_)
         return payments.subscription_status
       }
       return null

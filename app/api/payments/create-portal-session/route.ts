@@ -13,7 +13,6 @@ export async function POST(req: NextRequest) {
         { status: HttpStatus.UNAUTHORIZED }
       )
     const usersStripeId = await createOrRetrieveStripeCustomer(session.user.id)
-    console.log(usersStripeId)
     if (!usersStripeId)
       return NextResponse.json(
         { error: "Invalid stripe id" },
@@ -23,12 +22,10 @@ export async function POST(req: NextRequest) {
       customer: usersStripeId,
       return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/app/settings`,
     })
-    console.log(data)
     return new Response(JSON.stringify({ url: data.url }), {
       status: 200,
     })
   } catch (error) {
-    console.log(error)
     return new Response(JSON.stringify({ error: error }), {
       status: 500,
     })

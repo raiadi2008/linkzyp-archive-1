@@ -16,8 +16,6 @@ export async function POST(req: NextRequest) {
   const prices = await stripe.prices.list({
     expand: ["data.product"],
   })
-
-  console.log(prices)
   try {
     const stripeSession = await stripe.checkout.sessions.create({
       billing_address_collection: "auto",
@@ -44,7 +42,6 @@ export async function POST(req: NextRequest) {
       status: HttpStatus.SUCCESS,
     })
   } catch (e) {
-    console.log(e)
     return new Response(
       JSON.stringify({ error: "Internal Server Error Occured" }),
       {
