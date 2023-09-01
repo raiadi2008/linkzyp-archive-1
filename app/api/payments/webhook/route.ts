@@ -5,9 +5,10 @@ import stripe from "../init/stripe"
 import { updateUsersSubscriptionStatusDB } from "@/db/payments"
 
 const relevantEvents = new Set([
-  "customer.subscription.created",
-  "customer.subscription.updated",
   "customer.subscription.deleted",
+  "invoice.paid",
+  "invoice.payment_failed",
+  "customer.subscription.paused",
 ])
 
 export async function POST(req: NextRequest) {
@@ -16,16 +17,26 @@ export async function POST(req: NextRequest) {
     const sig = headers().get("Stripe-Signature") as string
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
     let event: Stripe.Event
-
     if (!sig || !webhookSecret) return
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret)
     const subscription = event.data.object as Stripe.Subscription
     if (relevantEvents.has(event.type)) {
-      updateUsersSubscriptionStatusDB(
-        subscription.customer as string,
-        event.type === "customer.subscription.created" ||
-          event.type === "customer.subscription.updated"
-      )
+      switch (event.type) {
+        case "invoice.paid":
+          await updateUsersSubscriptionStatusDB(
+            subscription.customer as string,
+            true
+          )
+
+        case "customer.subscription.deleted":
+        case "invoice.paid":
+        case "invoice.payment_failed":
+        case "customer.subscription.paused":
+          await updateUsersSubscriptionStatusDB(
+            subscription.customer as string,
+            false
+          )
+      }
     }
   } catch (error) {
     console.log(error)

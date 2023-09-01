@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prismadb"
 
-export function getUsersStripeIdDB(userId: string) {
-  const userStripe = prisma.userPayments.findUnique({
+export async function getUsersStripeIdDB(userId: string) {
+  const userStripe = await prisma.userPayments.findUnique({
     where: {
       userId,
     },
@@ -9,8 +9,8 @@ export function getUsersStripeIdDB(userId: string) {
   return userStripe
 }
 
-export function createUsersStripeDB(userId: string, stripeId: string) {
-  const userStripe = prisma.userPayments.create({
+export async function createUsersStripeDB(userId: string, stripeId: string) {
+  const userStripe = await prisma.userPayments.create({
     data: {
       userId,
       stripe_id: stripeId,
@@ -19,11 +19,11 @@ export function createUsersStripeDB(userId: string, stripeId: string) {
   return userStripe
 }
 
-export function updateUsersSubscriptionStatusDB(
+export async function updateUsersSubscriptionStatusDB(
   user_stripe_id: string,
   status: boolean
 ) {
-  const userStripe = prisma.userPayments.update({
+  const userStripe = await prisma.userPayments.update({
     where: {
       stripe_id: user_stripe_id,
     },
