@@ -23,7 +23,6 @@ export async function updateUsersSubscriptionStatusDB(
   user_stripe_id: string,
   status: boolean
 ) {
-  console.log(user_stripe_id, status)
   const userStripe = await prisma.userPayments.update({
     where: {
       stripe_id: user_stripe_id,
@@ -32,4 +31,6 @@ export async function updateUsersSubscriptionStatusDB(
       subscription_active: status,
     },
   })
+
+  return userStripe
 }
