@@ -9,6 +9,7 @@ const relevantEvents = new Set([
   "invoice.paid",
   "invoice.payment_failed",
   "customer.subscription.paused",
+  "invoice.finalization_failed",
 ])
 
 export async function POST(req: NextRequest) {
@@ -20,6 +21,7 @@ export async function POST(req: NextRequest) {
     if (!sig || !webhookSecret) return
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret)
     const subscription = event.data.object as Stripe.Subscription
+
     if (relevantEvents.has(event.type)) {
       switch (event.type) {
         case "invoice.paid":
@@ -27,19 +29,20 @@ export async function POST(req: NextRequest) {
             subscription.customer as string,
             true
           )
-
+          return
         case "customer.subscription.deleted":
-        case "invoice.paid":
-        case "invoice.payment_failed":
         case "customer.subscription.paused":
+        case "invoice.payment_failed":
+        case "invoice.finalization_failed":
           await updateUsersSubscriptionStatusDB(
             subscription.customer as string,
             false
           )
+          return
       }
     }
   } catch (error) {
-    console.log(error)
+    console.log("error", error)
     return new Response(
       "Webhook handler failed. View your nextjs function logs.",
       {
