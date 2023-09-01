@@ -29,14 +29,16 @@ const authOptions: NextAuthOptions = {
       }
       if (account) {
         getUsersStripeIdDB(user.id)
-          .then(
-            (data) => (token.premium_user = data?.subscription_active ?? false)
-          )
+          .then((data) => {
+            token.premium_user = data?.subscription_active ?? false
+            console.log(data)
+          })
           .catch((e) => console.error(e))
         token.accessToken = account.access_token
         token.id = user.id
         token.added_linkedin = user.added_linkedin
       }
+      console.log(token)
       return token
     },
     session({ session, token, trigger }) {

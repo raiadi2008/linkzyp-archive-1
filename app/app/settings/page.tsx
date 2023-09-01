@@ -81,7 +81,7 @@ export default function Page() {
       const resp = await fetch("/api/payments/status")
       if (resp.ok && resp.status === HttpStatus.SUCCESS) {
         const payments = await resp.json()
-
+        console.log(payments)
         const test_ = await update({
           ...session,
           user: {
@@ -90,8 +90,6 @@ export default function Page() {
           },
         })
         console.log(test_)
-        console.log("are we here")
-
         return payments.subscription_status
       }
       return null
@@ -166,7 +164,7 @@ export default function Page() {
               </h2>
             </div>
           </Link>
-          {session?.user.premium_user ? (
+          {!showPremiumPopup ? (
             <button
               className='font-bold bg-black text-yellow-500 px-6 py-3 rounded-lg flex items-center gap-x-2'
               onClick={getPortalSession}
