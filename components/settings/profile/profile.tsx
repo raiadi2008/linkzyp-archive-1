@@ -6,6 +6,9 @@ import { parseSiteDataFromJSON } from "@/app/utils/functions"
 import { ISite, ISiteUpdates } from "@/app/utils/interfaces"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSignOut } from "@fortawesome/free-solid-svg-icons"
+import { signOut } from "next-auth/react"
 
 interface ProfileInputError {
   first_name: boolean
@@ -388,6 +391,9 @@ export default function ProfileSettings({
             </div>
           </div>
         </div>
+        <button className='mt-9' onClick={(e) => signOut()}>
+          <FontAwesomeIcon icon={faSignOut} /> Logout
+        </button>
       </section>
 
       <section className='fixed bottom-0 left-0 w-screen bg-white -shadow-2xl px-6'>
