@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid"
 
 import HttpStatus from "@/constants/http_status"
 import authOptions from "@/lib/auth"
-import { createSiteDB } from "@/db/site"
+import { createSiteDB, getSiteByUserId } from "@/db/site"
 import { updateUserLinkedinAdded } from "@/db/user"
 import Themes from "@/constants/themes"
 import { ISite } from "@/app/utils/interfaces"
@@ -41,6 +41,12 @@ export async function GET(request: NextRequest) {
         {
           status: HttpStatus.BAD_REQUEST,
         }
+      )
+
+    if (!(await getSiteByUserId(user_id)))
+      return NextResponse.json(
+        { error: "You have already created your site" },
+        { status: HttpStatus.BAD_REQUEST }
       )
 
     const siteData: ISite | null =

@@ -1,8 +1,9 @@
-import { NextRequest } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { headers } from "next/headers"
 import Stripe from "stripe"
 import stripe from "../init/stripe"
 import { updateUsersSubscriptionStatusDB } from "@/db/payments"
+import HttpStatus from "@/constants/http_status"
 
 const relevantEvents = new Set([
   "customer.subscription.deleted",
@@ -45,13 +46,13 @@ export async function POST(req: NextRequest) {
       }
     }
   } catch (error) {
-    return new Response(
-      "Webhook handler failed. View your nextjs function logs.",
+    return NextResponse.json(
+      { error: "Webhook handler failed. View your nextjs function logs." },
       {
-        status: 400,
+        status: HttpStatus.BAD_REQUEST,
       }
     )
   }
 
-  return new Response(JSON.stringify({ received: true }))
+  return NextResponse.json({ recieved: true }, { status: HttpStatus.SUCCESS })
 }

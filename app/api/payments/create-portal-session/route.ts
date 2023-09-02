@@ -22,12 +22,18 @@ export async function POST(req: NextRequest) {
       customer: usersStripeId,
       return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/app/settings`,
     })
-    return new Response(JSON.stringify({ url: data.url }), {
-      status: 200,
-    })
+    return NextResponse.json(
+      { url: data.url },
+      {
+        status: HttpStatus.SUCCESS,
+      }
+    )
   } catch (error) {
-    return new Response(JSON.stringify({ error: error }), {
-      status: 500,
-    })
+    return NextResponse.json(
+      { error: error },
+      {
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+      }
+    )
   }
 }

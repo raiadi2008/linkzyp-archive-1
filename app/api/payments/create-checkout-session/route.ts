@@ -48,13 +48,16 @@ export async function POST(req: NextRequest) {
         { status: HttpStatus.INTERNAL_SERVER_ERROR }
       )
 
-    return new Response(JSON.stringify({ checkout_url: stripeSession.url }), {
-      status: HttpStatus.SUCCESS,
-    })
+    return NextResponse.json(
+      { checkout_url: stripeSession.url },
+      {
+        status: HttpStatus.SUCCESS,
+      }
+    )
   } catch (e) {
     console.log(e)
-    return new Response(
-      JSON.stringify({ error: "Internal Server Error Occured" }),
+    return NextResponse.json(
+      { error: "Internal Server Error Occured" },
       {
         status: HttpStatus.INTERNAL_SERVER_ERROR,
       }
