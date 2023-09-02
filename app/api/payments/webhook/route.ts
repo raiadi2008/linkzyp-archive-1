@@ -32,20 +32,22 @@ export async function POST(req: NextRequest) {
     if (relevantEvents.has(event.type)) {
       switch (event.type) {
         case "invoice.paid":
-          await updateUsersSubscriptionStatusDB(
-            subscription.customer as string,
-            true
-          )
+          try {
+            await updateUsersSubscriptionStatusDB(
+              subscription.customer as string,
+              true
+            )
+          } catch (e) {}
           break
-        case "customer.subscription.deleted":
-        case "customer.subscription.paused":
-        case "invoice.payment_failed":
-        case "invoice.finalization_failed":
-          await updateUsersSubscriptionStatusDB(
-            subscription.customer as string,
-            false
-          )
-          break
+        // case "customer.subscription.deleted":
+        // case "customer.subscription.paused":
+        // case "invoice.payment_failed":
+        // case "invoice.finalization_failed":
+        //   await updateUsersSubscriptionStatusDB(
+        //     subscription.customer as string,
+        //     false
+        //   )
+        //   break
       }
     }
   } catch (error) {
