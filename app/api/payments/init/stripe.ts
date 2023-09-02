@@ -16,12 +16,6 @@ export async function createOrRetrieveStripeCustomer(user_id: string) {
   const customerData: Stripe.CustomerCreateParams = {
     email: user.email!,
     name: user.name!,
-    address: {
-      country: "US",
-      city: "New York",
-      line1: "123 Main St",
-      postal_code: "10001",
-    },
     metadata: {
       user_id: user_id,
     },

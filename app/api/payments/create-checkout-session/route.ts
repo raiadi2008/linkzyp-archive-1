@@ -14,6 +14,8 @@ export async function POST(req: NextRequest) {
     )
   const userStripeId = await createOrRetrieveStripeCustomer(session.user.id)
   const userStripe = await getUsersStripeIdDB(session.user.id)
+  const { currency } = await req.json()
+
   if (userStripe?.subscription_active)
     return NextResponse.json(
       { error: "You already have an active subscription" },
@@ -26,12 +28,13 @@ export async function POST(req: NextRequest) {
   try {
     const stripeSession = await stripe.checkout.sessions.create({
       billing_address_collection: "auto",
-      currency: "usd",
+      currency: currency ?? "usd",
       customer: userStripeId,
       line_items: [
         {
           price: prices.data[0].id,
           quantity: 1,
+          tax_rates: currency === "inr" ? [process.env.IND_GST!] : [],
         },
       ],
       mode: "subscription",
@@ -49,6 +52,7 @@ export async function POST(req: NextRequest) {
       status: HttpStatus.SUCCESS,
     })
   } catch (e) {
+    console.log(e)
     return new Response(
       JSON.stringify({ error: "Internal Server Error Occured" }),
       {
