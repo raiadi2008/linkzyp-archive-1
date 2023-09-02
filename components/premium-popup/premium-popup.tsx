@@ -2,6 +2,7 @@ import HttpStatus from "@/constants/http_status"
 import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction } from "react"
 import Loader from "../loader/loader"
+import Link from "next/link"
 
 interface IParams {
   show: Dispatch<SetStateAction<boolean>>
@@ -15,21 +16,6 @@ export default function PremiumPopup({
   setLoadingCheckout,
 }: IParams) {
   const router = useRouter()
-  async function getCheckoutSession(
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) {
-    e.stopPropagation()
-    setLoadingCheckout(true)
-    const resp = await fetch("/api/payments/create-checkout-session", {
-      method: "POST",
-    })
-    if (resp.ok && resp.status === HttpStatus.SUCCESS) {
-      const { checkout_url } = await resp.json()
-      setLoadingCheckout(false)
-      router.replace(checkout_url)
-    }
-    setLoadingCheckout(false)
-  }
 
   return (
     <div
@@ -60,12 +46,11 @@ export default function PremiumPopup({
         </ul>
         <div className='mt-12 flex justify-end gap-x-4'>
           <button className='text-black font-thin'>Close</button>
-          <button
-            className='font-bold bg-black text-yellow-500 px-6 py-3 rounded-lg flex items-center gap-x-2'
-            onClick={getCheckoutSession}
-          >
-            {loadingCheckout && <Loader />}Go Premium
-          </button>
+          <Link href='/app/payments/billing-zone'>
+            <button className='font-bold bg-black text-yellow-500 px-6 py-3 rounded-lg flex items-center gap-x-2'>
+              Go Premium
+            </button>
+          </Link>
         </div>
       </div>
     </div>

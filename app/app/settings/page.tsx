@@ -112,19 +112,6 @@ export default function Page() {
     router.push(`?${TAB}=${navbarMap.get(navbar[index])}`)
   }
 
-  async function getCheckoutSession() {
-    setLoadingCheckout(true)
-    const resp = await fetch("/api/payments/create-checkout-session", {
-      method: "POST",
-    })
-    if (resp.ok && resp.status === HttpStatus.SUCCESS) {
-      const { checkout_url } = await resp.json()
-      setLoadingCheckout(false)
-      router.replace(checkout_url)
-    }
-    setLoadingCheckout(false)
-  }
-
   async function getPortalSession() {
     setLoadingCheckout(true)
     const resp = await fetch("/api/payments/create-portal-session", {
@@ -172,12 +159,11 @@ export default function Page() {
               {loadingCheckout && <Loader />}Premium
             </button>
           ) : (
-            <button
-              className='font-bold bg-black text-yellow-500 px-6 py-3 rounded-lg flex items-center gap-x-2'
-              onClick={getCheckoutSession}
-            >
-              {loadingCheckout && <Loader />}Go Premium
-            </button>
+            <Link href='/app/payments/billing-zone'>
+              <button className='font-bold bg-black text-yellow-500 px-6 py-3 rounded-lg flex items-center gap-x-2'>
+                Go Premium
+              </button>
+            </Link>
           )}
         </div>
       </section>
