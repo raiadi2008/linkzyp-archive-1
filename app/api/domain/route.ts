@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
       { status: HttpStatus.UNAUTHORIZED }
     )
 
-  const vercelDomainAddEndpoint = `${process.env.VERCEL_URL}/v10/projects/${process.env.VERCEL_PROJECT_ID}/domains?teamId=${process.env.VERCEL_TEAM_ID}`
+  const vercelDomainAddEndpoint = `${process.env.VERCEL_API_URL}/v10/projects/${process.env.VERCEL_PROJECT_ID}/domains?teamId=${process.env.VERCEL_TEAM_ID}`
   const headers = {
     Authorization: `Bearer ${process.env.VERCEL_ACCESS_TOKEN}`,
   }
@@ -153,8 +153,8 @@ export async function GET(req: NextRequest) {
     Authorization: `Bearer ${process.env.VERCEL_ACCESS_TOKEN}`,
   }
 
-  const vercelDomainVerifyEndpoint = `${process.env.VERCEL_URL}/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains/${site.domain}?teamId=${process.env.VERCEL_TEAM_ID}`
-  const vercelSubDomainVerifyEndpoint = `${process.env.VERCEL_URL}/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains/${site.www_sub_domain}?teamId=${process.env.VERCEL_TEAM_ID}`
+  const vercelDomainVerifyEndpoint = `${process.env.VERCEL_API_URL}/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains/${site.domain}?teamId=${process.env.VERCEL_TEAM_ID}`
+  const vercelSubDomainVerifyEndpoint = `${process.env.VERCEL_API_URL}/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains/${site.www_sub_domain}?teamId=${process.env.VERCEL_TEAM_ID}`
   const resultDomain = await fetch(vercelDomainVerifyEndpoint, {
     headers,
     method: "GET",

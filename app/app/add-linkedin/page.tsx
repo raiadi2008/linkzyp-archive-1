@@ -48,6 +48,7 @@ export default function Page() {
       await update({
         ...session,
         user: {
+          ...session?.user,
           added_linkedin: true,
         },
       })

@@ -1,6 +1,26 @@
+import Link from "next/link"
+import Image from "next/image"
+import logo from "@/public/logo.png"
+
 export default function Page() {
   return (
     <main className=''>
+      <section className='mx-auto max-w-website px-6'>
+        <div className='relative flex justify-between items-center py-6'>
+          <Link href='/'>
+            <div className='relative flex gap-x-2 items-center'>
+              <Image
+                src={logo}
+                alt='logo'
+                className='w-10 h-10 md:w-8 md:h-10'
+              />
+              <h2 className='text-xl text-neutral-dark font-medium md:text-lg'>
+                Linkzyp
+              </h2>
+            </div>
+          </Link>
+        </div>
+      </section>
       <section className='w-1/2 mx-auto child:mb-4 text-sm py-12 px-8 sm:w-full'>
         <h2 className='mb-6 font-medium text-2xl'>
           Privacy Policy for Linkzyp

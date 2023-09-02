@@ -238,7 +238,6 @@ export function isStringValidUrl(url: string): boolean {
     const parsedURL = new URL(url)
     return true
   } catch (e) {
-    console.log(e)
     return false
   }
 }

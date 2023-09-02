@@ -17,19 +17,28 @@ export const config = {
 export async function middleware(req: NextRequest) {
   const { origin, host, pathname } = req.nextUrl
   const not_found_url = new URL("/404", origin)
-  if (pathname !== "/") {
-    const username = pathname.split("/")[1]
-    const response = await fetch(
-      new URL(`/api/portfolio-url?username=${username}`, origin)
-    )
-    const data = await response.json()
-    if (!response.ok || response.status !== HttpStatus.SUCCESS) {
-      return NextResponse.rewrite(not_found_url)
+  let targetURL: URL
+
+  if (host.includes(process.env.MAIN_HOST!) || host.includes("vercel.app")) {
+    if (pathname === "/" || pathname === "") {
+      console.log("came here")
+      return NextResponse.next()
+    } else {
+      const username = pathname.split("/")[1]
+      targetURL = new URL(`/api/portfolio-url?username=${username}`, origin)
     }
-
-    const url = data["themeUrl"]
-
-    const siteURL = new URL(url)
-    return NextResponse.rewrite(siteURL)
+  } else {
+    targetURL = new URL(
+      `/api/portfolio-url?domain=${host.replace("www.", "")}`,
+      origin
+    )
   }
+  const response = await fetch(targetURL)
+  const data = await response.json()
+  if (!response.ok || response.status !== HttpStatus.SUCCESS) {
+    return NextResponse.rewrite(not_found_url)
+  }
+  const url = data["themeUrl"]
+  const siteURL = new URL(url)
+  return NextResponse.rewrite(siteURL)
 }
