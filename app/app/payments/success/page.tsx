@@ -9,7 +9,7 @@ export default function Page() {
       <h1 className='text-xl font-semibold text-black mb-4'>
         You have succesfully subscribed to LINKZYP PREMIUM
       </h1>
-      <div className='text-center mt-12'>
+      <div className='mt-12 flex justify-center'>
         <FontAwesomeIcon
           icon={faCheckCircle}
           color='green'

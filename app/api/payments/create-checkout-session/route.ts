@@ -35,8 +35,8 @@ export async function POST(req: NextRequest) {
         },
       ],
       mode: "subscription",
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/app/pyament/success?success=true&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/app/payment/cancelled?canceled=true`,
+      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/app/payments/success?success=true&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/app/payments/cancelled?canceled=true`,
     })
 
     if (!stripeSession.url)

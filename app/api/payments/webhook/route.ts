@@ -14,10 +14,13 @@ const relevantEvents = new Set([
 
 export async function POST(req: NextRequest) {
   try {
+    console.log(req)
     const body = await req.text()
-    const sig = headers().get("Stripe-Signature") as string
+    const sig = req?.headers?.get("Stripe-Signature")
+
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
     let event: Stripe.Event
+
     if (!sig || !webhookSecret) return
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret)
     const subscription = event.data.object as Stripe.Subscription
