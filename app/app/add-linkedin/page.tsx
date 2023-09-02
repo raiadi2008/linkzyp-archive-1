@@ -38,7 +38,7 @@ export default function Page() {
     setLinkedinURL("")
     setLoading(true)
     const urlParms = withLinkedin
-      ? `?linkedinURL=${url}&withLinkedin=true`
+      ? `linkedinURL=${url}&withLinkedin=true`
       : "withLinkedin=false"
 
     const userInfo = await fetch(`/api/add-linkedin?${urlParms}`)
