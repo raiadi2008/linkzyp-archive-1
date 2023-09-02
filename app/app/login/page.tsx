@@ -34,7 +34,7 @@ export default function Page() {
         <h1 className='font-semibold text-3xl'>Welcome Back!</h1>
         <button
           className=' flex gap-x-4 py-2 border border-neutral-400 rounded items-center justify-center w-full'
-          onClick={() => signIn("google", { callbackUrl: "/app/settings" })}
+          onClick={() => signIn("google", { callbackUrl: "/app/add-linkedin" })}
         >
           <Image src={googleIcon} alt='' className='h-9 w-9' />
           <p className='text-lg font-medium'>Signin with Google</p>
