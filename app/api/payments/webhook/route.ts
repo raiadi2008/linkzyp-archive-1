@@ -21,8 +21,6 @@ export async function POST(req: NextRequest) {
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
     let event: Stripe.Event
 
-    console.log("herewrsdfas")
-
     if (!sig || !webhookSecret)
       return NextResponse.json(
         { error: "Sig or webhook not present" },
@@ -38,7 +36,7 @@ export async function POST(req: NextRequest) {
             subscription.customer as string,
             true
           )
-          return
+          break
         case "customer.subscription.deleted":
         case "customer.subscription.paused":
         case "invoice.payment_failed":
@@ -47,7 +45,7 @@ export async function POST(req: NextRequest) {
             subscription.customer as string,
             false
           )
-          return
+          break
       }
     }
   } catch (error) {
