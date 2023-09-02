@@ -25,6 +25,7 @@ export async function fetchPeopleLinkedinData(linkedinURL: string) {
     },
   })
 
+  console.log("1")
   if (res.status === HttpStatus.SUCCESS && res.ok) {
     const data = await res.json()
 
@@ -62,6 +63,7 @@ export async function fetchPeopleLinkedinData(linkedinURL: string) {
       }
     )
 
+    console.log("4")
     const certificates = (data["certifications"] as any[]).map(
       (value, index) => {
         return {
@@ -72,9 +74,11 @@ export async function fetchPeopleLinkedinData(linkedinURL: string) {
       }
     )
 
-    const courses = (data["courses"] as any[]).map((value, index) => {
-      return value["name"]
-    })
+    const courses = (data["accomplishment_courses"] as any[]).map(
+      (value, index) => {
+        return value["name"]
+      }
+    )
 
     const logos = experiences.map((value) =>
       value.company_linkedin_profile_url
