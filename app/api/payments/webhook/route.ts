@@ -15,14 +15,19 @@ const relevantEvents = new Set([
 
 export async function POST(req: NextRequest) {
   try {
-    console.log(req)
     const body = await req.text()
-    const sig = req?.headers?.get("Stripe-Signature")
+    const sig = req?.headers?.get("stripe-signature")
 
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
     let event: Stripe.Event
 
-    if (!sig || !webhookSecret) return
+    console.log("herewrsdfas")
+
+    if (!sig || !webhookSecret)
+      return NextResponse.json(
+        { error: "Sig or webhook not present" },
+        { status: HttpStatus.BAD_REQUEST }
+      )
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret)
     const subscription = event.data.object as Stripe.Subscription
 
@@ -46,6 +51,7 @@ export async function POST(req: NextRequest) {
       }
     }
   } catch (error) {
+    console.log(error)
     return NextResponse.json(
       { error: "Webhook handler failed. View your nextjs function logs." },
       {
