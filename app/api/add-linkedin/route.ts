@@ -42,8 +42,8 @@ export async function GET(request: NextRequest) {
           status: HttpStatus.BAD_REQUEST,
         }
       )
-
-    if (!(await getSiteByUserId(user_id)))
+    const _check_user_site = await getSiteByUserId(user_id)
+    if (_check_user_site)
       return NextResponse.json(
         { error: "You have already created your site" },
         { status: HttpStatus.BAD_REQUEST }
