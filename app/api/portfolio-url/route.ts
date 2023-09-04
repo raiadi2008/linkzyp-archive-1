@@ -26,6 +26,7 @@ export async function GET(req: NextRequest) {
     : await getSiteByDomainDB(domain!)
 
   if (!site) {
+    console.log("username = ", username, "domain = ", domain, "result = ", site)
     return NextResponse.json(
       { error: "Site not found" },
       { status: HttpStatus.NOT_FOUND }
@@ -34,6 +35,7 @@ export async function GET(req: NextRequest) {
   const themeId = site.themeId
   const theme = await getThemeByIdDB(themeId)
   if (!theme) {
+    console.log("theme issue = ", themeId, "site = ", site)
     return NextResponse.json(
       { error: "Theme not found" },
       { status: HttpStatus.NOT_FOUND }
